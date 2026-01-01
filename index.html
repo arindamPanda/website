@@ -1,0 +1,2434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arindam | Researcher & Traveler</title>
+    <meta name="description" content="Personal website of Arindam - Research, Publications, and Travel Blog.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            /* --bg-color: #ffffff; User requested suitable background. Using Pale Mint to match header */
+            --bg-color: #eff5ef;
+            /* User requested "like showing", likely pure white or bright */
+            --text-color: #333333;
+            --accent-color: #007a7a;
+            /* Dark Olive Green from reference */
+            --link-hover: #000000;
+            --border-radius: 2px;
+            --transition: all 0.3s ease;
+            --header-height: 80px;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, #ffe8d6 0%, #ebf8ff 50%, #cceeff 100%);
+            min-height: 100vh;
+            color: var(--text-color);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            color: #111;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent-color);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            height: var(--header-height);
+            background-color: #ffe8d6;
+            backdrop-filter: none;
+            /* Very light Pale Mint/Sage to match accents */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            /* border-bottom: 1px solid #f0f0f0; Too light against new BG */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            /* Darker, clearly visible border */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            /* Stronger shadow for lift */
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            /* text-transform: uppercase; Removed to match user request "Arindam" */
+            font-weight: 500;
+            color: #000;
+        }
+
+        .brand-name span {
+            color: #666;
+            /* Optionally fade the last name like 'PAL' in reference */
+            margin-left: 5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            /* color: #888; Darkened for better visibility per user request */
+            color: #007a7a;
+            font-weight: 500;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #007a7a;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            /* Wider for split layout */
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Sections */
+        section {
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            /* opacity: 0; transform: translateY(20px); animation: fadeIn 1s forwards; Removed to fix disappearing issue */
+            scroll-margin-top: var(--header-height);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* HERO SPLIT LAYOUT */
+        #about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 4rem;
+            text-align: left;
+            /* Reset center align */
+            padding: 4rem 0;
+            min-height: 80vh;
+        }
+
+        .hero-content {
+            padding-right: 2rem;
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #007a7a;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: inline-block;
+            border-bottom: 2px solid #8FBC8F;
+            padding-bottom: 5px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 500;
+            /* Reduced from 5rem */
+            line-height: 1.1;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            /* font-style: italic; Removed per user request */
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title em {
+            font-style: normal;
+            /* Force normal if em tag remains */
+            font-weight: 400;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 3rem;
+            max-width: 500px;
+            line-height: 1.6;
+            font-style: italic;
+            /* Moved italics here */
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            width: fit-content;
+        }
+
+        .hero-btn-row {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn-primary {
+            background-color: #367c8a !important;
+            color: #fff !important;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            /* Pill shape */
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: 2px solid #367c8a !important;
+        }
+
+        .btn-outline {
+            background-color: #367c8a !important;
+            color: #fff !important;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: 2px solid #367c8a !important;
+        }
+
+        .btn-outline:hover,
+        .btn-primary:hover {
+            background-color: #007a7a !important;
+            border-color: #007a7a !important;
+            color: #fff !important;
+        }
+
+        .hero-image-container {
+            position: relative;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 500px;
+            /* Adjust based on image quality */
+            height: auto;
+            object-fit: cover;
+            /* Gradient mask for seamless blending */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent),
+                linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent),
+                linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+        }
+
+        /* Research Grid (Desktop) */
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            /* minmax(0, 1fr) prevents overflow */
+            gap: 3rem;
+            align-items: start;
+            margin-bottom: 4rem;
+            max-width: 1000px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Publication List Styles */
+        .pub-card {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            gap: 2rem;
+        }
+
+        .pub-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .pub-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 120px;
+        }
+
+        .pub-year-badge {
+            background: #f0f2f0;
+            color: #333;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .pub-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #777;
+            font-weight: 500;
+        }
+
+        .pub-content {
+            flex: 1;
+        }
+
+        .pub-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #222;
+            margin-bottom: 0.3rem;
+            line-height: 1.4;
+            transition: var(--transition);
+        }
+
+        .pub-card:hover .pub-title {
+            color: #007a7a;
+        }
+
+        .pub-citation {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .pub-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pub-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            transition: var(--transition);
+        }
+
+        .pub-card:hover .pub-icon {
+            background: #007a7a;
+            border-color: #007a7a;
+            color: #fff;
+        }
+
+        /* Mobile Adjustments for Hero */
+        @media (max-width: 900px) {
+            #about {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-content {
+                padding-right: 0;
+            }
+
+            .hero-desc {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-buttons {
+                align-items: center;
+            }
+
+            .hero-btn-row {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .research-grid,
+            .other-research {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Research Image Styles */
+        .research-figure {
+            margin: 1.5rem 0;
+            background: #fff;
+            padding: 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            /* Soft shadow for depth */
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+            /* Force clip overflow */
+            max-width: 100%;
+            /* Ensure figure doesn't exceed parent */
+        }
+
+        .research-figure:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .research-grid .card {
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .research-grid .card:hover {
+            border-color: rgba(0, 0, 0, 0.15);
+            /* Darker border on hover */
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            /* Enhanced shadow */
+            transform: translateY(-2px);
+            /* Slight lift */
+        }
+
+
+        .featured-split {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem 3rem;
+            text-align: left;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .featured-text {
+            flex: 1;
+        }
+
+        .featured-image-container {
+            flex: 0 0 auto;
+        }
+
+        .featured-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .featured-split {
+                flex-direction: column-reverse;
+                /* Text below image on mobile, or column for Text above? User usually prefers Image top or Text top. Let's start with column (Text Top) or column-reverse. Standard is often Image Top. Let's do Text Top as per current flow? No, split usually implies side by side. On mobile stack. Let's simply stack. */
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+        }
+
+        .card-number-watermark {
+            position: absolute;
+            top: -2.5rem;
+            right: 1rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            color: rgba(0, 0, 0, 0.08);
+            font-weight: 700;
+            line-height: 1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Ensure content is above watermark */
+        .research-grid .card>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .research-img {
+            width: 100%;
+            /* Full width of container */
+            max-width: 100%;
+            /* STRICT constraint */
+            height: auto;
+            /* Maintain aspect ratio */
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            display: block;
+            object-fit: contain;
+            /* Ensure image fits */
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+            transform: translateY(-3px);
+            border-color: #e0e0e0;
+        }
+
+        .research-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #007a7a;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .paper-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .paper-meta {
+            font-size: 0.85rem;
+            color: #888;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Gallery */
+        /* Grid Layout for Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        @media (max-width: 1100px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Marquee Animation */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 2rem;
+            margin-top: 3rem;
+            /* Increased gap as requested */
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            gap: 1rem;
+            /* Space between groups */
+        }
+
+        .marquee-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            /* Space between items */
+            animation: marquee 30s linear infinite;
+        }
+
+        /* Pause on hover for better UX */
+        .marquee-container:hover .marquee-group {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Specific sizing for Marquee Items */
+        .marquee-group .gallery-item {
+            width: auto;
+            /* Adapt to image width */
+            height: 350px;
+            /* Fixed height */
+            flex-shrink: 0;
+            background: transparent;
+            /* Hide background if image has transparent spacing */
+        }
+
+        .marquee-group .gallery-item img {
+            width: auto;
+            height: 100%;
+            object-fit: contain;
+            /* Show full image */
+        }
+
+        .gallery-item {
+            height: 250px;
+            /* Increased Size */
+            width: 100%;
+            flex-shrink: 0;
+            background-color: #eee;
+            overflow: hidden;
+            position: relative;
+            border-radius: 8px;
+            /* Soften edges */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-date {
+            position: absolute;
+            bottom: 8px;
+            right: 12px;
+            color: mediumspringgreen;
+            font-size: 0.9rem;
+            font-weight: 500;
+            pointer-events: none;
+            z-index: 2;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        /* Contact Form */
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #eee;
+            background: #fff;
+            border-radius: 0;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #aaa;
+        }
+
+        button.btn {
+            background-color: #367c8a;
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        button.btn:hover {
+            background-color: #007a7a;
+            letter-spacing: 3px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            font-size: 0.75rem;
+            color: #aaa;
+            letter-spacing: 1px;
+            border-top: 1px solid #f5f5f5;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                height: auto;
+                padding: 1.5rem;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .research-grid,
+            .other-research {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Lightbox Styles */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 80vh;
+            text-align: center;
+            position: relative;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            /* Initial scale for animation */
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox-overlay.active .lightbox-image {
+            transform: scale(1);
+        }
+
+        .lightbox-caption {
+            margin-top: 1.5rem;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            max-width: 800px;
+        }
+
+        .lightbox-date {
+            margin-top: 0.5rem;
+            color: #ccc;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10002;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Header -->
+    <header>
+        <div class="brand-name">
+            Arindam
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#researcher-bio">About</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#travel">Photography</a></li>
+                <li><a href="#memory">Travel & Memory</a></li>
+                <li><a href="#connect">Contact</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero / About -->
+        <!-- Hero / About -->
+        <section id="about">
+            <div class="hero-content">
+                <div class="tagline" style="color: #4338ca;">Physics of Living Matter Researcher</div>
+                <h1 class="hero-title">Far From <br>Equilibrium</h1>
+                <p class="hero-desc">
+                    Exploring the non-equilibrium physics of active systems to understand how biological matter
+                    maintains complex functions far from equilibrium.
+                </p>
+                <div class="hero-buttons">
+                    <div class="hero-btn-row">
+                        <button class="btn btn-primary" onclick="location.href='#research'">Explore Research</button>
+                        <button class="btn btn-outline" onclick="location.href='#travel'">Explore Photography</button>
+                    </div>
+                    <div class="hero-btn-row">
+                        <button class="btn btn-outline" onclick="location.href='#memory'">Explore Memory</button>
+                        <button class="btn btn-outline" onclick="location.href='#connect'">Contact Me</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image-container">
+                <img src="./Arindam.jpg" alt="Arindam" class="hero-image">
+            </div>
+        </section>
+
+        <!-- Researcher Bio Section -->
+        <section id="researcher-bio" class="section" style="padding: 4rem 0; background-color: transparent;">
+            <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <div class="tagline" style="margin-bottom: 2rem; color: #4338ca;">About the Researcher</div>
+                <p
+                    style="font-size: 1.2rem; line-height: 1.8; color: var(--text-color); font-family: 'Playfair Display', serif; text-align: justify;">
+                    My research centers on the non-equilibrium statistical mechanics of active matter. Specifically, I
+                    study active polymers—systems that bridge the gap between inanimate materials and living matter. By
+                    integrating Brownian dynamics simulations with analytical theory, I investigate how internal
+                    activity fundamentally alters the conformational, mechanical, and rheological fingerprints of
+                    polymer systems.
+                </p>
+            </div>
+        </section>
+
+        <!-- Research -->
+        <section id="research">
+            <div style="text-align: center;">
+                <div class="tagline" style="margin-bottom: 1rem; color: #4338ca;">Core Research</div>
+            </div>
+            <h2 class="hero-title"
+                style="text-align: center; font-size: 2.5rem; margin-top: 0; margin-bottom: 3rem; max-width: 1200px; margin-left: auto; margin-right: auto; text-transform: none;">
+                Conformational, Dynamical, and Rheological <br> Behavior of Active Polymers
+            </h2>
+
+            <!-- Featured Presentation -->
+            <div class="featured-split">
+                <div class="featured-text">
+                    <div class="tagline" style="margin-bottom: 1rem; color: #4338ca;">
+                        Feature Presentation</div>
+                    <p
+                        style="font-size: 1rem; color: #555; margin-bottom: 2rem; line-height: 1.6; max-width: 100%; text-align: justify;">
+                        A schematic of a bidirectional active polymer, where the arrows display the direction of active
+                        force. A pair of half-headed arrows illustrates the polarity reversal of the active force.
+                    </p>
+                    <a href="https://pubs.acs.org/doi/10.1021/acs.macromol.5c01098" target="_blank"
+                        style="display: inline-block; padding: 0.5rem 1.5rem; background-color: transparent; color: #8a2be2; border: 1px solid #8a2be2; border-radius: 50px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;"
+                        onmouseover="this.style.backgroundColor='#8a2be2'; this.style.color='#fff';"
+                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='#8a2be2';">
+                        View the article
+                    </a>
+                </div>
+                <div class="featured-image-container" style="display: flex; justify-content: flex-end;">
+                    <img src="cover.jpg" alt="Active Polymer Schematic Cover Art" class="featured-image"
+                        style="max-width: 220px;">
+                </div>
+            </div>
+
+            <div class="research-grid">
+                <!-- Column 1: APLP Paper -->
+                <div class="card" style="border-left: none; height: 100%;">
+                    <span class="card-number-watermark">4</span>
+                    <h3 class="research-card-title">
+                        Analytical Analysis of the Conformational and Rheological Properties of Flexible Active
+                        Polar Linear Polymers
+                    </h3>
+                    <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.5rem;">
+                        This study develops an analytical framework to characterize the conformational and rheological
+                        properties of flexible Active Polar Linear Polymers (APLPs) under shear flow. It reveals that
+                        activity leads to quantitatively distinct behavior, including enhanced transverse shrinkage and
+                        amplified shear-thinning, with scaling exponents that align with previous simulation findings.
+                    </p>
+
+                    <figure class="research-figure">
+                        <img src="figure1.png" alt="Schematic of APLP under shear flow" class="research-img">
+                        <figcaption class="research-caption">
+                            Schematic representation of an active polar linear polymer (purple chain with green arrows
+                            indicating active forces) subjected to linear shear flow (blue arrows). The flow is along
+                            the x-direction with a gradient in the y-direction.
+                        </figcaption>
+                    </figure>
+
+                    <a href="https://pubs.aip.org/aip/jcp/article/163/22/224905/3374548/Analytical-analysis-of-the-conformational-and"
+                        target="_blank"
+                        style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8a2be2;">read
+                        more &rarr;</a>
+                </div>
+
+                <!-- Column 2: Folding-unfolding Paper -->
+                <div class="card" style="border-left: none; height: 100%;">
+                    <span class="card-number-watermark">3</span>
+                    <h3 class="research-card-title">
+                        Folding-Unfolding Transition of Active Polymer on the Reconfiguration of Bidirectional
+                        Tangential Active Force
+                    </h3>
+                    <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.5rem;">
+                        This paper examines how bidirectional tangential active forces influence the conformational and
+                        dynamic properties of active polymers. It reveals that the interplay of force directionality and
+                        reversal rates can drive polymers through compression, re-swelling, and distinct dynamic
+                        regimes, bridging behaviors previously observed in unidirectional and random active polymer
+                        models.
+                    </p>
+
+                    <figure class="research-figure">
+                        <img src="bipolar.png" alt="Schematic of active polymer with bidirectional forces"
+                            class="research-img">
+                        <figcaption class="research-caption">
+                            Schematic representation of an active polymer with bidirectional tangential forces. Green
+                            arrows indicate positive polarity (head-to-tail) forces while magenta arrows show negative
+                            polarity (tail-to-head) forces. The polarity can stochastically reverse with characteristic
+                            time τₙ, creating a dynamic force landscape along the polymer backbone.
+                        </figcaption>
+                    </figure>
+
+                    <a href="https://pubs.acs.org/doi/10.1021/acs.macromol.5c01098" target="_blank"
+                        style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8a2be2;">read
+                        more &rarr;</a>
+                </div>
+
+                <!-- Column 3: Activity-enhanced shear thinning Paper -->
+                <div class="card" style="border-left: none; height: 100%;">
+                    <span class="card-number-watermark">2</span>
+                    <h3 class="research-card-title">
+                        Activity-Enhanced Shear Thinning of Flexible Linear Polar Polymers
+                    </h3>
+                    <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.5rem;">
+                        The tangential polar activity in flexible linear polymers dramatically enhances shear-thinning
+                        behavior, leading to a viscosity reduction scaling with a \(Wi_{Pe}^{-4/3}\) exponent, alongside
+                        amplified transverse shrinkage and
+                        altered tumbling dynamics, which are distinct from passive polymers. The study leveraged both
+                        coarse-grained simulations and an analytical model to characterize these unique rheological
+                        signatures.
+                    </p>
+
+                    <figure class="research-figure">
+                        <img src="schem_tan.png" alt="Schematic of tangentially driven active polar linear polymer"
+                            class="research-img">
+                        <figcaption class="research-caption">
+                            Schematic of a tangentially driven active polar linear polymer under linear shear flow. The
+                            red arrows indicate the active forces along the bond vectors. The purple arrows and the
+                            background color illustrate the linear shear flow.
+                        </figcaption>
+                    </figure>
+
+                    <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.111.055413" target="_blank"
+                        style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8a2be2;">read
+                        more &rarr;</a>
+                </div>
+
+                <!-- Column 4: Self-avoiding Active Brownian Polymers Paper -->
+                <div class="card" style="border-left: none; height: 100%;">
+                    <span class="card-number-watermark">1</span>
+                    <h3 class="research-card-title">
+                        Characteristic Features of Self-avoiding Active Brownian Polymers Under Linear Shear Flow
+                    </h3>
+                    <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.5rem;">
+                        This study used Brownian dynamics simulations to investigate how active noise and
+                        excluded-volume interactions modify the conformational and rheological properties of flexible
+                        polymers under linear shear flow. We found new power-law scalings for polymer compression,
+                        alignment, and shear thinning in active systems, along with a non-monotonic zero-shear viscosity
+                        driven by excluded-volume effects.
+                    </p>
+
+                    <figure class="research-figure">
+                        <img src="schematic_abp.png"
+                            alt="Schematic of an active Brownian polymer under linear shear flow" class="research-img">
+                        <figcaption class="research-caption">
+                            Schematic representation of an active Brownian polymer under linear shear flow. The polymer
+                            consists of self-propelled monomers (red spheres) connected by harmonic springs,
+                            experiencing both active forces (blue arrows) and linear shear flow (green arrows).
+                        </figcaption>
+                    </figure>
+
+                    <a href="https://pubs.rsc.org/en/content/articlehtml/2023/sm/d3sm01334k" target="_blank"
+                        style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8a2be2;">read
+                        more &rarr;</a>
+                </div>
+            </div>
+
+
+            <!-- Conference Presentation -->
+            <div class="featured-split" style="display: block; text-align: center;">
+                <div class="tagline" style="margin-bottom: 2rem; color: #4338ca;">Conference Presentation</div>
+                <div class="conference-grid"
+                    style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center;">
+                    <div class="conference-item">
+                        <img src="compflu_2022.jpeg" alt="CompFlu 2022"
+                            style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
+                        <div
+                            style="font-size: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 500; color: mediumorchid;">
+                            CompFlu 2022</div>
+                    </div>
+                    <div class="conference-item">
+                        <img src="symposium_2023.jpeg" alt="Symposium 2023"
+                            style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
+                        <div
+                            style="font-size: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 500; color: mediumorchid;">
+                            Symposium 2023</div>
+                    </div>
+                    <div class="conference-item">
+                        <img src="compflu_2023.jpeg" alt="CompFlu 2023"
+                            style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
+                        <div
+                            style="font-size: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 500; color: mediumorchid;">
+                            CompFlu 2023</div>
+                    </div>
+                    <div class="conference-item">
+                        <img src="DPG_2025.jpeg" alt="DPG 2025"
+                            style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
+                        <div
+                            style="font-size: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 500; color: mediumorchid;">
+                            DPG 2025</div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Publications -->
+        <section id="publications" style="padding: 4rem 0;">
+            <div style="text-align: center;">
+                <div class="tagline" style="margin-bottom: 1rem; color: #4338ca;">Scholarly Works</div>
+            </div>
+            <h2 class="section-title"
+                style="margin-top: 0; font-family: 'Book Antiqua', Palatino, serif; font-weight: normal;">
+                PUBLICATIONS</h2>
+
+            <div class="publication-list">
+
+                <!-- Paper 1 -->
+                <div class="pub-card">
+                    <div class="pub-left">
+                        <span class="pub-year-badge">2025</span>
+                        <span class="pub-type">Journal Article</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3 class="pub-title">Analytical Analysis of the Conformational and Rheological Properties of
+                            Flexible Active Polar Linear Polymers under Shear Flow</h3>
+                        <p class="pub-citation">J. Chem. Phys. 163, 224905 (2025)</p>
+                    </div>
+                    <div class="pub-right">
+                        <a href="https://pubs.aip.org/aip/jcp/article/163/22/224905/3374548/Analytical-analysis-of-the-conformational-and"
+                            target="_blank" class="pub-icon" aria-label="View Paper">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="pub-card">
+                    <div class="pub-left">
+                        <span class="pub-year-badge">2025</span>
+                        <span class="pub-type">Journal Article</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3 class="pub-title">Folding-Unfolding Transition of Active Polymer on the Reconfiguration of
+                            Bidirectional Tangential Active Force</h3>
+                        <p class="pub-citation">Macromolecules 2025, 58, 21, 11816–11826</p>
+                    </div>
+                    <div class="pub-right">
+                        <a href="https://pubs.acs.org/doi/full/10.1021/acs.macromol.5c01098" target="_blank"
+                            class="pub-icon" aria-label="View Paper">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="pub-card">
+                    <div class="pub-left">
+                        <span class="pub-year-badge">2025</span>
+                        <span class="pub-type">Journal Article</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3 class="pub-title">Activity-Enhanced Shear Thinning of Flexible Linear Polar Polymers</h3>
+                        <p class="pub-citation">Physical Review E, 111, 055413</p>
+                    </div>
+                    <div class="pub-right">
+                        <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.111.055413" target="_blank"
+                            class="pub-icon" aria-label="View Paper">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Paper 4 -->
+                <div class="pub-card">
+                    <div class="pub-left">
+                        <span class="pub-year-badge">2023</span>
+                        <span class="pub-type">Journal Article</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3 class="pub-title">Characteristic Features of Self-avoiding Active Brownian Polymers Under
+                            Linear Shear Flow</h3>
+                        <p class="pub-citation">Soft Matter, 19 (44), 8577-8586</p>
+                    </div>
+                    <div class="pub-right">
+                        <a href="https://pubs.rsc.org/en/content/articlehtml/2023/sm/d3sm01334k" target="_blank"
+                            class="pub-icon" aria-label="View Paper">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Travel -->
+            <section id="travel">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+                    <a href="photo.png" target="_blank"
+                        style="width: 79px; height: 79px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none; overflow: hidden; border: 2px solid #8FBC8F;"
+                        onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
+                        onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                        <img src="photo.png" alt="Arindam" style="width: 100%; height: 100%; object-fit: cover;">
+                    </a>
+                    <h2
+                        style="display: inline-block; border-bottom: 2px solid #8FBC8F; padding-bottom: 5px; margin: 0;">
+                        Photography</h2>
+                </div>
+                <script>
+                    let photoInterval;
+                    const photoSpeed = 1; // Pixels per tick
+
+                    function startPhotoScroll() {
+                        const container = document.getElementById('photo-scroll-container');
+                        if (!container) return;
+
+                        // Clear existing
+                        if (photoInterval) clearInterval(photoInterval);
+
+                        photoInterval = setInterval(() => {
+                            container.scrollLeft += photoSpeed;
+                            // Infinite loop logic
+                            if (container.scrollLeft >= (container.scrollWidth / 2)) {
+                                container.scrollLeft = 0;
+                            }
+                        }, 20);
+                    }
+
+                    function pausePhotoScroll() {
+                        if (photoInterval) clearInterval(photoInterval);
+                    }
+
+                    function manualScrollPhoto(direction) {
+                        const container = document.getElementById('photo-scroll-container');
+                        const scrollAmount = 300;
+                        container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+                    }
+
+                    window.addEventListener('load', startPhotoScroll);
+                </script>
+                <style>
+                    /* Reusing/Adapting styles for Photography Marquee */
+                    .photo-wrapper {
+                        position: relative;
+                        max-width: 100%;
+                        margin: 0 auto;
+                        padding: 0 60px;
+                        margin-top: 1rem;
+                        margin-bottom: 2rem;
+                    }
+
+                    .photo-container {
+                        display: flex;
+                        overflow-x: hidden;
+                        gap: 1rem;
+                        padding: 1rem 5px;
+                        white-space: nowrap;
+                    }
+
+                    .photo-group {
+                        display: flex;
+                        gap: 1rem;
+                        flex-shrink: 0;
+                    }
+
+                    .gallery-item {
+                        width: 280px;
+                        /* Fixed width for consistency */
+                        height: auto;
+                        min-height: 200px;
+                        display: flex;
+                        flex-direction: column;
+                        flex-shrink: 0;
+                        border-radius: 12px;
+                        overflow: hidden;
+                        cursor: pointer;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                        transition: transform 0.3s ease;
+                        background: white;
+                    }
+
+                    .gallery-item:hover {
+                        transform: scale(1.03);
+                    }
+
+                    .gallery-item img {
+                        width: 100%;
+                        height: 200px;
+                        object-fit: cover;
+                        flex-shrink: 0;
+                    }
+
+                    .gallery-caption-text {
+                        padding: 10px;
+                        font-size: 0.9rem;
+                        color: #8B008B;
+                        font-weight: 700;
+                        text-align: center;
+                        background: white;
+                        font-family: 'Outfit', sans-serif;
+                        line-height: 1.4;
+                        white-space: normal;
+                    }
+
+                    .photo-nav {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        font-size: 3rem;
+                        color: #555;
+                        cursor: pointer;
+                        user-select: none;
+                        z-index: 10;
+                        transition: color 0.3s;
+                        line-height: 1;
+                    }
+
+                    .photo-nav:hover {
+                        color: #8FBC8F;
+                    }
+
+                    .photo-prev {
+                        left: 10px;
+                    }
+
+                    .photo-next {
+                        right: 10px;
+                    }
+                </style>
+
+                <div class="photo-wrapper" onmouseenter="pausePhotoScroll()" onmouseleave="startPhotoScroll()">
+                    <div class="photo-nav photo-prev" onclick="manualScrollPhoto(-1)">&#10094;</div>
+                    <div id="photo-scroll-container" class="photo-container">
+                        <div class="photo-group">
+                            <div class="gallery-item"
+                                onclick="openLightbox('photography/image1.jpg', 'Nature\'s tears are the most beautiful jewelry', 'Various Dates');">
+                                <img src="photography/image1.jpg" alt="Photography 1">
+                                <div class="gallery-caption-text">Nature's tears are the most beautiful jewelry</div>
+                            </div>
+                            <div class="gallery-item"
+                                onclick="openLightbox('photography/image2.jpg', 'A winter gem waiting for the first light.', 'Various Dates');">
+                                <img src="photography/image2.jpg" alt="Photography 2">
+                                <div class="gallery-caption-text">A winter gem waiting for the first light.</div>
+                            </div>
+                            <div class="gallery-item"
+                                onclick="openLightbox('photography/image3.jpg', 'Turning a soft golden morning into cotton clouds ablaze.', 'Various Dates');">
+                                <img src="photography/image3.jpg" alt="Photography 3">
+                                <div class="gallery-caption-text">Turning a soft golden morning into cotton clouds
+                                    ablaze.</div>
+                            </div>
+                            <div class="gallery-item"
+                                onclick="openLightbox('photography/image4.jpg', 'Matching the scorching noon heat with a blaze of its own.', 'Various Dates');">
+                                <img src="photography/image4.jpg" alt="Photography 4">
+                                <div class="gallery-caption-text">Matching the scorching noon heat with a blaze of
+                                    its own.</div>
+                            </div>
+                            <div class="gallery-item"
+                                onclick="openLightbox('photography/image5.jpg', '&quot;Nut-thing&quot; to see here, just having a snack.', 'Various Dates');">
+                                <img src="photography/image5.jpg" alt="Photography 5">
+                                <div class="gallery-caption-text">"Nut-thing" to see here, just having a snack.</div>
+                            </div>
+                            <div class="gallery-item"
+                                onclick="openLightbox('photography/image6.jpg', 'From spongy white calm to fiery red chaos.', 'Various Dates');">
+                                <img src="photography/image6.jpg" alt="Photography 6">
+                                <div class="gallery-caption-text">From spongy white calm to fiery red chaos.</div>
+                            </div>
+                            <div class="gallery-item"
+                                onclick="openLightbox('photography/image7.jpg', 'Soaking in the final golden glow of the afternoon.', 'Various Dates');">
+                                <img src="photography/image7.jpg" alt="Photography 7">
+                                <div class="gallery-caption-text">Soaking in the final golden glow of the afternoon.
+                                </div>
+                            </div>
+                            <div class="gallery-item"
+                                onclick="openLightbox('photography/image8.jpeg', 'The horizon holds the day\'s last burning ember, while the rest of world breathes cool.', 'Various Dates');">
+                                <img src="photography/image8.jpeg" alt="Photography 8">
+                                <div class="gallery-caption-text">The horizon holds the day's last burning ember,
+                                    while the rest of world breathes cool.</div>
+                            </div>
+                            <div class="gallery-item"
+                                onclick="openLightbox('photography/image9.jpg', 'A warm glow breaking the silence of the dark.', 'Various Dates');">
+                                <img src="photography/image9.jpg" alt="Photography 9">
+                                <div class="gallery-caption-text">A warm glow breaking the silence of the dark.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="photo-nav photo-next" onclick="manualScrollPhoto(1)">&#10095;</div>
+                </div>
+            </section>
+
+            <!-- Travel & Memory -->
+            <section id="memory">
+                <div style="text-align: center;">
+                    <h2 style="display: inline-block; border-bottom: 2px solid #8FBC8F; padding-bottom: 5px;">Travel &
+                        Memory</h2>
+                </div>
+                <div style="text-align: center; margin-top: 1.5rem; margin-bottom: 0.5rem;">
+                    <h3
+                        style="display: inline-block; border-bottom: 2px solid #8FBC8F; padding-bottom: 3px; font-weight: 500; font-size: 1.5rem; margin: 0; color: mediumvioletred;">
+                        Trips</h3>
+                </div>
+                <script>
+                    let tripsInterval;
+                    const tripsSpeed = 1; // Pixels per tick
+
+                    function startTripsScroll() {
+                        const container = document.getElementById('trips-scroll-container');
+                        if (!container) return;
+
+                        // Clear existing to avoid dupes
+                        if (tripsInterval) clearInterval(tripsInterval);
+
+                        tripsInterval = setInterval(() => {
+                            // Move right to left
+                            container.scrollLeft += tripsSpeed;
+
+                            // Infinite loop logic:
+                            // We have 2 identical groups. When we scroll past the first group
+                            // (width approx half of scrollWidth), snap back to 0.
+                            // We use a safe threshold (e.g. maxScroll / 2)
+                            if (container.scrollLeft >= (container.scrollWidth / 2)) {
+                                container.scrollLeft = 0;
+                            }
+                        }, 20); // 50fps approx
+                    }
+
+                    function pauseTripsScroll() {
+                        if (tripsInterval) clearInterval(tripsInterval);
+                    }
+
+                    function manualScrollTrips(direction) {
+                        const container = document.getElementById('trips-scroll-container');
+                        const scrollAmount = 400;
+                        container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+                    }
+
+                    // Start on load
+                    window.addEventListener('load', startTripsScroll);
+                </script>
+                <style>
+                    .trips-wrapper {
+                        position: relative;
+                        max-width: 100%;
+                        margin: 0 auto;
+                        padding: 0 60px;
+                        margin-top: 1rem;
+                        margin-bottom: 2rem;
+                    }
+
+                    .trips-container {
+                        display: flex;
+                        overflow-x: hidden;
+                        /* Hide scrollbar but allow JS scroll */
+                        gap: 1rem;
+                        padding: 1rem 5px;
+                        white-space: nowrap;
+                    }
+
+                    .trips-group {
+                        display: flex;
+                        gap: 1rem;
+                        flex-shrink: 0;
+                    }
+
+                    /* Navigation Arrows */
+                    .trips-nav {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        font-size: 3rem;
+                        color: #555;
+                        cursor: pointer;
+                        user-select: none;
+                        z-index: 10;
+                        transition: color 0.3s;
+                        line-height: 1;
+                    }
+
+                    .trips-nav:hover {
+                        color: mediumvioletred;
+                    }
+
+                    .trips-prev {
+                        left: 10px;
+                    }
+
+                    .trips-next {
+                        right: 10px;
+                    }
+                </style>
+                <div class="trips-wrapper" onmouseenter="pauseTripsScroll()" onmouseleave="startTripsScroll()">
+                    <div class="trips-nav trips-prev" onclick="manualScrollTrips(-1)">&#10094;</div>
+                    <div id="trips-scroll-container" class="trips-container">
+                        <!-- Group 1 -->
+                        <div class="trips-group">
+                            <!-- Orchha Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Orchha, Sep, 2025</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Orchha/orch1.jpg" alt="Orchha"
+                                        style="width: 100%; height: 100%; object-fit: contain;">
+                                </div>
+                                <a href="#" onclick="openMappedGallery([
+                                    {caption: 'Rani Mahal, Jhansi', images: ['Orchha/orch1.jpg', 'Orchha/orch2.jpg', 'Orchha/orch3.jpg', 'Orchha/orch4.jpg', 'Orchha/orch5.jpg']},
+                                    {caption: 'Orchha Fort (Raja Mahal)', images: ['Orchha/orch6.jpg', 'Orchha/orch7.jpg', 'Orchha/orch8.jpg', 'Orchha/orch9.jpg']},
+                                    {caption: 'The Chaturbhuj Temple from Raja Mahal', images: ['Orchha/orch10.jpg']},
+                                    {caption: 'The Chhatris of Orchha from Raja Mahal', images: ['Orchha/orch11.jpg']},
+                                    {caption: 'The Chhatris of Orchha', images: ['Orchha/orch12.jpg', 'Orchha/orch13.jpg', 'Orchha/orch14.jpg', 'Orchha/orch15.jpg', 'Orchha/orch16.jpg']},
+                                    {caption: 'Raja Mahal from The Chaturbhuj Temple', images: ['Orchha/orch17.jpg']},
+                                    {caption: 'Shri Ram Raja Mandir from The Chaturbhuj Temple', images: ['Orchha/orch18.jpg']}
+                                ], 'September, 2025'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+
+
+                            <!-- DPG Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    DPG, Mar, 2025</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="DPG/dpg1.jpeg" alt="DPG"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <a href="#" onclick="openMappedGallery([
+                                    {caption: 'Mumbai International Airport', images: ['DPG/dpg1.jpeg']},
+                                    {caption: 'Doha International Airport', images: ['DPG/dpg2.jpeg']},
+                                    {caption: 'Regensburg University', images: ['DPG/dpg3.jpeg', 'DPG/dpg4.jpeg']},
+                                    {caption: 'Old Stone Bridge, Danube River', images: ['DPG/dpg5.jpeg', 'DPG/dpg6.jpeg', 'DPG/dpg7.jpeg', 'DPG/dpg8.jpeg']},
+                                    {caption: 'Walhalla', images: ['DPG/dpg9.jpeg', 'DPG/dpg10.jpeg', 'DPG/dpg11.jpeg', 'DPG/dpg12.jpeg', 'DPG/dpg13.jpeg', 'DPG/dpg14.jpeg', 'DPG/dpg15.jpeg', 'DPG/dpg16.jpeg']},
+                                    {caption: 'Nymphenburg Palace, Munich', images: ['DPG/dpg17.jpeg', 'DPG/dpg18.jpeg', 'DPG/dpg19.jpeg', 'DPG/dpg20.jpeg']}
+                                ], 'March, 2025'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Raisen Fort Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Raisen Fort, Aug, 2024</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Raisen Fort/Rai1.jpeg" alt="Raisen Fort"
+                                        style="width: 100%; height: 100%; object-fit: cover; object-position: left;">
+                                </div>
+                                <a href="#"
+                                    onclick="openGallery(['Raisen Fort/Rai1.jpeg', 'Raisen Fort/Rai2.jpeg', 'Raisen Fort/Rai3.jpeg', 'Raisen Fort/Rai4.jpeg', 'Raisen Fort/Rai5.jpeg', 'Raisen Fort/Rai6.jpeg', 'Raisen Fort/Rai7.jpg', 'Raisen Fort/Rai8.jpeg'], 'Raisen Fort', 'August, 2024'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Chennai Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Chennai Diaries, Dec, 2023</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Chennai/1.jpg" alt="Chennai Diaries"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <a href="#" onclick="openMappedGallery([
+                                    {caption: 'Chennai Diaries', images: ['Chennai/1.jpg']},
+                                    {caption: 'Brihadeeswara Temple, Thanjavur; UNESCO World Heritage', images: ['Chennai/B1.jpeg', 'Chennai/B2.jpeg', 'Chennai/B3.jpeg', 'Chennai/B4.jpeg']},
+                                    {caption: 'Sri Ranganatha Swamy Temple, Tiruchirappalli', images: ['Chennai/S1.jpeg', 'Chennai/S2.jpeg', 'Chennai/S3.jpeg']},
+                                    {caption: 'Meenakshi Amman Temple, Madurai', images: ['Chennai/M1.jpeg', 'Chennai/M2.jpeg', 'Chennai/M3.jpeg']},
+                                    {caption: 'The Ramanathaswamy Temple, Rameswaram', images: ['Chennai/R1.jpeg', 'Chennai/R2.jpeg', 'Chennai/R3.jpeg', 'Chennai/R4.jpeg']},
+                                    {caption: 'Dhanushkodi, the Bay of Bengal and Indian Ocean meet', images: ['Chennai/D1.jpeg', 'Chennai/D2.jpeg']},
+                                    {caption: 'Mahabalipuram Temple, UNESCO Group of Monuments', images: ['Chennai/M1.jpg', 'Chennai/M2.jpg']}
+                                ], 'December, 2023'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Jabalpur Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Jabalpur, Dec, 2022</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Jabalpur/jab1.jpeg" alt="Jabalpur"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <a href="#" onclick="openMappedGallery([
+                                    {caption: 'Jabalpur Diaries', images: ['Jabalpur/jab1.jpeg']},
+                                    {caption: 'Rani Durgavati Museum', images: ['Jabalpur/jab2.jpeg']},
+                                    {caption: 'Balancing Rock', images: ['Jabalpur/jab3.jpeg']},
+                                    {caption: 'Madan Mahal Fort', images: ['Jabalpur/jab4.jpeg']},
+                                    {caption: 'Beauty of Bhedaghat', images: ['Jabalpur/jab5.jpeg', 'Jabalpur/jab6.jpeg', 'Jabalpur/jab7.jpeg', 'Jabalpur/jab8.jpeg', 'Jabalpur/jab9.jpeg', 'Jabalpur/jab10.jpeg']}
+                                ], 'December, 2022'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Ranthambore Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Ranthambore, Oct, 2022</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Ranthambore/IMG_0198.jpg" alt="Ranthambore"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <a href="#"
+                                    onclick="openGallery(['Ranthambore/IMG_0198.jpg', 'Ranthambore/IMG_0199.jpg', 'Ranthambore/IMG_0200.jpg', 'Ranthambore/IMG_0201.jpg', 'Ranthambore/IMG_0202.jpg', 'Ranthambore/IMG_0203.jpg', 'Ranthambore/IMG_0204.jpg', 'Ranthambore/IMG_0205.jpg'], 'Ranthambore', 'October, 2022'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Hamta Pass Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Hamta Pass, June, 2022</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Hamptapas/trek1.jpg" alt="Hamta Pass"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <a href="#" onclick="openMappedGallery([
+                                    {caption: 'Day 1', images: ['Hamptapas/Day1/Dy1.jpg', 'Hamptapas/Day1/Dy2.jpg', 'Hamptapas/Day1/Dy3.jpg', 'Hamptapas/Day1/Dy4.jpg', 'Hamptapas/Day1/Dy5.jpg', 'Hamptapas/Day1/Dy6.jpg']},
+                                    {caption: 'Day 2', images: ['Hamptapas/Day2/D2_1.jpg', 'Hamptapas/Day2/D2_2.jpg', 'Hamptapas/Day2/D2_3.jpg', 'Hamptapas/Day2/D2_4.jpg', 'Hamptapas/Day2/D2_5.jpg']},
+                                    {caption: 'Day 3', images: ['Hamptapas/Day3/Dy3_1.jpg', 'Hamptapas/Day3/Dy3_2.jpg', 'Hamptapas/Day3/Dy3_3.jpg', 'Hamptapas/Day3/Dy3_4.jpg', 'Hamptapas/Day3/Dy3_5.jpg', 'Hamptapas/Day3/Dy3_6.jpg', 'Hamptapas/Day3/Dy3_7.jpg', 'Hamptapas/Day3/Dy3_8.jpg', 'Hamptapas/Day3/Dy3_9.jpg', 'Hamptapas/Day3/Dy3_10.jpg']},
+                                    {caption: 'Final Day', images: ['Hamptapas/Day4/Dy4_1.jpg', 'Hamptapas/Day4/Dy4_2.jpg', 'Hamptapas/Day4/Dy4_3.jpg', 'Hamptapas/Day4/Dy4_4.jpg', 'Hamptapas/Day4/Dy4_5.jpg', 'Hamptapas/Day4/Dy4_6.jpg', 'Hamptapas/Day4/Dy4_7.jpg', 'Hamptapas/Day4/Dy4_8.jpg', 'Hamptapas/Day4/Dy4_9.jpg']}
+                                ], 'June, 2022'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Manali Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Manali, June, 2022</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Manali/Manali1.jpg?v=updated2" alt="Manali"
+                                        style="width: 100%; height: 100%; object-fit: contain;">
+                                </div>
+                                <a href="#"
+                                    onclick="openGallery(['Manali/Manali1.jpg?v=updated2', 'Manali/Manali2.jpg', 'Manali/Manali3.jpg', 'Manali/Manali4.jpeg', 'Manali/Manali5.jpeg', 'Manali/Manali6.jpeg', 'Manali/Manali7.jpg', 'Manali/Manali8.jpg', 'Manali/Manali9.jpg'], 'Manali', 'June, 2022'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Churna Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Churna Safari (Satpura), Dec, 2021</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Churna/314.jpg" alt="Churna Safari"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <a href="#"
+                                    onclick="openGallery(['Churna/314.jpg', 'Churna/315.jpg', 'Churna/316.jpg', 'Churna/317.jpg', 'Churna/320.jpg', 'Churna/321.jpg', 'Churna/322.jpg', 'Churna/323.jpg'], 'Churna Safari (Satpura)', 'December, 2021'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+                        </div>
+
+                        <!-- Group 2 (Duplicate) -->
+                        <div class="trips-group">
+                            <!-- Orchha Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Orchha, Sep, 2025</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Orchha/orch1.jpg" alt="Orchha"
+                                        style="width: 100%; height: 100%; object-fit: contain;">
+                                </div>
+                                <a href="#" onclick="openMappedGallery([
+                                    {caption: 'Rani Mahal, Jhansi', images: ['Orchha/orch1.jpg', 'Orchha/orch2.jpg', 'Orchha/orch3.jpg', 'Orchha/orch4.jpg', 'Orchha/orch5.jpg']},
+                                    {caption: 'Orchha Fort (Raja Mahal)', images: ['Orchha/orch6.jpg', 'Orchha/orch7.jpg', 'Orchha/orch8.jpg', 'Orchha/orch9.jpg']},
+                                    {caption: 'The Chaturbhuj Temple from Raja Mahal', images: ['Orchha/orch10.jpg']},
+                                    {caption: 'The Chhatris of Orchha from Raja Mahal', images: ['Orchha/orch11.jpg']},
+                                    {caption: 'The Chhatris of Orchha', images: ['Orchha/orch12.jpg', 'Orchha/orch13.jpg', 'Orchha/orch14.jpg', 'Orchha/orch15.jpg', 'Orchha/orch16.jpg']},
+                                    {caption: 'Raja Mahal from The Chaturbhuj Temple', images: ['Orchha/orch17.jpg']},
+                                    {caption: 'Shri Ram Raja Mandir from The Chaturbhuj Temple', images: ['Orchha/orch18.jpg']}
+                                ], 'September, 2025'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Raisen Fort Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Raisen Fort, Aug, 2024</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Raisen Fort/Rai1.jpeg" alt="Raisen Fort"
+                                        style="width: 100%; height: 100%; object-fit: cover; object-position: left;">
+                                </div>
+                                <a href="#"
+                                    onclick="openGallery(['Raisen Fort/Rai1.jpeg', 'Raisen Fort/Rai2.jpeg', 'Raisen Fort/Rai3.jpeg', 'Raisen Fort/Rai4.jpeg', 'Raisen Fort/Rai5.jpeg', 'Raisen Fort/Rai6.jpeg', 'Raisen Fort/Rai7.jpg', 'Raisen Fort/Rai8.jpeg'], 'Raisen Fort', 'August, 2024'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Chennai Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Chennai Diaries, Dec, 2023</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Chennai/1.jpg" alt="Chennai Diaries"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <a href="#" onclick="openMappedGallery([
+                                    {caption: 'Chennai Diaries', images: ['Chennai/1.jpg']},
+                                    {caption: 'Brihadeeswara Temple, Thanjavur; UNESCO World Heritage', images: ['Chennai/B1.jpeg', 'Chennai/B2.jpeg', 'Chennai/B3.jpeg', 'Chennai/B4.jpeg']},
+                                    {caption: 'Sri Ranganatha Swamy Temple, Tiruchirappalli', images: ['Chennai/S1.jpeg', 'Chennai/S2.jpeg', 'Chennai/S3.jpeg']},
+                                    {caption: 'Meenakshi Amman Temple, Madurai', images: ['Chennai/M1.jpeg', 'Chennai/M2.jpeg', 'Chennai/M3.jpeg']},
+                                    {caption: 'The Ramanathaswamy Temple, Rameswaram', images: ['Chennai/R1.jpeg', 'Chennai/R2.jpeg', 'Chennai/R3.jpeg', 'Chennai/R4.jpeg']},
+                                    {caption: 'Dhanushkodi, the Bay of Bengal and Indian Ocean meet', images: ['Chennai/D1.jpeg', 'Chennai/D2.jpeg']},
+                                    {caption: 'Mahabalipuram Temple, UNESCO Group of Monuments', images: ['Chennai/M1.jpg', 'Chennai/M2.jpg']}
+                                ], 'December, 2023'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Jabalpur Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Jabalpur, Dec, 2022</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Jabalpur/jab1.jpeg" alt="Jabalpur"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <a href="#" onclick="openMappedGallery([
+                                    {caption: 'Jabalpur Diaries', images: ['Jabalpur/jab1.jpeg']},
+                                    {caption: 'Rani Durgavati Museum', images: ['Jabalpur/jab2.jpeg']},
+                                    {caption: 'Balancing Rock', images: ['Jabalpur/jab3.jpeg']},
+                                    {caption: 'Madan Mahal Fort', images: ['Jabalpur/jab4.jpeg']},
+                                    {caption: 'Beauty of Bhedaghat', images: ['Jabalpur/jab5.jpeg', 'Jabalpur/jab6.jpeg', 'Jabalpur/jab7.jpeg', 'Jabalpur/jab8.jpeg', 'Jabalpur/jab9.jpeg', 'Jabalpur/jab10.jpeg']}
+                                ], 'December, 2022'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Ranthambore Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Ranthambore, Oct, 2022</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Ranthambore/IMG_0198.jpg" alt="Ranthambore"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <a href="#"
+                                    onclick="openGallery(['Ranthambore/IMG_0198.jpg', 'Ranthambore/IMG_0199.jpg', 'Ranthambore/IMG_0200.jpg', 'Ranthambore/IMG_0201.jpg', 'Ranthambore/IMG_0202.jpg', 'Ranthambore/IMG_0203.jpg', 'Ranthambore/IMG_0204.jpg', 'Ranthambore/IMG_0205.jpg'], 'Ranthambore', 'October, 2022'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+
+                            <!-- Churna Card -->
+                            <div class="card"
+                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                                <h3
+                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                                    Churna Safari (Satpura), Dec, 2021</h3>
+                                <div
+                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                    <img src="Churna/314.jpg" alt="Churna Safari"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <a href="#"
+                                    onclick="openGallery(['Churna/314.jpg', 'Churna/315.jpg', 'Churna/316.jpg', 'Churna/317.jpg', 'Churna/320.jpg', 'Churna/321.jpg', 'Churna/322.jpg', 'Churna/323.jpg'], 'Churna Safari (Satpura)', 'December, 2021'); return false;"
+                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    more &rarr;</a>
+                            </div>
+                        </div>
+
+
+                    </div> <!-- End trips-container -->
+                    <div class="trips-nav trips-next" onclick="manualScrollTrips(1)">&#10095;</div>
+                </div> <!-- End trips-wrapper -->
+
+                <div style="text-align: center; margin-top: 2rem; margin-bottom: 0.5rem;">
+                    <h3
+                        style="display: inline-block; border-bottom: 2px solid #8FBC8F; padding-bottom: 3px; font-weight: 500; font-size: 1.5rem; margin: 0; color: mediumvioletred;">
+                        Timelines</h3>
+                </div>
+
+                <div class="gallery-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; padding: 0 1rem;">
+
+
+                    <script>
+                        const timelineData = [
+                            { src: 'season4.jpg', caption: 'ϕ CRIC: Season 4', date: 'January, 2025' },
+                            { src: 'season2.jpg', caption: 'ϕ CRIC: Season 2', date: 'February, 2023' },
+                            { src: 'Dinner1.jpg', caption: 'Dinner Outing', date: 'September, 2022' },
+                            { src: 'NariPhi.jpg', caption: 'Nari Φ', date: 'August, 2022' },
+                            { src: 'PHY_season1.jpg', caption: 'ϕ CRIC: Season 1', date: 'March, 2022' },
+                            { src: 'Sep_5.jpg', caption: 'Teacher\'s Day, 2021', date: 'September, 2021' },
+                            { src: 'dec_2020.jpg', caption: 'Vibrant IISERB CAMPUS: Winter 2020', date: 'December, 2020' },
+                            { src: 'jnu_05_07.jpg', caption: 'JNU Final Group Photo: 2019', date: 'May, 2019' },
+                            { src: 'farewell.png', caption: 'Farewell 2019', date: 'April, 2019' },
+                            { src: 'spring_2019.jpg', caption: 'Spring chronicles at JNU, 2019', date: 'April, 2019' },
+                            { src: 'SPS_Group.JPG', caption: 'School of Physical Science, JNU, Group Photo', date: 'April, 2018' },
+                            { src: 'Spring.jpg', caption: 'Spring at JNU', date: 'P.C. Ritam, 2018' },
+                            { src: 'Jnu_dec.jpg', caption: 'Wild JNU: Where peacocks, Nilgai, and caves tell the story of nature.', date: 'December, 2017' },
+                            { src: 'JNU_fresher.jpg', caption: 'Fresher Party, JNU', date: 'August, 2017' },
+                            { src: 'the_ganga.jpg', caption: 'A solitary silhouette gliding over the shimmering waters under the midday sun.', date: 'The Ganga, Kolkata, 13/04/2017' }
+                        ];
+                    </script>
+
+                    <!-- Season 4 Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 0)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            ϕ CRIC: Season 4</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="season4.jpg" alt="ϕ CRIC: Season 4"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                            January,
+                            2025</div>
+                    </div>
+
+                    <!-- Season 2 Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 1)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            ϕ CRIC: Season 2</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="season2.jpg" alt="ϕ CRIC: Season 2"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                            February,
+                            2023</div>
+                    </div>
+
+                    <!-- Dinner Outing Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 2)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            Dinner Outing</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="Dinner1.jpg" alt="Dinner Outing"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                            September,
+                            2022</div>
+                    </div>
+
+                    <!-- NariPhi Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 3)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            Nari Φ</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="NariPhi.jpg" alt="Nari Φ" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">August,
+                            2022</div>
+                    </div>
+
+                    <!-- PHY_season1 Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 4)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            ϕ CRIC: Season 1</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="PHY_season1.jpg" alt="ϕ CRIC: Season 1"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">March,
+                            2022
+                        </div>
+                    </div>
+
+                    <!-- Teacher's Day Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 5)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            Teacher's Day</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="Sep_5.jpg" alt="Teacher's Day, 2021"
+                                style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                            September,
+                            2021</div>
+                    </div>
+
+                    <!-- Vibrant IISERB Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 6)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            Vibrant IISERB CAMPUS: Winter</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="dec_2020.jpg" alt="Vibrant IISERB CAMPUS: Winter 2020"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                            December,
+                            2020</div>
+                    </div>
+
+                    <!-- JNU Final Group Photo Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 7)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            JNU Final Group Photo</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="jnu_05_07.jpg" alt="JNU Final Group Photo: 2019"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">May,
+                            2019
+                        </div>
+                    </div>
+
+                    <!-- Farewell 2019 Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 8)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            Farewell</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="farewell.png" alt="Farewell 2019"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">April,
+                            2019
+                        </div>
+                    </div>
+
+                    <!-- Spring Chronicles Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 9)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            Spring chronicles at JNU</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="spring_2019.jpg" alt="Spring chronicles at JNU, 2019"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">April,
+                            2019
+                        </div>
+                    </div>
+
+                    <!-- SPS Group Photo Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 10)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            School of Physical Science, JNU, Group Photo</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="SPS_Group.JPG" alt="SPS Group Photo"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">April,
+                            2018
+                        </div>
+                    </div>
+
+                    <!-- Spring at JNU Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 11)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            Spring at JNU</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="Spring.jpg" alt="Spring at JNU"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">March,
+                            2018
+                        </div>
+                    </div>
+
+                    <!-- Wild JNU Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 12)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            Wild JNU: Where peacocks, Nilgai, and caves tell the story of nature.</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="Jnu_dec.jpg" alt="Wild JNU" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                            December,
+                            2017</div>
+                    </div>
+
+                    <!-- Fresher Party Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 13)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            Fresher Party, JNU</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="JNU_fresher.jpg" alt="JNU Fresher Party"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">August,
+                            2017</div>
+                    </div>
+
+                    <!-- The Ganga Card -->
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 14)"
+                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
+                        <h3
+                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                            A solitary silhouette gliding over the shimmering waters under the midday sun.</h3>
+                        <div
+                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                            <img src="the_ganga.jpg" alt="The Ganga"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">April,
+                            2017
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Connect -->
+            <section id="connect">
+                <div style="text-align: center;">
+                    <h2 style="display: inline-block; border-bottom: 2px solid #8FBC8F; padding-bottom: 5px;">Get in
+                        Touch</h2>
+                </div>
+                <form action="#" onsubmit="event.preventDefault(); alert('Message sent!');">
+
+                    <div class="form-group">
+                        <textarea class="form-control" rows="5"
+                            placeholder="Drop a Message (Email & Name Please)"></textarea>
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn">Send Message</button>
+                    </div>
+                    <!-- Added SOCIALS label per user request -->
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <div class="tagline"
+                            style="color: #4338ca; border-bottom: 2px solid #8FBC8F; display: inline-block;">SOCIALS
+                        </div>
+                        <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem;">
+                            <a href="https://scholar.google.com/citations?user=nal4X5MAAAAJ&hl=en" target="_blank"
+                                style="background-color: #8FBC8F; color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none;"
+                                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
+                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20"
+                                    height="20" fill="currentColor">
+                                    <path
+                                        d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z" />
+                                </svg>
+                            </a>
+                            <a href="https://orcid.org/0009-0001-6898-6457" target="_blank"
+                                style="background-color: #8FBC8F; color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none;"
+                                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
+                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20"
+                                    height="20" fill="currentColor">
+                                    <path
+                                        d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.306v7.444h2.297c3.125 0 4.05-2.269 4.05-3.719 0-1.556-1.125-3.725-4.084-3.725h-2.263z" />
+                                </svg>
+                            </a>
+                            <a href="https://www.linkedin.com/in/arindam-panda-797857344/" target="_blank"
+                                style="background-color: #8FBC8F; color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none;"
+                                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
+                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20"
+                                    height="20" fill="currentColor">
+                                    <path
+                                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                                </svg>
+                            </a>
+                            <a href="https://x.com/arindam_p13" target="_blank"
+                                style="background-color: #8FBC8F; color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none;"
+                                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
+                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20"
+                                    height="20" fill="currentColor">
+                                    <path
+                                        d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+                                </svg>
+                            </a>
+                            <a href="https://www.instagram.com/toarindam/" target="_blank"
+                                style="background-color: #8FBC8F; color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none;"
+                                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
+                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20"
+                                    height="20" fill="currentColor">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+    </main>
+
+    <footer>
+        &copy; 2025 Arindam. All rights reserved.
+    </footer>
+
+    <!-- Dusk Transition Overlay -->
+
+
+    <script>
+        // Entry from Dawn (Dawn -> Light)
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1'; // Ensure body is visible behind overlay
+
+            const dawnOverlay = document.getElementById('dawn-overlay');
+            if (dawnOverlay) {
+                // Fade out Dawn overlay to reveal Light Mode
+                dawnOverlay.style.opacity = '0';
+
+                setTimeout(() => {
+                    dawnOverlay.style.display = 'none';
+                }, 1500);
+            }
+        });
+
+        // Exit to Dusk (Light -> Dusk -> Dark)
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleLink = document.querySelector('.theme-flip-container');
+            const duskOverlay = document.getElementById('dusk-overlay');
+
+            if (toggleLink && duskOverlay) {
+                toggleLink.addEventListener('click', function (e) {
+                    e.preventDefault(); // Stop immediate navigation
+                    const target = this.href;
+
+                    // 1. Fade to Dusk
+                    duskOverlay.style.opacity = '1';
+
+                    // 2. Wait for Dusk, then Navigate
+                    setTimeout(() => {
+                        window.location.href = target;
+                    }, 800);
+                });
+            }
+        });
+    </script>
+    <a href="index_dark.html" class="theme-toggle-floating" title="Switch to Dark Mode">
+        <img src="icon_ice_planet.png" alt="Dark Mode" class="theme-icon-floating">
+    </a>
+    <style>
+        .theme-toggle-floating {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 10000;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle-floating:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .theme-icon-floating {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            /* Shadow removed to ensure clean edge */
+            box-shadow: none !important;
+            border: none !important;
+            outline: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            display: block;
+            /* Clip path tightened further to 41% per user request */
+            clip-path: circle(41% at 50% 50%);
+            /* Removes inline-block gaps */
+        }
+
+        .theme-toggle-floating {
+            border: none !important;
+            outline: none !important;
+            background: transparent !important;
+            text-decoration: none !important;
+            /* Prevents anchor underline borders */
+        }
+    </style>
+    <!-- Lightbox Markup -->
+    <div id="lightbox" class="lightbox-overlay">
+        <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
+        <div class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">&#10094;</div>
+        <div class="lightbox-nav lightbox-next" onclick="changeImage(1)">&#10095;</div>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightbox-img" class="lightbox-image" src="" alt="">
+            <div id="lightbox-caption" class="lightbox-caption"></div>
+            <div id="lightbox-date" class="lightbox-date"></div>
+        </div>
+    </div>
+
+    <style>
+        .lightbox-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 3rem;
+            padding: 1rem;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.3s;
+            z-index: 10001;
+        }
+
+        .lightbox-prev {
+            left: 2rem;
+        }
+
+        .lightbox-next {
+            right: 2rem;
+        }
+
+        .lightbox-nav:hover {
+            color: #8FBC8F;
+        }
+    </style>
+
+    <script>
+        let currentGallery = [];
+        let currentIndex = 0;
+
+        function openLightbox(src, caption, date) {
+            // Single image mode fallback
+            openGalleryMode([{ src: src, caption: caption, date: date }], 0);
+        }
+
+        function openGallery(images, captionPrefix, date) {
+            // Gallery mode
+            const galleryData = images.map((imgSrc, index) => ({
+                src: imgSrc,
+                caption: `${captionPrefix} (${index + 1}/${images.length})`,
+                date: date
+            }));
+            openGalleryMode(galleryData, 0);
+        }
+
+        function openMappedGallery(groups, date) {
+            const galleryData = [];
+            groups.forEach(group => {
+                group.images.forEach(img => {
+                    galleryData.push({
+                        src: img,
+                        caption: group.caption,
+                        date: date
+                    });
+                });
+            });
+
+            // Add counters
+            galleryData.forEach((item, index) => {
+                item.caption = `${item.caption} (${index + 1}/${galleryData.length})`;
+            });
+
+            openGalleryMode(galleryData, 0);
+        }
+
+        function openMixedContentGallery(galleryData, index) {
+            // Add counters
+            const mappedData = galleryData.map((item, i) => ({
+                src: item.src,
+                caption: `${item.caption} (${i + 1}/${galleryData.length})`,
+                date: item.date
+            }));
+            openGalleryMode(mappedData, index);
+        }
+
+        function openGalleryMode(galleryData, index) {
+            currentGallery = galleryData;
+            currentIndex = index;
+            updateLightboxContent();
+
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'flex';
+            setTimeout(() => {
+                lightbox.classList.add('active');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function changeImage(direction) {
+            if (currentGallery.length <= 1) return;
+            currentIndex = (currentIndex + direction + currentGallery.length) % currentGallery.length;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            const item = currentGallery[currentIndex];
+            const img = document.getElementById('lightbox-img');
+            const cap = document.getElementById('lightbox-caption');
+            const dt = document.getElementById('lightbox-date');
+
+            // Hide/Show arrows
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
+            if (currentGallery.length > 1) {
+                if (prevBtn) prevBtn.style.display = 'block';
+                if (nextBtn) nextBtn.style.display = 'block';
+            } else {
+                if (prevBtn) prevBtn.style.display = 'none';
+                if (nextBtn) nextBtn.style.display = 'none';
+            }
+
+            img.src = item.src;
+            cap.textContent = item.caption;
+            dt.textContent = item.date;
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+
+            // Wait for transition to finish
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+                document.getElementById('lightbox-img').src = '';
+            }, 300);
+
+            document.body.style.overflow = 'auto'; // Restore scroll
+            currentGallery = [];
+        }
+
+        // Key navigation
+        document.addEventListener('keydown', function (e) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'ArrowLeft') changeImage(-1);
+                if (e.key === 'ArrowRight') changeImage(1);
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
+
+        // Close on click outside
+        document.getElementById('lightbox').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+
+</html>
