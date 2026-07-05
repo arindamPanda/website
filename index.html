@@ -132,24 +132,20 @@
             transition: var(--transition);
         }
 
-        /* HEADER — classic bar, capped width */
+        /* HEADER — full-width bar */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2.5rem;
+            padding: 0 5%;
             height: var(--header-height);
             width: 100%;
-            max-width: 1150px;
-            margin: 0 auto;
             background-color: var(--header-bg);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border: 1px solid var(--header-border);
-            border-top: none;
-            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            border-bottom: 1px solid var(--header-border);
             box-shadow: var(--header-shadow);
         }
 
