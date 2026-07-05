@@ -810,6 +810,182 @@
             outline-offset: 3px;
         }
 
+        /* Trip cards (Travel & Memory horizontal scroller) */
+        .trip-card {
+            width: 380px;
+            flex-shrink: 0;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            border: 1px solid var(--card-border);
+        }
+
+        .trip-card-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .trip-card-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .trip-card-link:hover {
+            color: var(--link-hover);
+        }
+
+        /* Square thumbnails used by trip and memory cards */
+        .card-thumb {
+            width: 100%;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1rem;
+        }
+
+        .card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Memory timeline cards */
+        .gallery-grid .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--card-border);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-grid .card h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .memory-date {
+            text-align: right;
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* "read more" links on research cards */
+        .read-more-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+        }
+
+        .read-more-link:hover {
+            color: var(--link-hover);
+        }
+
+        /* Pill link to papers/PDFs */
+        .paper-pill-link {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            border-radius: var(--radius-pill);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .paper-pill-link:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        /* Conference presentation grid */
+        .conference-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 0.5rem;
+        }
+
+        .conference-label {
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            color: var(--accent-color);
+        }
+
+        /* Social icon circles */
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-soft);
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(143, 188, 143, 0.4);
+        }
+
+        /* Circular photo badge next to the Photography heading */
+        .photo-badge {
+            width: 79px;
+            height: 79px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            overflow: hidden;
+            border: 2px solid var(--accent-soft);
+        }
+
+        .photo-badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(143, 188, 143, 0.4);
+        }
+
+        /* Section sub-headings (Trips / Down the Memory Lane) */
+        .section-subheading {
+            display: inline-block;
+            border-bottom: 2px solid var(--accent-soft);
+            padding-bottom: 3px;
+            font-weight: 500;
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--accent-color);
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
             header {
@@ -936,7 +1112,7 @@
         <!-- Hero / About -->
         <section id="about">
             <div class="hero-content">
-                <div class="tagline" style="color: #4338ca;">Physics of Living Matter Researcher</div>
+                <div class="tagline">Physics of Living Matter Researcher</div>
                 <h1 class="hero-title">Far From <br>Equilibrium</h1>
                 <p class="hero-desc">
                     Exploring the non-equilibrium physics of active systems to understand how biological matter
@@ -961,9 +1137,9 @@
         <!-- Researcher Bio Section -->
         <section id="researcher-bio" class="section" style="padding: 4rem 0; background-color: transparent;">
             <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <div class="tagline" style="margin-bottom: 2rem; color: #4338ca;">About the Researcher</div>
+                <div class="tagline" style="margin-bottom: 2rem;">About the Researcher</div>
                 <p
-                    style="font-size: 1.2rem; line-height: 1.8; color: var(--text-color); font-family: 'Playfair Display', serif; text-align: justify;">
+                    style="font-size: 1.2rem; line-height: 1.8; color: var(--text-color); font-family: 'Playfair Display', serif; text-align: left;">
                     My research centers on the non-equilibrium statistical mechanics of active matter. Specifically, I
                     study active polymers—systems that bridge the gap between inanimate materials and living matter. By
                     integrating Brownian dynamics simulations with analytical theory, I investigate how internal
@@ -976,7 +1152,7 @@
         <!-- Research -->
         <section id="research">
             <div style="text-align: center;">
-                <div class="tagline" style="margin-bottom: 1rem; color: #4338ca;">Core Research</div>
+                <div class="tagline" style="margin-bottom: 1rem;">Core Research</div>
             </div>
             <h2 class="hero-title"
                 style="text-align: center; font-size: 2.5rem; margin-top: 0; margin-bottom: 3rem; max-width: 1200px; margin-left: auto; margin-right: auto; text-transform: none;">
@@ -986,17 +1162,15 @@
             <!-- Featured Presentation -->
             <div class="featured-split">
                 <div class="featured-text">
-                    <div class="tagline" style="margin-bottom: 1rem; color: #4338ca;">
+                    <div class="tagline" style="margin-bottom: 1rem;">
                         Feature Presentation</div>
                     <p
-                        style="font-size: 1rem; color: #555; margin-bottom: 2rem; line-height: 1.6; max-width: 100%; text-align: justify;">
+                        style="font-size: 1rem; color: var(--text-muted); margin-bottom: 2rem; line-height: 1.6; max-width: 100%; text-align: left;">
                         A schematic of a bidirectional active polymer, where the arrows display the direction of active
                         force. A pair of half-headed arrows illustrates the polarity reversal of the active force.
                     </p>
                     <a href="https://pubs.acs.org/doi/10.1021/acs.macromol.5c01098" target="_blank"
-                        style="display: inline-block; padding: 0.5rem 1.5rem; background-color: transparent; color: #8a2be2; border: 1px solid #8a2be2; border-radius: 50px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;"
-                        onmouseover="this.style.backgroundColor='#8a2be2'; this.style.color='#fff';"
-                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='#8a2be2';">
+                        class="paper-pill-link">
                         View the article
                     </a>
                 </div>
@@ -1014,7 +1188,7 @@
                         Analytical Analysis of the Conformational and Rheological Properties of Flexible Active
                         Polar Linear Polymers
                     </h3>
-                    <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.5rem;">
+                    <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem;">
                         This study develops an analytical framework to characterize the conformational and rheological
                         properties of flexible Active Polar Linear Polymers (APLPs) under shear flow. It reveals that
                         activity leads to quantitatively distinct behavior, including enhanced transverse shrinkage and
@@ -1032,7 +1206,7 @@
 
                     <a href="https://pubs.aip.org/aip/jcp/article/163/22/224905/3374548/Analytical-analysis-of-the-conformational-and"
                         target="_blank"
-                        style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8a2be2;">read
+                        class="read-more-link">read
                         more &rarr;</a>
                 </div>
 
@@ -1043,7 +1217,7 @@
                         Folding-Unfolding Transition of Active Polymer on the Reconfiguration of Bidirectional
                         Tangential Active Force
                     </h3>
-                    <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.5rem;">
+                    <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem;">
                         This paper examines how bidirectional tangential active forces influence the conformational and
                         dynamic properties of active polymers. It reveals that the interplay of force directionality and
                         reversal rates can drive polymers through compression, re-swelling, and distinct dynamic
@@ -1063,7 +1237,7 @@
                     </figure>
 
                     <a href="https://pubs.acs.org/doi/10.1021/acs.macromol.5c01098" target="_blank"
-                        style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8a2be2;">read
+                        class="read-more-link">read
                         more &rarr;</a>
                 </div>
 
@@ -1073,7 +1247,7 @@
                     <h3 class="research-card-title">
                         Activity-Enhanced Shear Thinning of Flexible Linear Polar Polymers
                     </h3>
-                    <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.5rem;">
+                    <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem;">
                         The tangential polar activity in flexible linear polymers dramatically enhances shear-thinning
                         behavior, leading to a viscosity reduction scaling with a \(Wi_{Pe}^{-4/3}\) exponent, alongside
                         amplified transverse shrinkage and
@@ -1093,7 +1267,7 @@
                     </figure>
 
                     <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.111.055413" target="_blank"
-                        style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8a2be2;">read
+                        class="read-more-link">read
                         more &rarr;</a>
                 </div>
 
@@ -1103,7 +1277,7 @@
                     <h3 class="research-card-title">
                         Characteristic Features of Self-avoiding Active Brownian Polymers Under Linear Shear Flow
                     </h3>
-                    <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.5rem;">
+                    <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem;">
                         This study used Brownian dynamics simulations to investigate how active noise and
                         excluded-volume interactions modify the conformational and rheological properties of flexible
                         polymers under linear shear flow. We found new power-law scalings for polymer compression,
@@ -1122,7 +1296,7 @@
                     </figure>
 
                     <a href="https://pubs.rsc.org/en/content/articlehtml/2023/sm/d3sm01334k" target="_blank"
-                        style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8a2be2;">read
+                        class="read-more-link">read
                         more &rarr;</a>
                 </div>
             </div>
@@ -1130,35 +1304,27 @@
 
             <!-- Conference Presentation -->
             <div class="featured-split" style="display: block; text-align: center;">
-                <div class="tagline" style="margin-bottom: 2rem; color: #4338ca;">Conference Presentation</div>
+                <div class="tagline" style="margin-bottom: 2rem;">Conference Presentation</div>
                 <div class="conference-grid"
                     style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center;">
                     <div class="conference-item">
-                        <img src="DPG_2025.jpeg" alt="DPG 2025"
-                            style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
-                        <div
-                            style="font-size: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 500; color: mediumorchid;">
+                        <img src="DPG_2025.jpeg" alt="DPG 2025" class="conference-img">
+                        <div class="conference-label">
                             DPG 2025</div>
                     </div>
                     <div class="conference-item">
-                        <img src="compflu_2023.jpeg" alt="CompFlu 2023"
-                            style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
-                        <div
-                            style="font-size: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 500; color: mediumorchid;">
+                        <img src="compflu_2023.jpeg" alt="CompFlu 2023" class="conference-img">
+                        <div class="conference-label">
                             CompFlu 2023</div>
                     </div>
                     <div class="conference-item">
-                        <img src="symposium_2023.jpeg" alt="Symposium 2023"
-                            style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
-                        <div
-                            style="font-size: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 500; color: mediumorchid;">
+                        <img src="symposium_2023.jpeg" alt="Symposium 2023" class="conference-img">
+                        <div class="conference-label">
                             Symposium 2023</div>
                     </div>
                     <div class="conference-item">
-                        <img src="compflu_2022.jpeg" alt="CompFlu 2022"
-                            style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
-                        <div
-                            style="font-size: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 500; color: mediumorchid;">
+                        <img src="compflu_2022.jpeg" alt="CompFlu 2022" class="conference-img">
+                        <div class="conference-label">
                             CompFlu 2022</div>
                     </div>
                 </div>
@@ -1169,7 +1335,7 @@
         <!-- Publications -->
         <section id="publications" style="padding: 4rem 0;">
             <div style="text-align: center;">
-                <div class="tagline" style="margin-bottom: 1rem; color: #4338ca;">Scholarly Works</div>
+                <div class="tagline" style="margin-bottom: 1rem;">Scholarly Works</div>
             </div>
             <h2 class="section-title"
                 style="margin-top: 0; font-family: 'Book Antiqua', Palatino, serif; font-weight: normal;">
@@ -1277,14 +1443,11 @@
             <!-- Travel -->
             <section id="travel">
                 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-                    <a href="photo.png" target="_blank"
-                        style="width: 79px; height: 79px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none; overflow: hidden; border: 2px solid #8FBC8F;"
-                        onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
-                        onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                    <a href="photo.png" target="_blank" class="photo-badge">
                         <img src="photo.png" alt="Arindam" style="width: 100%; height: 100%; object-fit: cover;">
                     </a>
                     <h2
-                        style="display: inline-block; border-bottom: 2px solid #8FBC8F; padding-bottom: 5px; margin: 0;">
+                        style="display: inline-block; border-bottom: 2px solid var(--accent-soft); padding-bottom: 5px; margin: 0;">
                         Photography</h2>
                 </div>
                 <script>
@@ -1355,9 +1518,9 @@
                         border-radius: 12px;
                         overflow: hidden;
                         cursor: pointer;
-                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                        box-shadow: var(--card-shadow);
                         transition: transform 0.3s ease;
-                        background: white;
+                        background: var(--card-bg);
                     }
 
                     .gallery-item:hover {
@@ -1374,10 +1537,10 @@
                     .gallery-caption-text {
                         padding: 10px;
                         font-size: 0.9rem;
-                        color: #8B008B;
+                        color: var(--accent-color);
                         font-weight: 700;
                         text-align: center;
-                        background: white;
+                        background: var(--card-bg);
                         font-family: 'Outfit', sans-serif;
                         line-height: 1.4;
                         white-space: normal;
@@ -1388,7 +1551,7 @@
                         top: 50%;
                         transform: translateY(-50%);
                         font-size: 3rem;
-                        color: #555;
+                        color: var(--text-muted);
                         cursor: pointer;
                         user-select: none;
                         z-index: 10;
@@ -1397,7 +1560,7 @@
                     }
 
                     .photo-nav:hover {
-                        color: #8FBC8F;
+                        color: var(--accent-soft);
                     }
 
                     .photo-prev {
@@ -1471,12 +1634,11 @@
             <!-- Travel & Memory -->
             <section id="memory">
                 <div style="text-align: center;">
-                    <h2 style="display: inline-block; border-bottom: 2px solid #8FBC8F; padding-bottom: 5px;">Travel &
+                    <h2 style="display: inline-block; border-bottom: 2px solid var(--accent-soft); padding-bottom: 5px;">Travel &
                         Memory</h2>
                 </div>
                 <div style="text-align: center; margin-top: 1.5rem; margin-bottom: 0.5rem;">
-                    <h3
-                        style="display: inline-block; border-bottom: 2px solid #8FBC8F; padding-bottom: 3px; font-weight: 500; font-size: 1.5rem; margin: 0; color: mediumvioletred;">
+                    <h3 class="section-subheading">
                         Trips</h3>
                 </div>
                 <script>
@@ -1548,7 +1710,7 @@
                         top: 50%;
                         transform: translateY(-50%);
                         font-size: 3rem;
-                        color: #555;
+                        color: var(--text-muted);
                         cursor: pointer;
                         user-select: none;
                         z-index: 10;
@@ -1557,7 +1719,7 @@
                     }
 
                     .trips-nav:hover {
-                        color: mediumvioletred;
+                        color: var(--accent-soft);
                     }
 
                     .trips-prev {
@@ -1574,13 +1736,10 @@
                         <!-- Group 1 -->
                         <div class="trips-group">
                             <!-- Orchha Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Orchha, Sep, 2025</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                <div class="card-thumb">
                                     <img src="Orchha/orch1.jpg" alt="Orchha"
                                         style="width: 100%; height: 100%; object-fit: contain;">
                                 </div>
@@ -1593,22 +1752,18 @@
                                     {caption: 'Raja Mahal from The Chaturbhuj Temple', images: ['Orchha/orch17.jpg']},
                                     {caption: 'Shri Ram Raja Mandir from The Chaturbhuj Temple', images: ['Orchha/orch18.jpg']}
                                 ], 'September, 2025'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
 
 
                             <!-- DPG Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     DPG, Mar, 2025</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                                    <img src="DPG/dpg1.jpeg" alt="DPG"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="card-thumb">
+                                    <img src="DPG/dpg1.jpeg" alt="DPG">
                                 </div>
                                 <a href="#" onclick="openMappedGallery([
                                     {caption: 'Mumbai International Airport', images: ['DPG/dpg1.jpeg']},
@@ -1618,37 +1773,30 @@
                                     {caption: 'Walhalla', images: ['DPG/dpg9.jpeg', 'DPG/dpg10.jpeg', 'DPG/dpg11.jpeg', 'DPG/dpg12.jpeg', 'DPG/dpg13.jpeg', 'DPG/dpg14.jpeg', 'DPG/dpg15.jpeg', 'DPG/dpg16.jpeg']},
                                     {caption: 'Nymphenburg Palace, Munich', images: ['DPG/dpg17.jpeg', 'DPG/dpg18.jpeg', 'DPG/dpg19.jpeg', 'DPG/dpg20.jpeg']}
                                 ], 'March, 2025'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Raisen Fort Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Raisen Fort, Aug, 2024</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                <div class="card-thumb">
                                     <img src="Raisen Fort/Rai1.jpeg" alt="Raisen Fort"
-                                        style="width: 100%; height: 100%; object-fit: cover; object-position: left;">
+                                        style="object-position: left;">
                                 </div>
                                 <a href="#"
                                     onclick="openGallery(['Raisen Fort/Rai1.jpeg', 'Raisen Fort/Rai2.jpeg', 'Raisen Fort/Rai3.jpeg', 'Raisen Fort/Rai4.jpeg', 'Raisen Fort/Rai5.jpeg', 'Raisen Fort/Rai6.jpeg', 'Raisen Fort/Rai7.jpg', 'Raisen Fort/Rai8.jpeg'], 'Raisen Fort', 'August, 2024'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Chennai Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Chennai Diaries, Dec, 2023</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                                    <img src="Chennai/1.jpg" alt="Chennai Diaries"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="card-thumb">
+                                    <img src="Chennai/1.jpg" alt="Chennai Diaries">
                                 </div>
                                 <a href="#" onclick="openMappedGallery([
                                     {caption: 'Chennai Diaries', images: ['Chennai/1.jpg']},
@@ -1659,20 +1807,16 @@
                                     {caption: 'Dhanushkodi, the Bay of Bengal and Indian Ocean meet', images: ['Chennai/D1.jpeg', 'Chennai/D2.jpeg']},
                                     {caption: 'Mahabalipuram Temple, UNESCO Group of Monuments', images: ['Chennai/M1.jpg', 'Chennai/M2.jpg']}
                                 ], 'December, 2023'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Jabalpur Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Jabalpur, Dec, 2022</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                                    <img src="Jabalpur/jab1.jpeg" alt="Jabalpur"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="card-thumb">
+                                    <img src="Jabalpur/jab1.jpeg" alt="Jabalpur">
                                 </div>
                                 <a href="#" onclick="openMappedGallery([
                                     {caption: 'Jabalpur Diaries', images: ['Jabalpur/jab1.jpeg']},
@@ -1681,37 +1825,29 @@
                                     {caption: 'Madan Mahal Fort', images: ['Jabalpur/jab4.jpeg']},
                                     {caption: 'Beauty of Bhedaghat', images: ['Jabalpur/jab5.jpeg', 'Jabalpur/jab6.jpeg', 'Jabalpur/jab7.jpeg', 'Jabalpur/jab8.jpeg', 'Jabalpur/jab9.jpeg', 'Jabalpur/jab10.jpeg']}
                                 ], 'December, 2022'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Ranthambore Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Ranthambore, Oct, 2022</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                                    <img src="Ranthambore/IMG_0198.jpg" alt="Ranthambore"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="card-thumb">
+                                    <img src="Ranthambore/IMG_0198.jpg" alt="Ranthambore">
                                 </div>
                                 <a href="#"
                                     onclick="openGallery(['Ranthambore/IMG_0198.jpg', 'Ranthambore/IMG_0199.jpg', 'Ranthambore/IMG_0200.jpg', 'Ranthambore/IMG_0201.jpg', 'Ranthambore/IMG_0202.jpg', 'Ranthambore/IMG_0203.jpg', 'Ranthambore/IMG_0204.jpg', 'Ranthambore/IMG_0205.jpg'], 'Ranthambore', 'October, 2022'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Hamta Pass Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Hamta Pass, June, 2022</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                                    <img src="Hamptapas/trek1.jpg" alt="Hamta Pass"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="card-thumb">
+                                    <img src="Hamptapas/trek1.jpg" alt="Hamta Pass">
                                 </div>
                                 <a href="#" onclick="openMappedGallery([
                                     {caption: 'Day 1', images: ['Hamptapas/Day1/Dy1.jpg', 'Hamptapas/Day1/Dy2.jpg', 'Hamptapas/Day1/Dy3.jpg', 'Hamptapas/Day1/Dy4.jpg', 'Hamptapas/Day1/Dy5.jpg', 'Hamptapas/Day1/Dy6.jpg']},
@@ -1719,41 +1855,34 @@
                                     {caption: 'Day 3', images: ['Hamptapas/Day3/Dy3_1.jpg', 'Hamptapas/Day3/Dy3_2.jpg', 'Hamptapas/Day3/Dy3_3.jpg', 'Hamptapas/Day3/Dy3_4.jpg', 'Hamptapas/Day3/Dy3_5.jpg', 'Hamptapas/Day3/Dy3_6.jpg', 'Hamptapas/Day3/Dy3_7.jpg', 'Hamptapas/Day3/Dy3_8.jpg', 'Hamptapas/Day3/Dy3_9.jpg', 'Hamptapas/Day3/Dy3_10.jpg']},
                                     {caption: 'Final Day', images: ['Hamptapas/Day4/Dy4_1.jpg', 'Hamptapas/Day4/Dy4_2.jpg', 'Hamptapas/Day4/Dy4_3.jpg', 'Hamptapas/Day4/Dy4_4.jpg', 'Hamptapas/Day4/Dy4_5.jpg', 'Hamptapas/Day4/Dy4_6.jpg', 'Hamptapas/Day4/Dy4_7.jpg', 'Hamptapas/Day4/Dy4_8.jpg', 'Hamptapas/Day4/Dy4_9.jpg']}
                                 ], 'June, 2022'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Manali Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Manali, June, 2022</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                <div class="card-thumb">
                                     <img src="Manali/Manali1.jpg?v=updated2" alt="Manali"
                                         style="width: 100%; height: 100%; object-fit: contain;">
                                 </div>
                                 <a href="#"
                                     onclick="openGallery(['Manali/Manali1.jpg?v=updated2', 'Manali/Manali2.jpg', 'Manali/Manali3.jpg', 'Manali/Manali4.jpeg', 'Manali/Manali5.jpeg', 'Manali/Manali6.jpeg', 'Manali/Manali7.jpg', 'Manali/Manali8.jpg', 'Manali/Manali9.jpg'], 'Manali', 'June, 2022'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Churna Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Churna Safari (Satpura), Dec, 2021</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                                    <img src="Churna/314.jpg" alt="Churna Safari"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="card-thumb">
+                                    <img src="Churna/314.jpg" alt="Churna Safari">
                                 </div>
                                 <a href="#"
                                     onclick="openGallery(['Churna/314.jpg', 'Churna/315.jpg', 'Churna/316.jpg', 'Churna/317.jpg', 'Churna/320.jpg', 'Churna/321.jpg', 'Churna/322.jpg', 'Churna/323.jpg'], 'Churna Safari (Satpura)', 'December, 2021'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
                         </div>
@@ -1761,13 +1890,10 @@
                         <!-- Group 2 (Duplicate) -->
                         <div class="trips-group">
                             <!-- Orchha Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Orchha, Sep, 2025</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                <div class="card-thumb">
                                     <img src="Orchha/orch1.jpg" alt="Orchha"
                                         style="width: 100%; height: 100%; object-fit: contain;">
                                 </div>
@@ -1780,37 +1906,30 @@
                                     {caption: 'Raja Mahal from The Chaturbhuj Temple', images: ['Orchha/orch17.jpg']},
                                     {caption: 'Shri Ram Raja Mandir from The Chaturbhuj Temple', images: ['Orchha/orch18.jpg']}
                                 ], 'September, 2025'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Raisen Fort Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Raisen Fort, Aug, 2024</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                                <div class="card-thumb">
                                     <img src="Raisen Fort/Rai1.jpeg" alt="Raisen Fort"
-                                        style="width: 100%; height: 100%; object-fit: cover; object-position: left;">
+                                        style="object-position: left;">
                                 </div>
                                 <a href="#"
                                     onclick="openGallery(['Raisen Fort/Rai1.jpeg', 'Raisen Fort/Rai2.jpeg', 'Raisen Fort/Rai3.jpeg', 'Raisen Fort/Rai4.jpeg', 'Raisen Fort/Rai5.jpeg', 'Raisen Fort/Rai6.jpeg', 'Raisen Fort/Rai7.jpg', 'Raisen Fort/Rai8.jpeg'], 'Raisen Fort', 'August, 2024'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Chennai Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Chennai Diaries, Dec, 2023</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                                    <img src="Chennai/1.jpg" alt="Chennai Diaries"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="card-thumb">
+                                    <img src="Chennai/1.jpg" alt="Chennai Diaries">
                                 </div>
                                 <a href="#" onclick="openMappedGallery([
                                     {caption: 'Chennai Diaries', images: ['Chennai/1.jpg']},
@@ -1821,20 +1940,16 @@
                                     {caption: 'Dhanushkodi, the Bay of Bengal and Indian Ocean meet', images: ['Chennai/D1.jpeg', 'Chennai/D2.jpeg']},
                                     {caption: 'Mahabalipuram Temple, UNESCO Group of Monuments', images: ['Chennai/M1.jpg', 'Chennai/M2.jpg']}
                                 ], 'December, 2023'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Jabalpur Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Jabalpur, Dec, 2022</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                                    <img src="Jabalpur/jab1.jpeg" alt="Jabalpur"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="card-thumb">
+                                    <img src="Jabalpur/jab1.jpeg" alt="Jabalpur">
                                 </div>
                                 <a href="#" onclick="openMappedGallery([
                                     {caption: 'Jabalpur Diaries', images: ['Jabalpur/jab1.jpeg']},
@@ -1843,41 +1958,33 @@
                                     {caption: 'Madan Mahal Fort', images: ['Jabalpur/jab4.jpeg']},
                                     {caption: 'Beauty of Bhedaghat', images: ['Jabalpur/jab5.jpeg', 'Jabalpur/jab6.jpeg', 'Jabalpur/jab7.jpeg', 'Jabalpur/jab8.jpeg', 'Jabalpur/jab9.jpeg', 'Jabalpur/jab10.jpeg']}
                                 ], 'December, 2022'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Ranthambore Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Ranthambore, Oct, 2022</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                                    <img src="Ranthambore/IMG_0198.jpg" alt="Ranthambore"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="card-thumb">
+                                    <img src="Ranthambore/IMG_0198.jpg" alt="Ranthambore">
                                 </div>
                                 <a href="#"
                                     onclick="openGallery(['Ranthambore/IMG_0198.jpg', 'Ranthambore/IMG_0199.jpg', 'Ranthambore/IMG_0200.jpg', 'Ranthambore/IMG_0201.jpg', 'Ranthambore/IMG_0202.jpg', 'Ranthambore/IMG_0203.jpg', 'Ranthambore/IMG_0204.jpg', 'Ranthambore/IMG_0205.jpg'], 'Ranthambore', 'October, 2022'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
 
                             <!-- Churna Card -->
-                            <div class="card"
-                                style="width: 380px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                                <h3
-                                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: mediumorchid; margin-top: 0; margin-bottom: 1rem;">
+                            <div class="card trip-card">
+                                <h3 class="trip-card-title">
                                     Churna Safari (Satpura), Dec, 2021</h3>
-                                <div
-                                    style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                                    <img src="Churna/314.jpg" alt="Churna Safari"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="card-thumb">
+                                    <img src="Churna/314.jpg" alt="Churna Safari">
                                 </div>
                                 <a href="#"
                                     onclick="openGallery(['Churna/314.jpg', 'Churna/315.jpg', 'Churna/316.jpg', 'Churna/317.jpg', 'Churna/320.jpg', 'Churna/321.jpg', 'Churna/322.jpg', 'Churna/323.jpg'], 'Churna Safari (Satpura)', 'December, 2021'); return false;"
-                                    style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: mediumvioletred; text-decoration: none;">view
+                                    class="trip-card-link">view
                                     more &rarr;</a>
                             </div>
                         </div>
@@ -1888,8 +1995,7 @@
                 </div> <!-- End trips-wrapper -->
 
                 <div style="text-align: center; margin-top: 2rem; margin-bottom: 0.5rem;">
-                    <h3
-                        style="display: inline-block; border-bottom: 2px solid #8FBC8F; padding-bottom: 3px; font-weight: 500; font-size: 1.5rem; margin: 0; color: mediumvioletred;">
+                    <h3 class="section-subheading">
                         Timelines</h3>
                 </div>
 
@@ -1918,237 +2024,180 @@
                     </script>
 
                     <!-- Season 4 Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 0)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 0)">
+                        <h3>
                             ϕ CRIC: Season 4</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="season4.jpg" alt="ϕ CRIC: Season 4"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="season4.jpg" alt="ϕ CRIC: Season 4">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                        <div class="memory-date">
                             January,
                             2025</div>
                     </div>
 
                     <!-- Season 2 Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 1)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 1)">
+                        <h3>
                             ϕ CRIC: Season 2</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="season2.jpg" alt="ϕ CRIC: Season 2"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="season2.jpg" alt="ϕ CRIC: Season 2">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                        <div class="memory-date">
                             February,
                             2023</div>
                     </div>
 
                     <!-- Dinner Outing Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 2)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 2)">
+                        <h3>
                             Dinner Outing</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="Dinner1.jpg" alt="Dinner Outing"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="Dinner1.jpg" alt="Dinner Outing">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                        <div class="memory-date">
                             September,
                             2022</div>
                     </div>
 
                     <!-- NariPhi Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 3)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 3)">
+                        <h3>
                             Nari Φ</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                        <div class="card-thumb">
                             <img src="NariPhi.jpg" alt="Nari Φ" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">August,
+                        <div class="memory-date">August,
                             2022</div>
                     </div>
 
                     <!-- PHY_season1 Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 4)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 4)">
+                        <h3>
                             ϕ CRIC: Season 1</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="PHY_season1.jpg" alt="ϕ CRIC: Season 1"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="PHY_season1.jpg" alt="ϕ CRIC: Season 1">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">March,
+                        <div class="memory-date">March,
                             2022
                         </div>
                     </div>
 
                     <!-- Teacher's Day Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 5)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 5)">
+                        <h3>
                             Teacher's Day</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                        <div class="card-thumb">
                             <img src="Sep_5.jpg" alt="Teacher's Day, 2021"
                                 style="width: 100%; height: 100%; object-fit: contain;">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                        <div class="memory-date">
                             September,
                             2021</div>
                     </div>
 
                     <!-- Vibrant IISERB Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 6)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 6)">
+                        <h3>
                             Vibrant IISERB CAMPUS: Winter</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="dec_2020.jpg" alt="Vibrant IISERB CAMPUS: Winter 2020"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="dec_2020.jpg" alt="Vibrant IISERB CAMPUS: Winter 2020">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                        <div class="memory-date">
                             December,
                             2020</div>
                     </div>
 
                     <!-- JNU Final Group Photo Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 7)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 7)">
+                        <h3>
                             JNU Final Group Photo</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="jnu_05_07.jpg" alt="JNU Final Group Photo: 2019"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="jnu_05_07.jpg" alt="JNU Final Group Photo: 2019">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">May,
+                        <div class="memory-date">May,
                             2019
                         </div>
                     </div>
 
                     <!-- Farewell 2019 Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 8)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 8)">
+                        <h3>
                             Farewell</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="farewell.png" alt="Farewell 2019"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="farewell.png" alt="Farewell 2019">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">April,
+                        <div class="memory-date">April,
                             2019
                         </div>
                     </div>
 
                     <!-- Spring Chronicles Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 9)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 9)">
+                        <h3>
                             Spring chronicles at JNU</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="spring_2019.jpg" alt="Spring chronicles at JNU, 2019"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="spring_2019.jpg" alt="Spring chronicles at JNU, 2019">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">April,
+                        <div class="memory-date">April,
                             2019
                         </div>
                     </div>
 
                     <!-- SPS Group Photo Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 10)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 10)">
+                        <h3>
                             School of Physical Science, JNU, Group Photo</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="SPS_Group.JPG" alt="SPS Group Photo"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="SPS_Group.JPG" alt="SPS Group Photo">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">April,
+                        <div class="memory-date">April,
                             2018
                         </div>
                     </div>
 
                     <!-- Spring at JNU Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 11)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 11)">
+                        <h3>
                             Spring at JNU</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="Spring.jpg" alt="Spring at JNU"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="Spring.jpg" alt="Spring at JNU">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">March,
+                        <div class="memory-date">March,
                             2018
                         </div>
                     </div>
 
                     <!-- Wild JNU Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 12)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 12)">
+                        <h3>
                             Wild JNU: Where peacocks, Nilgai, and caves tell the story of nature.</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
+                        <div class="card-thumb">
                             <img src="Jnu_dec.jpg" alt="Wild JNU" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">
+                        <div class="memory-date">
                             December,
                             2017</div>
                     </div>
 
                     <!-- Fresher Party Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 13)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 13)">
+                        <h3>
                             Fresher Party, JNU</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="JNU_fresher.jpg" alt="JNU Fresher Party"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="JNU_fresher.jpg" alt="JNU Fresher Party">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">August,
+                        <div class="memory-date">August,
                             2017</div>
                     </div>
 
                     <!-- The Ganga Card -->
-                    <div class="card" onclick="openMixedContentGallery(timelineData, 14)"
-                        style="background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.3s ease;">
-                        <h3
-                            style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: purple; margin-top: 0; margin-bottom: 1rem; text-align: center;">
+                    <div class="card" onclick="openMixedContentGallery(timelineData, 14)">
+                        <h3>
                             A solitary silhouette gliding over the shimmering waters under the midday sun.</h3>
-                        <div
-                            style="width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 1rem;">
-                            <img src="the_ganga.jpg" alt="The Ganga"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-thumb">
+                            <img src="the_ganga.jpg" alt="The Ganga">
                         </div>
-                        <div style="text-align: right; color: purple; font-size: 0.85rem; font-weight: 500;">April,
+                        <div class="memory-date">April,
                             2017
                         </div>
                     </div>
@@ -2158,7 +2207,7 @@
             <!-- Connect -->
             <section id="connect">
                 <div style="text-align: center;">
-                    <h2 style="display: inline-block; border-bottom: 2px solid #8FBC8F; padding-bottom: 5px;">Get in
+                    <h2 style="display: inline-block; border-bottom: 2px solid var(--accent-soft); padding-bottom: 5px;">Get in
                         Touch</h2>
                 </div>
                 <form action="#" onsubmit="event.preventDefault(); alert('Message sent!');">
@@ -2172,54 +2221,38 @@
                     </div>
                     <!-- Added SOCIALS label per user request -->
                     <div style="text-align: center; margin-top: 2rem;">
-                        <div class="tagline"
-                            style="color: #4338ca; border-bottom: 2px solid #8FBC8F; display: inline-block;">SOCIALS
+                        <div class="tagline">SOCIALS
                         </div>
                         <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem;">
-                            <a href="https://scholar.google.com/citations?user=nal4X5MAAAAJ&hl=en" target="_blank"
-                                style="background-color: #8FBC8F; color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none;"
-                                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
-                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                            <a href="https://scholar.google.com/citations?user=nal4X5MAAAAJ&hl=en" target="_blank" class="social-icon">
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20"
                                     height="20" fill="currentColor">
                                     <path
                                         d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z" />
                                 </svg>
                             </a>
-                            <a href="https://orcid.org/0009-0001-6898-6457" target="_blank"
-                                style="background-color: #8FBC8F; color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none;"
-                                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
-                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                            <a href="https://orcid.org/0009-0001-6898-6457" target="_blank" class="social-icon">
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20"
                                     height="20" fill="currentColor">
                                     <path
                                         d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.306v7.444h2.297c3.125 0 4.05-2.269 4.05-3.719 0-1.556-1.125-3.725-4.084-3.725h-2.263z" />
                                 </svg>
                             </a>
-                            <a href="https://www.linkedin.com/in/arindam-panda-797857344/" target="_blank"
-                                style="background-color: #8FBC8F; color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none;"
-                                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
-                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                            <a href="https://www.linkedin.com/in/arindam-panda-797857344/" target="_blank" class="social-icon">
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20"
                                     height="20" fill="currentColor">
                                     <path
                                         d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                                 </svg>
                             </a>
-                            <a href="https://x.com/arindam_p13" target="_blank"
-                                style="background-color: #8FBC8F; color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none;"
-                                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
-                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                            <a href="https://x.com/arindam_p13" target="_blank" class="social-icon">
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20"
                                     height="20" fill="currentColor">
                                     <path
                                         d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
                                 </svg>
                             </a>
-                            <a href="https://www.instagram.com/toarindam/" target="_blank"
-                                style="background-color: #8FBC8F; color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s ease; text-decoration: none;"
-                                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(143, 188, 143, 0.4)'"
-                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                            <a href="https://www.instagram.com/toarindam/" target="_blank" class="social-icon">
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20"
                                     height="20" fill="currentColor">
                                     <path
@@ -2375,7 +2408,7 @@
         }
 
         .lightbox-nav:hover {
-            color: #8FBC8F;
+            color: var(--accent-soft);
         }
     </style>
 
