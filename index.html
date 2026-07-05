@@ -132,19 +132,24 @@
             transition: var(--transition);
         }
 
-        /* HEADER */
+        /* HEADER — classic bar, capped width */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 5%;
+            padding: 0 2.5rem;
             height: var(--header-height);
+            width: 100%;
+            max-width: 1150px;
+            margin: 0 auto;
             background-color: var(--header-bg);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid var(--header-border);
+            border: 1px solid var(--header-border);
+            border-top: none;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
             box-shadow: var(--header-shadow);
         }
 
@@ -166,7 +171,7 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2.5rem;
+            gap: 2rem;
         }
 
         nav a {
@@ -324,161 +329,132 @@
             align-items: center;
         }
 
-        /* Circular portrait with facet icons orbiting like electrons:
-           learn/read, travel, play, physics */
+        /* Portrait as a living, slowly morphing organic shape — a nod to
+           soft/active matter — with labeled facet chips floating around it */
         .hero-portrait {
             position: relative;
-            width: 380px;
-            height: 380px;
-            margin: 46px;
+            width: 420px;
+            height: 420px;
+        }
+
+        .portrait-blob {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 46% 54% 57% 43% / 45% 42% 58% 55%;
+            animation: blob-morph 16s ease-in-out infinite;
+            box-shadow: var(--card-shadow);
+            z-index: 1;
         }
 
         .hero-image {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
             object-fit: cover;
             object-position: 50% 30%;
             display: block;
-            border: 4px solid var(--card-bg);
-            box-shadow: var(--card-shadow);
         }
 
-        /* Inner thin ring */
+        /* Gradient echo behind the portrait, morphing out of phase */
         .hero-portrait::before {
             content: '';
             position: absolute;
-            inset: -14px;
-            border-radius: 50%;
-            border: 1px solid var(--accent-soft);
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        /* Outer dashed orbit track */
-        .hero-portrait::after {
-            content: '';
-            position: absolute;
-            inset: -46px;
-            border-radius: 50%;
-            border: 1px dashed var(--accent-soft);
+            inset: -6%;
+            transform: translate(5%, 4%) rotate(8deg);
+            background: linear-gradient(135deg, var(--accent-soft), var(--accent-color));
             opacity: 0.35;
-            pointer-events: none;
+            border-radius: 46% 54% 57% 43% / 45% 42% 58% 55%;
+            animation: blob-morph 16s ease-in-out -8s infinite;
+            z-index: 0;
         }
 
-        .orbit {
+        @keyframes blob-morph {
+
+            0%,
+            100% {
+                border-radius: 46% 54% 57% 43% / 45% 42% 58% 55%;
+            }
+
+            33% {
+                border-radius: 57% 43% 44% 56% / 52% 58% 42% 48%;
+            }
+
+            66% {
+                border-radius: 44% 56% 52% 48% / 58% 46% 54% 42%;
+            }
+        }
+
+        /* Facet chips: icon + word, so the picture introduces the person */
+        .facet-chip {
             position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .orbit-a,
-        .orbit-b {
-            inset: -14px;
-            animation: orbit-spin 36s linear infinite;
-        }
-
-        .orbit-c,
-        .orbit-d {
-            inset: -46px;
-            animation: orbit-spin 52s linear infinite reverse;
-        }
-
-        /* Negative delays stagger the starting angles */
-        .orbit-b,
-        .orbit-b .orbit-icon {
-            animation-delay: -18s;
-        }
-
-        .orbit-d,
-        .orbit-d .orbit-icon {
-            animation-delay: -26s;
-        }
-
-        .orbit-icon {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0.95rem;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
+            border-radius: var(--radius-pill);
             box-shadow: var(--card-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: var(--accent-color);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            white-space: nowrap;
+            z-index: 2;
+            animation: chip-float 6s ease-in-out infinite;
         }
 
-        /* Counter-rotation keeps the icons upright while they orbit */
-        .orbit-a .orbit-icon,
-        .orbit-b .orbit-icon {
-            animation: orbit-icon-spin 36s linear infinite;
+        .facet-chip svg {
+            flex-shrink: 0;
         }
 
-        .orbit-c .orbit-icon,
-        .orbit-d .orbit-icon {
-            animation: orbit-icon-spin 52s linear infinite reverse;
+        .chip-1 {
+            top: 4%;
+            right: -6%;
+            animation-duration: 6s;
         }
 
-        @keyframes orbit-spin {
-            from {
-                transform: rotate(0deg);
+        .chip-2 {
+            top: 42%;
+            left: -12%;
+            animation-duration: 7s;
+            animation-delay: -2s;
+        }
+
+        .chip-3 {
+            bottom: 8%;
+            right: -10%;
+            animation-duration: 6.5s;
+            animation-delay: -4s;
+        }
+
+        .chip-4 {
+            top: -5%;
+            left: 12%;
+            animation-duration: 7.5s;
+            animation-delay: -1s;
+        }
+
+        @keyframes chip-float {
+
+            0%,
+            100% {
+                transform: translateY(0);
             }
 
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes orbit-icon-spin {
-            from {
-                transform: translate(-50%, -50%) rotate(360deg);
-            }
-
-            to {
-                transform: translate(-50%, -50%) rotate(0deg);
+            50% {
+                transform: translateY(-9px);
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
 
-            .orbit,
-            .orbit-icon {
+            .portrait-blob,
+            .hero-portrait::before,
+            .facet-chip {
                 animation: none !important;
-            }
-
-            .orbit-a {
-                transform: rotate(45deg);
-            }
-
-            .orbit-a .orbit-icon {
-                transform: translate(-50%, -50%) rotate(-45deg);
-            }
-
-            .orbit-b {
-                transform: rotate(135deg);
-            }
-
-            .orbit-b .orbit-icon {
-                transform: translate(-50%, -50%) rotate(-135deg);
-            }
-
-            .orbit-c {
-                transform: rotate(225deg);
-            }
-
-            .orbit-c .orbit-icon {
-                transform: translate(-50%, -50%) rotate(-225deg);
-            }
-
-            .orbit-d {
-                transform: rotate(315deg);
-            }
-
-            .orbit-d .orbit-icon {
-                transform: translate(-50%, -50%) rotate(-315deg);
             }
         }
 
@@ -621,14 +597,26 @@
             }
 
             .hero-portrait {
-                width: 250px;
-                height: 250px;
-                margin: 46px auto;
+                width: 270px;
+                height: 270px;
+                margin: 2rem auto;
             }
 
-            .orbit-icon {
-                width: 36px;
-                height: 36px;
+            .facet-chip {
+                font-size: 0.62rem;
+                padding: 0.35rem 0.7rem;
+            }
+
+            .chip-1 {
+                right: -3%;
+            }
+
+            .chip-2 {
+                left: -6%;
+            }
+
+            .chip-3 {
+                right: -5%;
             }
 
             .research-grid,
@@ -1235,12 +1223,12 @@
             header {
                 flex-direction: column;
                 height: auto;
-                padding: 1.5rem;
-                gap: 1rem;
+                padding: 1rem 1.25rem;
+                gap: 0.75rem;
             }
 
             nav ul {
-                gap: 1rem;
+                gap: 0.75rem 1rem;
                 flex-wrap: wrap;
                 justify-content: center;
             }
@@ -1375,49 +1363,47 @@
             </div>
             <div class="hero-image-container">
                 <div class="hero-portrait">
-                    <img src="./Arindam.jpg" alt="Arindam" class="hero-image">
-                    <div class="orbit orbit-a" aria-hidden="true">
-                        <span class="orbit-icon" title="Physics">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.5" stroke-linecap="round">
-                                <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"></circle>
-                                <ellipse cx="12" cy="12" rx="10" ry="4.2"></ellipse>
-                                <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
-                                <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
-                            </svg>
-                        </span>
+                    <div class="portrait-blob">
+                        <img src="./Arindam.jpg" alt="Arindam" class="hero-image">
                     </div>
-                    <div class="orbit orbit-b" aria-hidden="true">
-                        <span class="orbit-icon" title="Reading & learning">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="orbit orbit-c" aria-hidden="true">
-                        <span class="orbit-icon" title="Travel">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="orbit orbit-d" aria-hidden="true">
-                        <span class="orbit-icon" title="Play">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="4"></rect>
-                                <circle cx="8.2" cy="8.2" r="1" fill="currentColor" stroke="none"></circle>
-                                <circle cx="15.8" cy="8.2" r="1" fill="currentColor" stroke="none"></circle>
-                                <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle>
-                                <circle cx="8.2" cy="15.8" r="1" fill="currentColor" stroke="none"></circle>
-                                <circle cx="15.8" cy="15.8" r="1" fill="currentColor" stroke="none"></circle>
-                            </svg>
-                        </span>
-                    </div>
+                    <span class="facet-chip chip-1" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"></circle>
+                            <ellipse cx="12" cy="12" rx="10" ry="4.2"></ellipse>
+                            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
+                            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
+                        </svg>
+                        Physics
+                    </span>
+                    <span class="facet-chip chip-2" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                        Reading
+                    </span>
+                    <span class="facet-chip chip-3" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                        Travel
+                    </span>
+                    <span class="facet-chip chip-4" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                            <circle cx="8.2" cy="8.2" r="1" fill="currentColor" stroke="none"></circle>
+                            <circle cx="15.8" cy="8.2" r="1" fill="currentColor" stroke="none"></circle>
+                            <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle>
+                            <circle cx="8.2" cy="15.8" r="1" fill="currentColor" stroke="none"></circle>
+                            <circle cx="15.8" cy="15.8" r="1" fill="currentColor" stroke="none"></circle>
+                        </svg>
+                        Play
+                    </span>
                 </div>
             </div>
         </section>
