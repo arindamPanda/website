@@ -325,133 +325,15 @@
             align-items: center;
         }
 
-        /* Portrait as a living, slowly morphing organic shape — a nod to
-           soft/active matter — with labeled facet chips floating around it */
-        .hero-portrait {
-            position: relative;
-            width: 420px;
-            height: 420px;
-        }
-
-        .portrait-blob {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            border-radius: 46% 54% 57% 43% / 45% 42% 58% 55%;
-            animation: blob-morph 16s ease-in-out infinite;
-            box-shadow: var(--card-shadow);
-            z-index: 1;
-        }
-
+        /* Simple portrait that fades into the background away from center */
         .hero-image {
             width: 100%;
-            height: 100%;
+            max-width: 520px;
+            height: auto;
             object-fit: cover;
-            object-position: 50% 30%;
             display: block;
-        }
-
-        /* Gradient echo behind the portrait, morphing out of phase */
-        .hero-portrait::before {
-            content: '';
-            position: absolute;
-            inset: -6%;
-            transform: translate(5%, 4%) rotate(8deg);
-            background: linear-gradient(135deg, var(--accent-soft), var(--accent-color));
-            opacity: 0.35;
-            border-radius: 46% 54% 57% 43% / 45% 42% 58% 55%;
-            animation: blob-morph 16s ease-in-out -8s infinite;
-            z-index: 0;
-        }
-
-        @keyframes blob-morph {
-
-            0%,
-            100% {
-                border-radius: 46% 54% 57% 43% / 45% 42% 58% 55%;
-            }
-
-            33% {
-                border-radius: 57% 43% 44% 56% / 52% 58% 42% 48%;
-            }
-
-            66% {
-                border-radius: 44% 56% 52% 48% / 58% 46% 54% 42%;
-            }
-        }
-
-        /* Facet chips: icon + word, so the picture introduces the person */
-        .facet-chip {
-            position: absolute;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-            padding: 0.45rem 0.95rem;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: var(--radius-pill);
-            box-shadow: var(--card-shadow);
-            color: var(--accent-color);
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            white-space: nowrap;
-            z-index: 2;
-            animation: chip-float 6s ease-in-out infinite;
-        }
-
-        .facet-chip svg {
-            flex-shrink: 0;
-        }
-
-        .chip-1 {
-            top: 4%;
-            right: -6%;
-            animation-duration: 6s;
-        }
-
-        .chip-2 {
-            top: 42%;
-            left: -12%;
-            animation-duration: 7s;
-            animation-delay: -2s;
-        }
-
-        .chip-3 {
-            bottom: 8%;
-            right: -10%;
-            animation-duration: 6.5s;
-            animation-delay: -4s;
-        }
-
-        .chip-4 {
-            top: -5%;
-            left: 12%;
-            animation-duration: 7.5s;
-            animation-delay: -1s;
-        }
-
-        @keyframes chip-float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-9px);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-
-            .portrait-blob,
-            .hero-portrait::before,
-            .facet-chip {
-                animation: none !important;
-            }
+            -webkit-mask-image: radial-gradient(ellipse 52% 52% at 50% 46%, black 45%, transparent 75%);
+            mask-image: radial-gradient(ellipse 52% 52% at 50% 46%, black 45%, transparent 75%);
         }
 
         /* Research Grid (Desktop) */
@@ -592,27 +474,9 @@
                 font-size: 3.5rem;
             }
 
-            .hero-portrait {
-                width: 270px;
-                height: 270px;
-                margin: 2rem auto;
-            }
-
-            .facet-chip {
-                font-size: 0.62rem;
-                padding: 0.35rem 0.7rem;
-            }
-
-            .chip-1 {
-                right: -3%;
-            }
-
-            .chip-2 {
-                left: -6%;
-            }
-
-            .chip-3 {
-                right: -5%;
+            .hero-image {
+                max-width: 320px;
+                margin: 0 auto;
             }
 
             .research-grid,
@@ -1358,49 +1222,7 @@
                 </div>
             </div>
             <div class="hero-image-container">
-                <div class="hero-portrait">
-                    <div class="portrait-blob">
-                        <img src="./Arindam.jpg" alt="Arindam" class="hero-image">
-                    </div>
-                    <span class="facet-chip chip-1" aria-hidden="true">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round">
-                            <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"></circle>
-                            <ellipse cx="12" cy="12" rx="10" ry="4.2"></ellipse>
-                            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
-                            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
-                        </svg>
-                        Physics
-                    </span>
-                    <span class="facet-chip chip-2" aria-hidden="true">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                        </svg>
-                        Reading
-                    </span>
-                    <span class="facet-chip chip-3" aria-hidden="true">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                        </svg>
-                        Travel
-                    </span>
-                    <span class="facet-chip chip-4" aria-hidden="true">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="4"></rect>
-                            <circle cx="8.2" cy="8.2" r="1" fill="currentColor" stroke="none"></circle>
-                            <circle cx="15.8" cy="8.2" r="1" fill="currentColor" stroke="none"></circle>
-                            <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle>
-                            <circle cx="8.2" cy="15.8" r="1" fill="currentColor" stroke="none"></circle>
-                            <circle cx="15.8" cy="15.8" r="1" fill="currentColor" stroke="none"></circle>
-                        </svg>
-                        Play
-                    </span>
-                </div>
+                <img src="./Arindam.jpg" alt="Arindam" class="hero-image">
             </div>
         </section>
 
