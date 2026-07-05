@@ -324,19 +324,162 @@
             align-items: center;
         }
 
+        /* Circular portrait with facet icons orbiting like electrons:
+           learn/read, travel, play, physics */
+        .hero-portrait {
+            position: relative;
+            width: 380px;
+            height: 380px;
+            margin: 46px;
+        }
+
         .hero-image {
             width: 100%;
-            max-width: 500px;
-            /* Adjust based on image quality */
-            height: auto;
+            height: 100%;
+            border-radius: 50%;
             object-fit: cover;
-            /* Gradient mask for seamless blending */
-            -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent),
-                linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent),
-                linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-            -webkit-mask-composite: source-in;
-            mask-composite: intersect;
+            object-position: 50% 30%;
+            display: block;
+            border: 4px solid var(--card-bg);
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Inner thin ring */
+        .hero-portrait::before {
+            content: '';
+            position: absolute;
+            inset: -14px;
+            border-radius: 50%;
+            border: 1px solid var(--accent-soft);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Outer dashed orbit track */
+        .hero-portrait::after {
+            content: '';
+            position: absolute;
+            inset: -46px;
+            border-radius: 50%;
+            border: 1px dashed var(--accent-soft);
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .orbit {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .orbit-a,
+        .orbit-b {
+            inset: -14px;
+            animation: orbit-spin 36s linear infinite;
+        }
+
+        .orbit-c,
+        .orbit-d {
+            inset: -46px;
+            animation: orbit-spin 52s linear infinite reverse;
+        }
+
+        /* Negative delays stagger the starting angles */
+        .orbit-b,
+        .orbit-b .orbit-icon {
+            animation-delay: -18s;
+        }
+
+        .orbit-d,
+        .orbit-d .orbit-icon {
+            animation-delay: -26s;
+        }
+
+        .orbit-icon {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+        }
+
+        /* Counter-rotation keeps the icons upright while they orbit */
+        .orbit-a .orbit-icon,
+        .orbit-b .orbit-icon {
+            animation: orbit-icon-spin 36s linear infinite;
+        }
+
+        .orbit-c .orbit-icon,
+        .orbit-d .orbit-icon {
+            animation: orbit-icon-spin 52s linear infinite reverse;
+        }
+
+        @keyframes orbit-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes orbit-icon-spin {
+            from {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .orbit,
+            .orbit-icon {
+                animation: none !important;
+            }
+
+            .orbit-a {
+                transform: rotate(45deg);
+            }
+
+            .orbit-a .orbit-icon {
+                transform: translate(-50%, -50%) rotate(-45deg);
+            }
+
+            .orbit-b {
+                transform: rotate(135deg);
+            }
+
+            .orbit-b .orbit-icon {
+                transform: translate(-50%, -50%) rotate(-135deg);
+            }
+
+            .orbit-c {
+                transform: rotate(225deg);
+            }
+
+            .orbit-c .orbit-icon {
+                transform: translate(-50%, -50%) rotate(-225deg);
+            }
+
+            .orbit-d {
+                transform: rotate(315deg);
+            }
+
+            .orbit-d .orbit-icon {
+                transform: translate(-50%, -50%) rotate(-315deg);
+            }
         }
 
         /* Research Grid (Desktop) */
@@ -475,6 +618,17 @@
 
             .hero-title {
                 font-size: 3.5rem;
+            }
+
+            .hero-portrait {
+                width: 250px;
+                height: 250px;
+                margin: 46px auto;
+            }
+
+            .orbit-icon {
+                width: 36px;
+                height: 36px;
             }
 
             .research-grid,
@@ -1217,7 +1371,51 @@
                 </div>
             </div>
             <div class="hero-image-container">
-                <img src="./Arindam.jpg" alt="Arindam" class="hero-image">
+                <div class="hero-portrait">
+                    <img src="./Arindam.jpg" alt="Arindam" class="hero-image">
+                    <div class="orbit orbit-a" aria-hidden="true">
+                        <span class="orbit-icon" title="Physics">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5" stroke-linecap="round">
+                                <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"></circle>
+                                <ellipse cx="12" cy="12" rx="10" ry="4.2"></ellipse>
+                                <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
+                                <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="orbit orbit-b" aria-hidden="true">
+                        <span class="orbit-icon" title="Reading & learning">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="orbit orbit-c" aria-hidden="true">
+                        <span class="orbit-icon" title="Travel">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="orbit orbit-d" aria-hidden="true">
+                        <span class="orbit-icon" title="Play">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                                <circle cx="8.2" cy="8.2" r="1" fill="currentColor" stroke="none"></circle>
+                                <circle cx="15.8" cy="8.2" r="1" fill="currentColor" stroke="none"></circle>
+                                <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle>
+                                <circle cx="8.2" cy="15.8" r="1" fill="currentColor" stroke="none"></circle>
+                                <circle cx="15.8" cy="15.8" r="1" fill="currentColor" stroke="none"></circle>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
             </div>
         </section>
 
