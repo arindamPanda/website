@@ -956,6 +956,92 @@
             box-shadow: 0 4px 12px rgba(143, 188, 143, 0.4);
         }
 
+        /* News & Achievements vertical timeline */
+        .news-timeline {
+            max-width: 720px;
+            margin: 2rem auto 0;
+            position: relative;
+            padding-left: 2rem;
+            text-align: left;
+        }
+
+        .news-timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 6px;
+            bottom: 6px;
+            width: 2px;
+            background: var(--accent-soft);
+            opacity: 0.6;
+        }
+
+        .news-item {
+            position: relative;
+            padding-bottom: 2.5rem;
+        }
+
+        .news-item:last-child {
+            padding-bottom: 0.5rem;
+        }
+
+        .news-item::before {
+            content: '';
+            position: absolute;
+            left: calc(-2rem + 1px);
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 0 3px var(--bg-color);
+        }
+
+        .news-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .news-date {
+            background: var(--badge-bg);
+            color: var(--accent-color);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: var(--radius-pill);
+        }
+
+        .news-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-soft);
+            padding: 0.2rem 0.7rem;
+            border-radius: var(--radius-pill);
+        }
+
+        .news-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--heading-color);
+            margin: 0 0 0.4rem;
+        }
+
+        .news-body {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 0 0 0.4rem;
+        }
+
         /* Circular photo badge next to the Photography heading */
         .photo-badge {
             width: 79px;
@@ -1098,6 +1184,7 @@
                 <li><a href="#researcher-bio">About</a></li>
                 <li><a href="#research">Research</a></li>
                 <li><a href="#publications">Publications</a></li>
+                <li><a href="#news">News</a></li>
                 <li><a href="#travel">Photography</a></li>
                 <li><a href="#memory">Travel & Memory</a></li>
                 <li><a href="#connect">Contact</a></li>
@@ -1439,6 +1526,59 @@
                 </div>
 
             </div>
+
+            <!-- News & Achievements -->
+            <section id="news">
+                <div style="text-align: center;">
+                    <div class="tagline" style="margin-bottom: 1rem;">Announcements</div>
+                </div>
+                <h2 class="section-title"
+                    style="margin-top: 0; font-family: 'Book Antiqua', Palatino, serif; font-weight: normal;">
+                    NEWS &amp; ACHIEVEMENTS</h2>
+
+                <div id="news-timeline" class="news-timeline"></div>
+                <script>
+                    // Newest first. Each entry becomes one timeline item.
+                    // PLACEHOLDER entries below — replace with announcements
+                    // rewritten from LinkedIn posts (keep the same fields).
+                    const newsData = [
+                        {
+                            dateLabel: 'June 2025',
+                            tag: 'Publication',
+                            title: 'New paper out in Macromolecules',
+                            body: 'Delighted to share that our work on the conformational and rheological behavior of bidirectional active polymers has been published in Macromolecules. This study combines Brownian dynamics simulations with analytical theory to show how polarity reversal of the active force reshapes polymer dynamics.',
+                            link: { href: 'https://pubs.acs.org/doi/10.1021/acs.macromol.5c01098', label: 'Read the paper' }
+                        },
+                        {
+                            dateLabel: 'March 2025',
+                            tag: 'Talk',
+                            title: 'Presented at the DPG Spring Meeting 2025',
+                            body: 'I had the pleasure of presenting my research on active polymers at the DPG Spring Meeting in Germany — a wonderful opportunity to exchange ideas with the soft matter and biological physics community.'
+                        },
+                        {
+                            dateLabel: 'December 2023',
+                            tag: 'Publication',
+                            title: 'Soft Matter paper published',
+                            body: 'Our study of tangentially driven active polymers appeared in Soft Matter, exploring how internal activity alters the mechanical fingerprints of polymer systems.',
+                            link: { href: 'https://pubs.rsc.org/en/content/articlehtml/2023/sm/d3sm01334k', label: 'Read the paper' }
+                        }
+                    ];
+
+                    (() => {
+                        const container = document.getElementById('news-timeline');
+                        container.innerHTML = newsData.map(item => `
+                            <article class="news-item">
+                                <div class="news-meta">
+                                    <span class="news-date">${item.dateLabel}</span>
+                                    ${item.tag ? `<span class="news-tag">${item.tag}</span>` : ''}
+                                </div>
+                                <h3 class="news-title">${item.title}</h3>
+                                <p class="news-body">${item.body}</p>
+                                ${item.link ? `<a class="read-more-link" href="${item.link.href}" target="_blank">${item.link.label} &rarr;</a>` : ''}
+                            </article>`).join('');
+                    })();
+                </script>
+            </section>
 
             <!-- Travel -->
             <section id="travel">
