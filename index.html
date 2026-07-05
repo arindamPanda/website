@@ -14,21 +14,71 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <!-- MathJax -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Apply saved theme before first paint to avoid a flash of the wrong theme -->
+    <script>
+        document.documentElement.dataset.theme =
+            localStorage.getItem('theme') ||
+            (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    </script>
 
     <style>
         :root {
-            /* --bg-color: #ffffff; User requested suitable background. Using Pale Mint to match header */
             --bg-color: #eff5ef;
-            /* User requested "like showing", likely pure white or bright */
+            --bg-gradient: linear-gradient(to bottom, #ffe8d6 0%, #ebf8ff 50%, #cceeff 100%);
             --text-color: #333333;
+            --text-muted: #555;
+            --heading-color: #111;
             --accent-color: #007a7a;
-            /* Dark Olive Green from reference */
+            --accent-soft: #8FBC8F;
+            --btn-bg: #367c8a;
+            --btn-hover: #007a7a;
+            --card-bg: #fff;
+            --card-border: rgba(0, 0, 0, 0.05);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --figure-bg: #fff;
+            --input-border: #eee;
+            --header-bg: #ffe8d6;
+            --header-border: rgba(0, 0, 0, 0.1);
+            --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --badge-bg: #f0f2f0;
+            --badge-text: #333;
+            --watermark-color: rgba(0, 0, 0, 0.08);
             --link-hover: #000000;
             --border-radius: 2px;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-pill: 999px;
             --transition: all 0.3s ease;
             --header-height: 80px;
+            color-scheme: light;
+        }
+
+        [data-theme="dark"] {
+            /* 'Dusk' indigo background, slate cards, brighter teal accent */
+            --bg-color: #1e1b4b;
+            --bg-gradient: linear-gradient(to bottom, #1e1b4b, #1e1b4b);
+            --text-color: #cbd5e1;
+            --text-muted: #94a3b8;
+            --heading-color: #f1f5f9;
+            --accent-color: #14b8a6;
+            --accent-soft: #2dd4bf;
+            --btn-bg: #0d9488;
+            --btn-hover: #14b8a6;
+            --card-bg: #1e293b;
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --figure-bg: #151e32;
+            --input-border: #334155;
+            --header-bg: rgba(15, 23, 42, 0.85);
+            --header-border: rgba(255, 255, 255, 0.1);
+            --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --badge-bg: #334155;
+            --badge-text: #f1f5f9;
+            --watermark-color: rgba(255, 255, 255, 0.15);
+            --link-hover: #ffffff;
+            color-scheme: dark;
         }
 
         /* Reset & Base Styles */
@@ -44,7 +94,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(to bottom, #ffe8d6 0%, #ebf8ff 50%, #cceeff 100%);
+            background: var(--bg-gradient);
             min-height: 100vh;
             color: var(--text-color);
             line-height: 1.8;
@@ -59,7 +109,7 @@
             font-family: 'Playfair Display', serif;
             font-weight: 400;
             letter-spacing: 0.5px;
-            color: #111;
+            color: var(--heading-color);
         }
 
         h2 {
@@ -89,17 +139,13 @@
             align-items: center;
             padding: 0 5%;
             height: var(--header-height);
-            background-color: #ffe8d6;
-            backdrop-filter: none;
-            /* Very light Pale Mint/Sage to match accents */
+            background-color: var(--header-bg);
+            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 1000;
-            /* border-bottom: 1px solid #f0f0f0; Too light against new BG */
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            /* Darker, clearly visible border */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            /* Stronger shadow for lift */
+            border-bottom: 1px solid var(--header-border);
+            box-shadow: var(--header-shadow);
         }
 
         .brand-name {
@@ -108,11 +154,11 @@
             letter-spacing: 4px;
             /* text-transform: uppercase; Removed to match user request "Arindam" */
             font-weight: 500;
-            color: #000;
+            color: var(--heading-color);
         }
 
         .brand-name span {
-            color: #666;
+            color: var(--text-muted);
             /* Optionally fade the last name like 'PAL' in reference */
             margin-left: 5px;
         }
@@ -127,14 +173,13 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            /* color: #888; Darkened for better visibility per user request */
-            color: #007a7a;
+            color: var(--accent-color);
             font-weight: 500;
         }
 
         nav a:hover,
         nav a.active {
-            color: #007a7a;
+            color: var(--link-hover);
         }
 
         /* Main Content */
@@ -180,11 +225,11 @@
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #007a7a;
+            color: var(--accent-color);
             margin-bottom: 1rem;
             font-weight: 600;
             display: inline-block;
-            border-bottom: 2px solid #8FBC8F;
+            border-bottom: 2px solid var(--accent-soft);
             padding-bottom: 5px;
         }
 
@@ -216,7 +261,7 @@
 
         .hero-desc {
             font-size: 1.1rem;
-            color: #555;
+            color: var(--text-muted);
             margin-bottom: 3rem;
             max-width: 500px;
             line-height: 1.6;
@@ -238,33 +283,37 @@
         }
 
         .btn-primary {
-            background-color: #367c8a !important;
-            color: #fff !important;
+            background-color: var(--btn-bg);
+            color: #fff;
             padding: 1rem 2rem;
-            border-radius: 30px;
-            /* Pill shape */
+            border-radius: var(--radius-pill);
             font-size: 0.85rem;
             font-weight: 600;
             letter-spacing: 1px;
-            border: 2px solid #367c8a !important;
+            border: 2px solid var(--btn-bg);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--btn-hover);
+            border-color: var(--btn-hover);
+            color: #fff;
         }
 
         .btn-outline {
-            background-color: #367c8a !important;
-            color: #fff !important;
+            background-color: transparent;
+            color: var(--accent-color);
             padding: 1rem 2rem;
-            border-radius: 30px;
+            border-radius: var(--radius-pill);
             font-size: 0.85rem;
             font-weight: 600;
             letter-spacing: 1px;
-            border: 2px solid #367c8a !important;
+            border: 2px solid var(--accent-color);
         }
 
-        .btn-outline:hover,
-        .btn-primary:hover {
-            background-color: #007a7a !important;
-            border-color: #007a7a !important;
-            color: #fff !important;
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
         }
 
         .hero-image-container {
@@ -308,13 +357,13 @@
         .pub-card {
             display: flex;
             align-items: center;
-            background: #fff;
+            background: var(--card-bg);
             padding: 1.5rem 2rem;
-            border-radius: 12px;
+            border-radius: var(--radius-md);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
             margin-bottom: 1.5rem;
             transition: var(--transition);
-            border: 1px solid rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--card-border);
             gap: 2rem;
         }
 
@@ -331,8 +380,8 @@
         }
 
         .pub-year-badge {
-            background: #f0f2f0;
-            color: #333;
+            background: var(--badge-bg);
+            color: var(--badge-text);
             font-weight: 700;
             font-size: 0.85rem;
             padding: 0.3rem 0.8rem;
@@ -345,7 +394,7 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #777;
+            color: var(--text-muted);
             font-weight: 500;
         }
 
@@ -357,20 +406,20 @@
             font-family: 'Inter', sans-serif;
             font-weight: 700;
             font-size: 1.1rem;
-            color: #222;
+            color: var(--heading-color);
             margin-bottom: 0.3rem;
             line-height: 1.4;
             transition: var(--transition);
         }
 
         .pub-card:hover .pub-title {
-            color: #007a7a;
+            color: var(--accent-color);
         }
 
         .pub-citation {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            color: #666;
+            color: var(--text-muted);
             font-size: 1rem;
         }
 
@@ -384,17 +433,17 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid #eee;
+            border: 1px solid var(--input-border);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #999;
+            color: var(--text-muted);
             transition: var(--transition);
         }
 
         .pub-card:hover .pub-icon {
-            background: #007a7a;
-            border-color: #007a7a;
+            background: var(--accent-color);
+            border-color: var(--accent-color);
             color: #fff;
         }
 
@@ -437,13 +486,13 @@
         /* Research Image Styles */
         .research-figure {
             margin: 1.5rem 0;
-            background: #fff;
+            background: var(--figure-bg);
             padding: 0.5rem;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             /* Soft shadow for depth */
             transition: var(--transition);
-            border: 1px solid rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--card-border);
             overflow: hidden;
             /* Force clip overflow */
             max-width: 100%;
@@ -458,20 +507,18 @@
         .research-grid .card {
             border-radius: 24px;
             padding: 2.5rem;
+            background: var(--card-bg);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--card-border);
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
         .research-grid .card:hover {
-            border-color: rgba(0, 0, 0, 0.15);
-            /* Darker border on hover */
+            border-color: var(--accent-soft);
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
-            /* Enhanced shadow */
             transform: translateY(-2px);
-            /* Slight lift */
         }
 
 
@@ -486,8 +533,9 @@
             padding: 2rem 3rem;
             text-align: left;
             border-radius: 24px;
+            background: var(--card-bg);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--card-border);
         }
 
         .featured-text {
@@ -520,7 +568,7 @@
             right: 1rem;
             font-family: 'Playfair Display', serif;
             font-size: 6rem;
-            color: rgba(0, 0, 0, 0.08);
+            color: var(--watermark-color);
             font-weight: 700;
             line-height: 1;
             pointer-events: none;
@@ -550,13 +598,13 @@
         .card:hover {
             box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
             transform: translateY(-3px);
-            border-color: #e0e0e0;
+            border-color: var(--accent-soft);
         }
 
         .research-card-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
-            color: #007a7a;
+            color: var(--accent-color);
             margin-bottom: 1rem;
             line-height: 1.3;
         }
@@ -569,7 +617,7 @@
 
         .paper-meta {
             font-size: 0.85rem;
-            color: #888;
+            color: var(--text-muted);
             font-family: 'Inter', sans-serif;
             margin-bottom: 1rem;
             text-transform: uppercase;
@@ -666,7 +714,7 @@
             /* Increased Size */
             width: 100%;
             flex-shrink: 0;
-            background-color: #eee;
+            background-color: var(--badge-bg);
             overflow: hidden;
             position: relative;
             border-radius: 8px;
@@ -689,7 +737,8 @@
             position: absolute;
             bottom: 8px;
             right: 12px;
-            color: mediumspringgreen;
+            color: #fff;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
             font-size: 0.9rem;
             font-weight: 500;
             pointer-events: none;
@@ -711,9 +760,10 @@
         .form-control {
             width: 100%;
             padding: 1rem;
-            border: 1px solid #eee;
-            background: #fff;
-            border-radius: 0;
+            border: 1px solid var(--input-border);
+            background: var(--card-bg);
+            color: var(--text-color);
+            border-radius: var(--radius-sm);
             font-family: inherit;
             font-size: 0.9rem;
             transition: border 0.3s;
@@ -721,14 +771,15 @@
 
         .form-control:focus {
             outline: none;
-            border-color: #aaa;
+            border-color: var(--accent-color);
         }
 
         button.btn {
-            background-color: #367c8a;
+            background-color: var(--btn-bg);
             color: #fff;
             padding: 1rem 2.5rem;
             border: none;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -738,7 +789,7 @@
         }
 
         button.btn:hover {
-            background-color: #007a7a;
+            background-color: var(--btn-hover);
             letter-spacing: 3px;
         }
 
@@ -747,9 +798,16 @@
             text-align: center;
             padding: 3rem;
             font-size: 0.75rem;
-            color: #aaa;
+            color: var(--text-muted);
             letter-spacing: 1px;
-            border-top: 1px solid #f5f5f5;
+            border-top: 1px solid var(--card-border);
+        }
+
+        /* Accessibility: visible focus for keyboard users */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 3px;
         }
 
         /* Mobile */
@@ -2179,50 +2237,34 @@
         &copy; 2025 Arindam. All rights reserved.
     </footer>
 
-    <!-- Dusk Transition Overlay -->
-
-
-    <script>
-        // Entry from Dawn (Dawn -> Light)
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '1'; // Ensure body is visible behind overlay
-
-            const dawnOverlay = document.getElementById('dawn-overlay');
-            if (dawnOverlay) {
-                // Fade out Dawn overlay to reveal Light Mode
-                dawnOverlay.style.opacity = '0';
-
-                setTimeout(() => {
-                    dawnOverlay.style.display = 'none';
-                }, 1500);
-            }
-        });
-
-        // Exit to Dusk (Light -> Dusk -> Dark)
-        document.addEventListener('DOMContentLoaded', () => {
-            const toggleLink = document.querySelector('.theme-flip-container');
-            const duskOverlay = document.getElementById('dusk-overlay');
-
-            if (toggleLink && duskOverlay) {
-                toggleLink.addEventListener('click', function (e) {
-                    e.preventDefault(); // Stop immediate navigation
-                    const target = this.href;
-
-                    // 1. Fade to Dusk
-                    duskOverlay.style.opacity = '1';
-
-                    // 2. Wait for Dusk, then Navigate
-                    setTimeout(() => {
-                        window.location.href = target;
-                    }, 800);
-                });
-            }
-        });
-    </script>
-    <a href="index_dark.html" class="theme-toggle-floating" title="Switch to Dark Mode">
-        <img src="icon_ice_planet.png" alt="Dark Mode" class="theme-icon-floating">
-    </a>
+    <!-- Theme toggle + dawn/dusk transition -->
+    <div id="theme-transition-overlay" aria-hidden="true"></div>
+    <button type="button" class="theme-toggle-floating" title="Switch theme" aria-label="Switch between light and dark theme">
+        <img src="icon_ice_planet.png" alt="" class="theme-icon-floating theme-icon-to-dark">
+        <img src="icon_mars.png" alt="" class="theme-icon-floating theme-icon-to-light">
+    </button>
     <style>
+        #theme-transition-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10005;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.7s ease;
+        }
+
+        #theme-transition-overlay.dusk {
+            background: linear-gradient(to bottom, #312e81 0%, #7c3aed 55%, #f59e0b 100%);
+        }
+
+        #theme-transition-overlay.dawn {
+            background: linear-gradient(to bottom, #bfdbfe 0%, #fed7aa 60%, #ffe8d6 100%);
+        }
+
+        #theme-transition-overlay.visible {
+            opacity: 1;
+        }
+
         .theme-toggle-floating {
             position: fixed;
             bottom: 30px;
@@ -2232,6 +2274,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border: none;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
         }
 
         .theme-toggle-floating:hover {
@@ -2242,26 +2288,58 @@
             width: 56px;
             height: 56px;
             border-radius: 50%;
-            /* Shadow removed to ensure clean edge */
-            box-shadow: none !important;
-            border: none !important;
-            outline: none !important;
-            background: transparent !important;
-            padding: 0 !important;
             display: block;
             /* Clip path tightened further to 41% per user request */
             clip-path: circle(41% at 50% 50%);
-            /* Removes inline-block gaps */
         }
 
-        .theme-toggle-floating {
-            border: none !important;
-            outline: none !important;
-            background: transparent !important;
-            text-decoration: none !important;
-            /* Prevents anchor underline borders */
+        /* Show the icon for the theme you would switch TO */
+        .theme-icon-to-light,
+        [data-theme="dark"] .theme-icon-to-dark {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-icon-to-light {
+            display: block;
         }
     </style>
+    <script>
+        (() => {
+            const overlay = document.getElementById('theme-transition-overlay');
+            const toggle = document.querySelector('.theme-toggle-floating');
+            const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+            let transitioning = false;
+
+            function applyTheme(next) {
+                document.documentElement.dataset.theme = next;
+                localStorage.setItem('theme', next);
+            }
+
+            toggle.addEventListener('click', () => {
+                const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+
+                if (reduceMotion.matches || transitioning) {
+                    applyTheme(next);
+                    return;
+                }
+
+                transitioning = true;
+                overlay.className = next === 'dark' ? 'dusk' : 'dawn';
+                // Force reflow so the fade-in transition runs after the class swap
+                void overlay.offsetWidth;
+                overlay.classList.add('visible');
+
+                setTimeout(() => {
+                    applyTheme(next);
+                    overlay.classList.remove('visible');
+                    setTimeout(() => {
+                        overlay.className = '';
+                        transitioning = false;
+                    }, 700);
+                }, 700);
+            });
+        })();
+    </script>
     <!-- Lightbox Markup -->
     <div id="lightbox" class="lightbox-overlay">
         <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
