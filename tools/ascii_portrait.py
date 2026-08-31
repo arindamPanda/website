@@ -61,6 +61,21 @@ TONE_GAMMA = 0.9
 # reads too heavy.
 FLOOR = 0.22
 
+# The dark theme paints LIGHT ink, so running it off the same darkness channel
+# renders a photographic negative: the hair, being densest, becomes the brightest
+# mass and the lit face falls into a hollow. The grid therefore carries a second
+# channel with the tone inverted, so ink tracks how far a pixel stands from the
+# page in whichever theme is showing — dark ink for the shadows on cream, light
+# ink for the highlights on brown.
+#
+# Inverting alone is not enough, and this is the trap: it drops the subject out
+# of the mask, the backdrop lights up solid, and the portrait ends up floating on
+# a bright card. The mask still gates it, so only the tone flips. This floor is
+# then the silhouette dial — the hair is near-black and would vanish into the
+# page without it, taking the head's outline with it. Raise it if the hair
+# dissolves, lower it if the head reads as a flat slab.
+DARK_FLOOR = 0.28
+
 # Column is treated as holding subject when above this share of the densest one.
 INK_THRESHOLD = 0.06
 
@@ -172,47 +187,60 @@ def build_grid(image):
     subject = luma[mask > 0.5]
     lo, hi = np.percentile(subject if subject.size else luma, TONE_CLIP)
     tone = np.clip((hi - luma) / max(hi - lo, 1e-6), 0.0, 1.0) ** TONE_GAMMA
+    # One channel per theme, differing only in which end of the tone range gets
+    # the ink. Both stay mask-multiplied — see DARK_FLOOR.
     density = mask * (FLOOR + (1.0 - FLOOR) * tone)
+    density_dark = mask * (DARK_FLOOR + (1.0 - DARK_FLOOR) * (1.0 - tone))
 
     # Average the full-resolution density into cells, so fine structure that a
     # downsample-then-measure order would lose still reaches the grid.
     rows = max(1, round(COLS * (image.height / image.width) * CELL_ASPECT))
-    cells = np.asarray(
-        Image.fromarray((density * 255).astype(np.uint8))
-        .resize((COLS, rows), Image.Resampling.BOX),
-        dtype=np.float32,
-    ) / 255.0
 
-    # No floor subtraction here. It used to rescale by (cells - FLOOR*0.8) to
-    # keep the backdrop clean, but the backdrop is already ~0 — its mask is ~0,
-    # and density is mask-multiplied. All the subtraction did was cancel FLOOR,
-    # dropping the shirt to roughly the background's own brightness.
-    cells = np.clip(cells, 0.0, 1.0)
-    return COLS, rows, centre_horizontally(cells)
+    def to_cells(d):
+        c = np.asarray(
+            Image.fromarray((d * 255).astype(np.uint8))
+            .resize((COLS, rows), Image.Resampling.BOX),
+            dtype=np.float32,
+        ) / 255.0
+        # No floor subtraction here. It used to rescale by (cells - FLOOR*0.8) to
+        # keep the backdrop clean, but the backdrop is already ~0 — its mask is ~0,
+        # and density is mask-multiplied. All the subtraction did was cancel FLOOR,
+        # dropping the shirt to roughly the background's own brightness.
+        return np.clip(c, 0.0, 1.0)
+
+    light = to_cells(density)
+    shift = centre_shift(light)
+    return COLS, rows, shift_columns(light, shift), shift_columns(to_cells(density_dark), shift)
 
 
-def centre_horizontally(cells):
-    """Even out the empty gutters either side of the subject.
+def centre_shift(cells):
+    """How far to slide the subject to even out the gutters either side of it.
 
     A subject sitting off-centre — the previous source sat hard against the right
     edge with a quarter of the width empty on the left — leaves the renderer's
-    edge fade eating into one shoulder while the other side is blank. Shift the
-    content by half the difference and pad the vacated columns, which re-centres
-    without cropping any of the subject or resizing the frame.
+    edge fade eating into one shoulder while the other side is blank. Half the
+    difference re-centres it without cropping the subject or resizing the frame.
 
-    The current source is already centred, so this computes a shift of 0 and
-    returns unchanged. Kept for the next swap, which may not be.
+    Measured on the light channel alone and applied to both: the two channels ink
+    opposite ends of the tone range, so measuring each separately can hand back
+    different shifts and slide the themes out of register with each other.
+
+    The current source is already centred, so this returns 0. Kept for the next
+    swap, which may not be.
     """
-    rows, cols = cells.shape
+    _, cols = cells.shape
     column = cells.sum(axis=0)
     inked = np.where(column > column.max() * INK_THRESHOLD)[0]
     if inked.size == 0:
-        return cells
+        return 0
+    return (int(inked[0]) - (cols - 1 - int(inked[-1]))) // 2
 
-    shift = (int(inked[0]) - (cols - 1 - int(inked[-1]))) // 2
+
+def shift_columns(cells, shift):
+    """Slide by `shift` columns, padding the vacated ones."""
     if shift == 0:
         return cells
-
+    _, cols = cells.shape
     out = np.zeros_like(cells)
     if shift > 0:                       # subject sits right — move it left
         out[:, :cols - shift] = cells[:, shift:]
@@ -246,21 +274,28 @@ def main():
     pool, weights = build_pool()
     with Image.open(SOURCE) as image:
         source_w, source_h = image.width, image.height
-        cols, rows, cells = build_grid(image.convert("RGB"))
+        cols, rows, cells, cells_dark = build_grid(image.convert("RGB"))
 
+    print("light theme — ink follows the shadows:")
     preview(cols, rows, cells)
-    inked = int((cells >= 0.05).sum())
+    print("\ndark theme — ink follows the highlights, hair held by DARK_FLOOR:")
+    preview(cols, rows, cells_dark)
+
     upper = sum(c.isupper() for c in pool)
     lower = sum(c.islower() for c in pool)
     digit = sum(c.isdigit() for c in pool)
-    print(f"\n{cols}x{rows} cells, {inked} inked", file=sys.stderr)
+    print(f"\n{cols}x{rows} cells, {int((cells >= 0.05).sum())} inked light, "
+          f"{int((cells_dark >= 0.05).sum())} inked dark", file=sys.stderr)
     print(f"pool: {len(pool)} glyphs ({upper} upper, {lower} lower, {digit} digit, "
           f"{len(pool) - upper - lower - digit} symbol)\n  {pool}", file=sys.stderr)
 
-    levels = np.clip((cells * LEVELS).astype(int), 0, LEVELS - 1)
-    data = "\\n".join(
-        "".join(ALPHABET[levels[y, x]] for x in range(cols)) for y in range(rows)
-    )
+    def encode(c):
+        levels = np.clip((c * LEVELS).astype(int), 0, LEVELS - 1)
+        return "\\n".join(
+            "".join(ALPHABET[levels[y, x]] for x in range(cols)) for y in range(rows)
+        )
+
+    data, data_dark = encode(cells), encode(cells_dark)
 
     OUTPUT.parent.mkdir(exist_ok=True)
     OUTPUT.write_text(
@@ -277,7 +312,9 @@ def main():
         f"    pool: {json.dumps(pool)},\n"
         # Same order as pool — the renderer indexes them in lockstep.
         f"    weights: {json.dumps(weights)},\n"
-        f"    data: '{data}'\n"
+        f"    data: '{data}',\n"
+        # Same grid, tone inverted, for the dark theme's light ink — see DARK_FLOOR.
+        f"    dataDark: '{data_dark}'\n"
         "};\n"
     )
     print(f"wrote {OUTPUT.relative_to(ROOT)}", file=sys.stderr)

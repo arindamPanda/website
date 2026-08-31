@@ -44,16 +44,32 @@
     const NARROW = 420;        // CSS px below which the grid is halved
     const FRAME = 1000 / 30;
 
-    // Full-resolution density, decoded once.
+    // Full-resolution density, decoded once per theme channel. The two are the
+    // same portrait with the tone inverted: ink has to mean "far from the page",
+    // which is the shadows on cream and the highlights on brown. Sharing one
+    // channel renders the dark theme as a negative — hair the brightest mass,
+    // face a hollow. dataDark is optional so an older baked grid still runs.
     const fullCols = grid.cols;
     const fullRows = grid.rows;
-    const full = new Float32Array(fullCols * fullRows);
-    const lines = grid.data.split('\n');
-    for (let y = 0; y < fullRows; y++) {
-        for (let x = 0; x < fullCols; x++) {
-            full[y * fullCols + x] =
-                grid.alphabet.indexOf(lines[y][x]) / (grid.levels - 1);
+
+    function decode(text) {
+        const out = new Float32Array(fullCols * fullRows);
+        const lines = text.split('\n');
+        for (let y = 0; y < fullRows; y++) {
+            for (let x = 0; x < fullCols; x++) {
+                out[y * fullCols + x] =
+                    grid.alphabet.indexOf(lines[y][x]) / (grid.levels - 1);
+            }
         }
+        return out;
+    }
+
+    const fullLight = decode(grid.data);
+    const fullDark = grid.dataDark ? decode(grid.dataDark) : fullLight;
+    let full = fullLight;
+
+    function isDark() {
+        return document.documentElement.dataset.theme === 'dark';
     }
 
     let cols = 0;
@@ -67,6 +83,28 @@
     let variant;  // per-cell pick from the glyph pool
     let comp;     // per-cell opacity correction for that glyph's ink
     let settled;  // resolve progress, 0..1
+
+    // Re-read the active channel into target. Only target depends on the theme —
+    // the geometry, stagger and glyph picks are all channel-independent, so a
+    // theme switch re-tones the portrait in place without disturbing its
+    // entrance progress or making it re-pick every glyph.
+    function fillTarget() {
+        for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < cols; x++) {
+                const i = y * cols + x;
+                if (halved) {
+                    const sx = x * 2;
+                    const sy = y * 2;
+                    target[i] = (full[sy * fullCols + sx] +
+                        full[sy * fullCols + sx + 1] +
+                        full[(sy + 1) * fullCols + sx] +
+                        full[(sy + 1) * fullCols + sx + 1]) / 4;
+                } else {
+                    target[i] = full[i];
+                }
+            }
+        }
+    }
 
     // At mobile widths the full grid renders glyphs too small to read, so fold
     // it 2x2 into a coarser one. The baked grid stays the single source.
@@ -89,17 +127,6 @@
         for (let y = 0; y < rows; y++) {
             for (let x = 0; x < cols; x++) {
                 const i = y * cols + x;
-
-                if (half) {
-                    const sx = x * 2;
-                    const sy = y * 2;
-                    target[i] = (full[sy * fullCols + sx] +
-                        full[sy * fullCols + sx + 1] +
-                        full[(sy + 1) * fullCols + sx] +
-                        full[(sy + 1) * fullCols + sx + 1]) / 4;
-                } else {
-                    target[i] = full[i];
-                }
 
                 // The whole frame renders; only the outermost cells soften, so
                 // the block dissolves into the page instead of ending on a
@@ -126,12 +153,11 @@
                 comp[i] = 1 / (WEIGHTS[(variant[i] * POOL.length) | 0] || 1);
             }
         }
+
+        fillTarget();
     }
 
-    // Density means darkness in both themes. On the dark theme that makes the
-    // hair the brightest mass — strictly a negative — but the hair is what
-    // carries the silhouette: mapping brightness instead correctly drives dark
-    // hair to near-empty and the head stops reading at all.
+    full = isDark() ? fullDark : fullLight;
     useGrid(false);
 
     let cellW = 0;
@@ -309,9 +335,14 @@
         else if (!reduceMotion.matches) play();
     });
 
-    // While running, the next frame picks up the new ink on its own.
+    // While running, the next frame picks up the new ink and tone on its own.
     new MutationObserver(() => {
         readInk();
+        const next = isDark() ? fullDark : fullLight;
+        if (next !== full) {
+            full = next;
+            fillTarget();
+        }
         if (!running && reduceMotion.matches) drawStatic();
     }).observe(document.documentElement, { attributeFilter: ['data-theme'] });
 
