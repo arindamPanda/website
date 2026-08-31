@@ -61,20 +61,32 @@ TONE_GAMMA = 0.9
 # reads too heavy.
 FLOOR = 0.22
 
-# The dark theme paints LIGHT ink, so running it off the same darkness channel
-# renders a photographic negative: the hair, being densest, becomes the brightest
-# mass and the lit face falls into a hollow. The grid therefore carries a second
-# channel with the tone inverted, so ink tracks how far a pixel stands from the
-# page in whichever theme is showing — dark ink for the shadows on cream, light
-# ink for the highlights on brown.
+# --- Dark theme -------------------------------------------------------------
 #
-# Inverting alone is not enough, and this is the trap: it drops the subject out
-# of the mask, the backdrop lights up solid, and the portrait ends up floating on
-# a bright card. The mask still gates it, so only the tone flips. This floor is
-# then the silhouette dial — the hair is near-black and would vanish into the
-# page without it, taking the head's outline with it. Raise it if the hair
-# dissolves, lower it if the head reads as a flat slab.
-DARK_FLOOR = 0.28
+# The dark theme cannot carry tone in opacity the way the light one does. Light
+# ink on a dark page only ever ADDS light, so a front-lit face over near-black
+# hair gives a bright oval with no crown — it reads as a ghost, whichever way the
+# tone is pointed. Running it off the light channel unchanged is worse still: the
+# hair, being densest, becomes the brightest mass and the face a hollow negative.
+#
+# So on dark the two jobs are split. COLOUR carries tone — each cell draws in a
+# shade taken from the photo, along a ramp between --ascii-ink-low and
+# --ascii-ink — and OPACITY carries presence, i.e. how much subject is in the
+# cell at all. That gives the hair somewhere to go: near-black ink at full
+# presence, a solid mass with a real edge rather than an absence.
+#
+# LIT is the colour driver: photo lightness, deliberately NOT masked, so the
+# backdrop lands at 1.0 and keeps drawing its faint ink-coloured field exactly as
+# it does on light. GAIN and BIAS stretch it — the raw range is too soft and the
+# face goes muddy without them.
+DARK_GAIN = 1.15
+DARK_BIAS = 0.05
+
+# Opacity floor inside the subject. Everything masked draws near-solid so tone is
+# read from its colour, not from how much page shows through; this sits above
+# CALM_ABOVE in the renderer, so on dark the portrait never shimmers and only the
+# backdrop moves. Lower it if the subject looks too flatly opaque.
+DARK_PRESENCE = 0.55
 
 # Column is treated as holding subject when above this share of the densest one.
 INK_THRESHOLD = 0.06
@@ -187,10 +199,11 @@ def build_grid(image):
     subject = luma[mask > 0.5]
     lo, hi = np.percentile(subject if subject.size else luma, TONE_CLIP)
     tone = np.clip((hi - luma) / max(hi - lo, 1e-6), 0.0, 1.0) ** TONE_GAMMA
-    # One channel per theme, differing only in which end of the tone range gets
-    # the ink. Both stay mask-multiplied — see DARK_FLOOR.
+    # Light: one channel, opacity carries tone. Dark: opacity carries presence
+    # and `lit` carries tone as colour — see the dark theme block above.
     density = mask * (FLOOR + (1.0 - FLOOR) * tone)
-    density_dark = mask * (DARK_FLOOR + (1.0 - DARK_FLOOR) * (1.0 - tone))
+    lit = np.clip((1.0 - tone) * DARK_GAIN - DARK_BIAS, 0.0, 1.0)
+    density_dark = mask * (DARK_PRESENCE + (1.0 - DARK_PRESENCE) * lit)
 
     # Average the full-resolution density into cells, so fine structure that a
     # downsample-then-measure order would lose still reaches the grid.
@@ -210,7 +223,12 @@ def build_grid(image):
 
     light = to_cells(density)
     shift = centre_shift(light)
-    return COLS, rows, shift_columns(light, shift), shift_columns(to_cells(density_dark), shift)
+    return (COLS, rows,
+            shift_columns(light, shift),
+            shift_columns(to_cells(density_dark), shift),
+            # Averaged over the cell like everything else, so the tint follows the
+            # same footprint the opacity does and colour cannot drift off the form.
+            shift_columns(to_cells(lit), shift))
 
 
 def centre_shift(cells):
@@ -274,12 +292,14 @@ def main():
     pool, weights = build_pool()
     with Image.open(SOURCE) as image:
         source_w, source_h = image.width, image.height
-        cols, rows, cells, cells_dark = build_grid(image.convert("RGB"))
+        cols, rows, cells, cells_dark, cells_tint = build_grid(image.convert("RGB"))
 
-    print("light theme — ink follows the shadows:")
+    print("light theme — opacity carries tone:")
     preview(cols, rows, cells)
-    print("\ndark theme — ink follows the highlights, hair held by DARK_FLOOR:")
+    print("\ndark theme — opacity carries presence (density below is NOT the tone):")
     preview(cols, rows, cells_dark)
+    print("\ndark theme tint — the colour ramp, dark ink at the low end:")
+    preview(cols, rows, cells_tint)
 
     upper = sum(c.isupper() for c in pool)
     lower = sum(c.islower() for c in pool)
@@ -295,7 +315,7 @@ def main():
             "".join(ALPHABET[levels[y, x]] for x in range(cols)) for y in range(rows)
         )
 
-    data, data_dark = encode(cells), encode(cells_dark)
+    data, data_dark, data_tint = encode(cells), encode(cells_dark), encode(cells_tint)
 
     OUTPUT.parent.mkdir(exist_ok=True)
     OUTPUT.write_text(
@@ -313,8 +333,10 @@ def main():
         # Same order as pool — the renderer indexes them in lockstep.
         f"    weights: {json.dumps(weights)},\n"
         f"    data: '{data}',\n"
-        # Same grid, tone inverted, for the dark theme's light ink — see DARK_FLOOR.
-        f"    dataDark: '{data_dark}'\n"
+        # On dark these two split the job the single light channel does alone:
+        # dataDark is presence (opacity), dataTint is tone (colour).
+        f"    dataDark: '{data_dark}',\n"
+        f"    dataTint: '{data_tint}'\n"
         "};\n"
     )
     print(f"wrote {OUTPUT.relative_to(ROOT)}", file=sys.stderr)

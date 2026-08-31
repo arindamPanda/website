@@ -39,6 +39,9 @@
     // This adds a flat lift on top, scaled by (1 - density) so it lands almost
     // entirely on the faint cells and leaves the portrait's tone alone.
     const SPARKLE = 0.06;
+    // Colour buckets between --ascii-ink-low and --ascii-ink. Quantised so a run
+    // of similar cells shares one fillStyle, the same trick the alpha uses.
+    const RAMP_STEPS = 24;
     const POINTER_RADIUS = 70;  // CSS px
     const EDGE_FADE = 0.08;    // fraction of each axis the outer fade spans
     const NARROW = 420;        // CSS px below which the grid is halved
@@ -66,10 +69,18 @@
 
     const fullLight = decode(grid.data);
     const fullDark = grid.dataDark ? decode(grid.dataDark) : fullLight;
+    // Tone as colour, for the dark theme only — see the dark block in the
+    // generator. Absent on an older baked grid, in which case tinting is off and
+    // every cell draws in the flat ink.
+    const fullTint = grid.dataTint ? decode(grid.dataTint) : null;
     let full = fullLight;
 
     function isDark() {
         return document.documentElement.dataset.theme === 'dark';
+    }
+
+    function tinting() {
+        return fullTint !== null && isDark();
     }
 
     let cols = 0;
@@ -83,26 +94,48 @@
     let variant;  // per-cell pick from the glyph pool
     let comp;     // per-cell opacity correction for that glyph's ink
     let settled;  // resolve progress, 0..1
+    let tint;     // per-cell colour bucket, index into RAMP
+    let tintRaw;  // float scratch the tint buckets are quantised from
 
-    // Re-read the active channel into target. Only target depends on the theme —
-    // the geometry, stagger and glyph picks are all channel-independent, so a
-    // theme switch re-tones the portrait in place without disturbing its
-    // entrance progress or making it re-pick every glyph.
-    function fillTarget() {
+    // Fold the full-resolution channel into the active grid, averaging 2x2 when
+    // halved. Both channels go through this so colour and opacity always share a
+    // footprint.
+    function sample(src, out) {
         for (let y = 0; y < rows; y++) {
             for (let x = 0; x < cols; x++) {
                 const i = y * cols + x;
                 if (halved) {
                     const sx = x * 2;
                     const sy = y * 2;
-                    target[i] = (full[sy * fullCols + sx] +
-                        full[sy * fullCols + sx + 1] +
-                        full[(sy + 1) * fullCols + sx] +
-                        full[(sy + 1) * fullCols + sx + 1]) / 4;
+                    out[i] = (src[sy * fullCols + sx] +
+                        src[sy * fullCols + sx + 1] +
+                        src[(sy + 1) * fullCols + sx] +
+                        src[(sy + 1) * fullCols + sx + 1]) / 4;
                 } else {
-                    target[i] = full[i];
+                    out[i] = src[i];
                 }
             }
+        }
+    }
+
+    // Re-read the active channels. Only these depend on the theme — the geometry,
+    // stagger and glyph picks are all channel-independent, so a theme switch
+    // re-tones the portrait in place without disturbing its entrance progress or
+    // making it re-pick every glyph.
+    function fillTarget() {
+        sample(full, target);
+        if (tinting()) {
+            // Via the float scratch, not straight into tint: that is a Uint8Array
+            // and would truncate every 0..1 sample to zero.
+            sample(fullTint, tintRaw);
+            for (let i = 0; i < count; i++) {
+                tint[i] = Math.min(RAMP_STEPS - 1, (tintRaw[i] * RAMP_STEPS) | 0);
+            }
+        } else {
+            // Flat ink: every cell lands on the top of the ramp, which readInk
+            // pins to --ascii-ink itself, so the light theme draws exactly as it
+            // did before tinting existed.
+            tint.fill(RAMP_STEPS - 1);
         }
     }
 
@@ -117,6 +150,8 @@
         count = cols * rows;
 
         target = new Float32Array(count);
+        tint = new Uint8Array(count);
+        tintRaw = new Float32Array(count);
         fall = new Float32Array(count);
         delay = new Float32Array(count);
         phase = new Float32Array(count);
@@ -157,23 +192,46 @@
         fillTarget();
     }
 
-    full = isDark() ? fullDark : fullLight;
-    useGrid(false);
-
     let cellW = 0;
     let cellH = 0;
     let pxScale = 1;
     let ink = '#45333a';
+    let ramp = [];
     let running = false;
     let frameId = 0;
     let start = 0;
     let last = 0;
     const pointer = { x: 0, y: 0, active: false };
 
-    function readInk() {
-        const value = getComputedStyle(canvas).getPropertyValue('--ascii-ink').trim();
-        if (value) ink = value;
+    // #rgb / #rrggbb only. Anything else returns null and the ramp collapses to
+    // the flat ink, which is exactly the pre-tinting rendering — a bad custom
+    // property degrades to the old look rather than to an invisible portrait.
+    function parseHex(value) {
+        const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(value);
+        if (!m) return null;
+        const h = m[1].length === 3 ? m[1].replace(/./g, (c) => c + c) : m[1];
+        return [0, 2, 4].map((k) => parseInt(h.slice(k, k + 2), 16));
     }
+
+    function readInk() {
+        const style = getComputedStyle(canvas);
+        const value = style.getPropertyValue('--ascii-ink').trim();
+        if (value) ink = value;
+
+        const hi = parseHex(ink);
+        const lo = parseHex(style.getPropertyValue('--ascii-ink-low').trim());
+        ramp = [];
+        for (let s = 0; s < RAMP_STEPS; s++) {
+            if (!hi || !lo) { ramp.push(ink); continue; }
+            const t = s / (RAMP_STEPS - 1);
+            const c = lo.map((v, k) => Math.round(v + (hi[k] - v) * t));
+            ramp.push(`rgb(${c[0]},${c[1]},${c[2]})`);
+        }
+    }
+
+    readInk();
+    full = isDark() ? fullDark : fullLight;
+    useGrid(false);
 
     function fit() {
         // Proportions follow the baked image, so swapping the photo needs only
@@ -203,10 +261,10 @@
 
     function draw(elapsed) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = ink;
 
         const radius = POINTER_RADIUS * pxScale;
         let lastAlpha = -1;
+        let lastTint = -1;
 
         // The entrance wants a bright wall of static; idle shimmer must not,
         // or every flickering backdrop cell outshines the portrait. Fade the
@@ -241,7 +299,14 @@
                 ? POOL[(variant[i] * POOL.length) | 0]
                 : NOISE[(Math.random() * NOISE.length) | 0];
 
-            // Quantise so a run of similar cells shares one state change.
+            // Quantise so a run of similar cells shares one state change. A cell
+            // still resolving shows its noise glyph in the flat ink: mid-shimmer
+            // static is not part of the portrait and should not wear its tone.
+            const shade = p > 0.5 ? tint[i] : RAMP_STEPS - 1;
+            if (shade !== lastTint) {
+                ctx.fillStyle = ramp[shade];
+                lastTint = shade;
+            }
             const step = Math.round(alpha * 32) / 32;
             if (step !== lastAlpha) {
                 ctx.globalAlpha = step;
