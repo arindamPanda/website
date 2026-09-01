@@ -19,7 +19,6 @@
     --badge-text: #333;
     --watermark-color: rgba(50, 36, 40, 0.06);
     --ascii-ink: #45333a;
-    --ascii-ink-low: #45333a;
     --link-hover: #000000;
     --border-radius: 2px;
     --radius-sm: 6px;
@@ -52,10 +51,6 @@
     --badge-text: #ede4de;
     --watermark-color: rgba(237, 228, 222, 0.12);
     --ascii-ink: #d9cdc6;
-    /* Low end of the portrait's tone ramp. Deliberately ABOVE the page colour:
-       glyphs cover ~10% of their cell, so ink darker than the page reads as
-       nothing at all and the hair loses its crown. */
-    --ascii-ink-low: #3a2e28;
     --link-hover: #ffffff;
     color-scheme: dark;
 }
@@ -439,6 +434,28 @@ main>section.active-panel {
     display: block;
 }
 
+/* Dark theme swaps the glyph portrait for the photograph — see index.html.
+   Same box either way, so the hero never changes height on a theme toggle. */
+.hero-photo {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    /* The cutout runs to the bottom of the frame, so without this the shoulders
+       end on a hard horizontal cut. Dissolves them into the page instead, the
+       way the glyph field's edge fade does on light. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 97%);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent 97%);
+}
+
+[data-theme="dark"] .hero-ascii {
+    display: none;
+}
+
+[data-theme="dark"] .hero-photo {
+    display: block;
+}
+
 /* No-JS fallback */
 .hero-image {
     width: 100%;
@@ -582,6 +599,7 @@ main>section.active-panel {
     }
 
     .hero-ascii,
+    .hero-photo,
     .hero-image {
         max-width: 320px;
     }
