@@ -75,12 +75,26 @@ FLOOR = 0.22
 # cell at all. That gives the hair somewhere to go: near-black ink at full
 # presence, a solid mass with a real edge rather than an absence.
 #
-# LIT is the colour driver: photo lightness, deliberately NOT masked, so the
-# backdrop lands at 1.0 and keeps drawing its faint ink-coloured field exactly as
-# it does on light. GAIN and BIAS stretch it — the raw range is too soft and the
-# face goes muddy without them.
+# LIT is the colour driver: photo lightness, MASKED. Leaving it unmasked is the
+# mistake to avoid — the subject is shot on white, so the empty backdrop lands at
+# the top of the ramp and every idle shimmer draws it in full bright ink, leaving
+# the emptiness brighter than the hair and the portrait sunk in glare. Masked, the
+# backdrop falls to the dim end and recedes where it belongs. It is still
+# distinguishable from the hair, which shares that colour: opacity separates them,
+# a dense mass against sparse specks.
+#
+# GAIN and BIAS stretch the range — raw lightness is too soft and the face goes
+# muddy without them.
 DARK_GAIN = 1.15
 DARK_BIAS = 0.05
+
+# Where the backdrop sits on that ramp. Not 0: the whole design has the portrait
+# emerging from a live character field, and at the very bottom the field goes
+# completely invisible on dark and the head floats on dead space. Not high
+# either — it has to stay clearly below the hair or the emptiness competes with
+# the subject again. Raise it if the surround looks lifeless, lower it if the
+# backdrop starts rivalling the silhouette.
+DARK_BACKDROP = 0.15
 
 # Opacity floor inside the subject. Everything masked draws near-solid so tone is
 # read from its colour, not from how much page shows through; this sits above
@@ -202,7 +216,8 @@ def build_grid(image):
     # Light: one channel, opacity carries tone. Dark: opacity carries presence
     # and `lit` carries tone as colour — see the dark theme block above.
     density = mask * (FLOOR + (1.0 - FLOOR) * tone)
-    lit = np.clip((1.0 - tone) * DARK_GAIN - DARK_BIAS, 0.0, 1.0)
+    lit = (mask * np.clip((1.0 - tone) * DARK_GAIN - DARK_BIAS, 0.0, 1.0)
+           + DARK_BACKDROP * (1.0 - mask))
     density_dark = mask * (DARK_PRESENCE + (1.0 - DARK_PRESENCE) * lit)
 
     # Average the full-resolution density into cells, so fine structure that a
