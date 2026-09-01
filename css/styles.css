@@ -434,18 +434,13 @@ main>section.active-panel {
     display: block;
 }
 
-/* Dark theme swaps the glyph portrait for the photograph — see index.html.
-   Same box either way, so the hero never changes height on a theme toggle. */
+/* Dark theme swaps the glyph portrait for the photograph, shown unaltered —
+   see index.html. Same box either way, so the hero keeps its height. */
 .hero-photo {
     display: none;
     width: 100%;
     max-width: 500px;
     height: auto;
-    /* The cutout runs to the bottom of the frame, so without this the shoulders
-       end on a hard horizontal cut. Dissolves them into the page instead, the
-       way the glyph field's edge fade does on light. */
-    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 97%);
-    mask-image: linear-gradient(to bottom, #000 70%, transparent 97%);
 }
 
 [data-theme="dark"] .hero-ascii {
