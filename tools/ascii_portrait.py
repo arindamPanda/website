@@ -19,6 +19,8 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "Arindam.jpg"
 OUTPUT = ROOT / "js" / "portrait-grid.js"
+# Background-free copy of SOURCE, shown as the dark theme's hero.
+CUTOUT = ROOT / "portrait-cutout.png"
 
 # Logical grid. Monospace cells are roughly 0.55 as wide as they are tall, so
 # rows are derived from the image aspect corrected by that factor.
@@ -188,7 +190,7 @@ def build_grid(image):
     # and density is mask-multiplied. All the subtraction did was cancel FLOOR,
     # dropping the shirt to roughly the background's own brightness.
     cells = np.clip(cells, 0.0, 1.0)
-    return COLS, rows, centre_horizontally(cells)
+    return COLS, rows, centre_horizontally(cells), mask
 
 
 def centre_horizontally(cells):
@@ -221,6 +223,48 @@ def centre_horizontally(cells):
     return out
 
 
+def write_cutout(image, mask):
+    """Write SOURCE with its studio backdrop knocked out, for the dark theme.
+
+    The dark hero shows the photograph rather than the glyph field, and this
+    photo is shot on white — dropped straight onto a dark page, that backdrop
+    reads as a bright halo ringing the head. The subject mask already separates
+    the two, so reuse it as an alpha channel and the head sits on the page with
+    nothing behind it. Feathered a little so the hair edge does not turn into a
+    cut-out line.
+    """
+    # Interior holes must be filled before any of this. The mask keys on "darker
+    # or more colourful than the backdrop", so anything near-white INSIDE the
+    # subject keys out too — above all the whites of the eyes, which come through
+    # as holes with the dark page showing where the sclera should be. Harmless in
+    # the density grid, where those cells merely go faint; ruinous as alpha.
+    # Flood the background inwards from the border: whatever it cannot reach is
+    # enclosed by subject and belongs to it.
+    solid = np.clip(mask, 0.0, 1.0) > 0.5
+    padded = np.pad(~solid, 1, constant_values=True)
+    # .copy() is load-bearing: floodfill silently no-ops on an image still backed
+    # by the numpy buffer, leaving every pixel opaque and no holes filled.
+    probe = Image.fromarray((padded * 255).astype(np.uint8)).copy()
+    ImageDraw.floodfill(probe, (0, 0), 128)
+    outside = np.asarray(probe)[1:-1, 1:-1] == 128
+    filled = np.maximum(np.clip(mask, 0.0, 1.0), (~outside).astype(np.float32))
+
+    # Eroded BEFORE the feather, not after. Feathering the mask where it stands
+    # puts the semi-transparent band straight over the subject/backdrop boundary,
+    # so those pixels blend in the old white and the head keeps a pale halo.
+    # Pulling the edge in by a pixel first lands the band inside the subject.
+    alpha = np.asarray(
+        Image.fromarray((filled * 255).astype(np.uint8))
+        .filter(ImageFilter.MinFilter(3))
+        .filter(ImageFilter.GaussianBlur(1.2)),
+        dtype=np.uint8,
+    )
+    out = image.convert("RGBA")
+    out.putalpha(Image.fromarray(alpha))
+    out.save(CUTOUT)
+    print(f"wrote {CUTOUT.relative_to(ROOT)}", file=sys.stderr)
+
+
 def preview(cols, rows, cells):
     """Show the density map as a tone ramp — deliberately NOT what ships.
 
@@ -246,7 +290,9 @@ def main():
     pool, weights = build_pool()
     with Image.open(SOURCE) as image:
         source_w, source_h = image.width, image.height
-        cols, rows, cells = build_grid(image.convert("RGB"))
+        rgb = image.convert("RGB")
+        cols, rows, cells, mask = build_grid(rgb)
+        write_cutout(rgb, mask)
 
     preview(cols, rows, cells)
     inked = int((cells >= 0.05).sum())
