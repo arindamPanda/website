@@ -19,8 +19,6 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "Arindam.jpg"
 OUTPUT = ROOT / "js" / "portrait-grid.js"
-# Background-free copy of SOURCE, shown as the dark theme's hero.
-CUTOUT = ROOT / "portrait-cutout.png"
 
 # Logical grid. Monospace cells are roughly 0.55 as wide as they are tall, so
 # rows are derived from the image aspect corrected by that factor.
@@ -190,7 +188,7 @@ def build_grid(image):
     # and density is mask-multiplied. All the subtraction did was cancel FLOOR,
     # dropping the shirt to roughly the background's own brightness.
     cells = np.clip(cells, 0.0, 1.0)
-    return COLS, rows, centre_horizontally(cells), mask
+    return COLS, rows, centre_horizontally(cells)
 
 
 def centre_horizontally(cells):
@@ -223,27 +221,6 @@ def centre_horizontally(cells):
     return out
 
 
-def write_cutout(image, mask):
-    """Write SOURCE with its studio backdrop knocked out, for the dark theme.
-
-    The dark hero shows the photograph rather than the glyph field, and this
-    photo is shot on white — dropped straight onto a dark page, that backdrop
-    reads as a bright halo ringing the head. The subject mask already separates
-    the two, so reuse it as an alpha channel and the head sits on the page with
-    nothing behind it. Feathered a little so the hair edge does not turn into a
-    cut-out line.
-    """
-    alpha = np.asarray(
-        Image.fromarray((np.clip(mask, 0.0, 1.0) * 255).astype(np.uint8))
-        .filter(ImageFilter.GaussianBlur(1.2)),
-        dtype=np.uint8,
-    )
-    out = image.convert("RGBA")
-    out.putalpha(Image.fromarray(alpha))
-    out.save(CUTOUT)
-    print(f"wrote {CUTOUT.relative_to(ROOT)}", file=sys.stderr)
-
-
 def preview(cols, rows, cells):
     """Show the density map as a tone ramp — deliberately NOT what ships.
 
@@ -269,9 +246,7 @@ def main():
     pool, weights = build_pool()
     with Image.open(SOURCE) as image:
         source_w, source_h = image.width, image.height
-        rgb = image.convert("RGB")
-        cols, rows, cells, mask = build_grid(rgb)
-        write_cutout(rgb, mask)
+        cols, rows, cells = build_grid(image.convert("RGB"))
 
     preview(cols, rows, cells)
     inked = int((cells >= 0.05).sum())
