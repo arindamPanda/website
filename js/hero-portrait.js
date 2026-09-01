@@ -42,6 +42,16 @@
     // Colour buckets between --ascii-ink-low and --ascii-ink. Quantised so a run
     // of similar cells shares one fillStyle, the same trick the alpha uses.
     const RAMP_STEPS = 24;
+    // Unresolved cells draw in one fixed shade rather than their own: mid-shimmer
+    // static is not part of the portrait and must not spoil its tone. Held well
+    // down the ramp because a wall of full-brightness light ink on a dark page is
+    // glare, where the same wall of dark ink on cream reads as texture.
+    const NOISE_SHADE = (RAMP_STEPS * 0.35) | 0;
+    // How bright the opening wall of static is. Same reason: light ink on a dark
+    // page carries much further, so the entrance has to be pitched lower or it
+    // whites out the hero for its first half second.
+    const WALL_LIGHT = 0.5;
+    const WALL_DARK = 0.28;
     const POINTER_RADIUS = 70;  // CSS px
     const EDGE_FADE = 0.08;    // fraction of each axis the outer fade spans
     const NARROW = 420;        // CSS px below which the grid is halved
@@ -265,6 +275,9 @@
         const radius = POINTER_RADIUS * pxScale;
         let lastAlpha = -1;
         let lastTint = -1;
+        const tinted = tinting();
+        const wall = tinted ? WALL_DARK : WALL_LIGHT;
+        const noiseShade = tinted ? NOISE_SHADE : RAMP_STEPS - 1;
 
         // The entrance wants a bright wall of static; idle shimmer must not,
         // or every flickering backdrop cell outshines the portrait. Fade the
@@ -286,7 +299,7 @@
             // Breathing fades out over the portrait so the face stays readable.
             const wobble = 1 + 0.16 * (1 - density) * Math.sin(elapsed * 1.7 + phase[i]);
             const idle = resolved * 1.4 + SPARKLE * (1 - density);
-            const noise = 0.5 * opening + idle * (1 - opening);
+            const noise = wall * opening + idle * (1 - opening);
             // comp corrects for the settled glyph's ink; cells drawing from
             // NOISE mid-shimmer are transient static and are meant to flicker.
             let alpha = fall[i] * (noise + (resolved - noise) * p) * wobble * comp[i];
@@ -302,7 +315,7 @@
             // Quantise so a run of similar cells shares one state change. A cell
             // still resolving shows its noise glyph in the flat ink: mid-shimmer
             // static is not part of the portrait and should not wear its tone.
-            const shade = p > 0.5 ? tint[i] : RAMP_STEPS - 1;
+            const shade = p > 0.5 ? tint[i] : noiseShade;
             if (shade !== lastTint) {
                 ctx.fillStyle = ramp[shade];
                 lastTint = shade;
