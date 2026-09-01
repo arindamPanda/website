@@ -434,13 +434,19 @@ main>section.active-panel {
     display: block;
 }
 
-/* Dark theme swaps the glyph portrait for the photograph, shown unaltered —
-   see index.html. Same box either way, so the hero keeps its height. */
+/* Dark theme swaps the glyph portrait for the photograph — see index.html.
+   Same box either way, so the hero never changes height on a theme toggle. */
 .hero-photo {
     display: none;
     width: 100%;
     max-width: 500px;
     height: auto;
+    /* Falls off towards every edge so the portrait dissolves into the page
+       rather than ending on the cutout's hard silhouette — the same intent as
+       the glyph field's radial edge fade on light. Centred a little above the
+       middle, where the face sits. */
+    -webkit-mask-image: radial-gradient(ellipse 66% 62% at 50% 43%, #000 38%, rgba(0, 0, 0, 0.6) 68%, transparent 92%);
+    mask-image: radial-gradient(ellipse 66% 62% at 50% 43%, #000 38%, rgba(0, 0, 0, 0.6) 68%, transparent 92%);
 }
 
 [data-theme="dark"] .hero-ascii {
