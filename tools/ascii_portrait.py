@@ -19,6 +19,8 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "Arindam.jpg"
 OUTPUT = ROOT / "js" / "portrait-grid.js"
+# Background-free copy of SOURCE, shown as the dark theme's hero.
+CUTOUT = ROOT / "portrait-cutout.png"
 
 # Logical grid. Monospace cells are roughly 0.55 as wide as they are tall, so
 # rows are derived from the image aspect corrected by that factor.
@@ -60,47 +62,6 @@ TONE_GAMMA = 0.9
 # for a pale-shirted subject than it does here; lower it toward 0.12 if the face
 # reads too heavy.
 FLOOR = 0.22
-
-# --- Dark theme -------------------------------------------------------------
-#
-# The dark theme cannot carry tone in opacity the way the light one does. Light
-# ink on a dark page only ever ADDS light, so a front-lit face over near-black
-# hair gives a bright oval with no crown — it reads as a ghost, whichever way the
-# tone is pointed. Running it off the light channel unchanged is worse still: the
-# hair, being densest, becomes the brightest mass and the face a hollow negative.
-#
-# So on dark the two jobs are split. COLOUR carries tone — each cell draws in a
-# shade taken from the photo, along a ramp between --ascii-ink-low and
-# --ascii-ink — and OPACITY carries presence, i.e. how much subject is in the
-# cell at all. That gives the hair somewhere to go: near-black ink at full
-# presence, a solid mass with a real edge rather than an absence.
-#
-# LIT is the colour driver: photo lightness, MASKED. Leaving it unmasked is the
-# mistake to avoid — the subject is shot on white, so the empty backdrop lands at
-# the top of the ramp and every idle shimmer draws it in full bright ink, leaving
-# the emptiness brighter than the hair and the portrait sunk in glare. Masked, the
-# backdrop falls to the dim end and recedes where it belongs. It is still
-# distinguishable from the hair, which shares that colour: opacity separates them,
-# a dense mass against sparse specks.
-#
-# GAIN and BIAS stretch the range — raw lightness is too soft and the face goes
-# muddy without them.
-DARK_GAIN = 1.15
-DARK_BIAS = 0.05
-
-# Where the backdrop sits on that ramp. Not 0: the whole design has the portrait
-# emerging from a live character field, and at the very bottom the field goes
-# completely invisible on dark and the head floats on dead space. Not high
-# either — it has to stay clearly below the hair or the emptiness competes with
-# the subject again. Raise it if the surround looks lifeless, lower it if the
-# backdrop starts rivalling the silhouette.
-DARK_BACKDROP = 0.15
-
-# Opacity floor inside the subject. Everything masked draws near-solid so tone is
-# read from its colour, not from how much page shows through; this sits above
-# CALM_ABOVE in the renderer, so on dark the portrait never shimmers and only the
-# backdrop moves. Lower it if the subject looks too flatly opaque.
-DARK_PRESENCE = 0.55
 
 # Column is treated as holding subject when above this share of the densest one.
 INK_THRESHOLD = 0.06
@@ -213,73 +174,74 @@ def build_grid(image):
     subject = luma[mask > 0.5]
     lo, hi = np.percentile(subject if subject.size else luma, TONE_CLIP)
     tone = np.clip((hi - luma) / max(hi - lo, 1e-6), 0.0, 1.0) ** TONE_GAMMA
-    # Light: one channel, opacity carries tone. Dark: opacity carries presence
-    # and `lit` carries tone as colour — see the dark theme block above.
     density = mask * (FLOOR + (1.0 - FLOOR) * tone)
-    lit = (mask * np.clip((1.0 - tone) * DARK_GAIN - DARK_BIAS, 0.0, 1.0)
-           + DARK_BACKDROP * (1.0 - mask))
-    density_dark = mask * (DARK_PRESENCE + (1.0 - DARK_PRESENCE) * lit)
 
     # Average the full-resolution density into cells, so fine structure that a
     # downsample-then-measure order would lose still reaches the grid.
     rows = max(1, round(COLS * (image.height / image.width) * CELL_ASPECT))
+    cells = np.asarray(
+        Image.fromarray((density * 255).astype(np.uint8))
+        .resize((COLS, rows), Image.Resampling.BOX),
+        dtype=np.float32,
+    ) / 255.0
 
-    def to_cells(d):
-        c = np.asarray(
-            Image.fromarray((d * 255).astype(np.uint8))
-            .resize((COLS, rows), Image.Resampling.BOX),
-            dtype=np.float32,
-        ) / 255.0
-        # No floor subtraction here. It used to rescale by (cells - FLOOR*0.8) to
-        # keep the backdrop clean, but the backdrop is already ~0 — its mask is ~0,
-        # and density is mask-multiplied. All the subtraction did was cancel FLOOR,
-        # dropping the shirt to roughly the background's own brightness.
-        return np.clip(c, 0.0, 1.0)
-
-    light = to_cells(density)
-    shift = centre_shift(light)
-    return (COLS, rows,
-            shift_columns(light, shift),
-            shift_columns(to_cells(density_dark), shift),
-            # Averaged over the cell like everything else, so the tint follows the
-            # same footprint the opacity does and colour cannot drift off the form.
-            shift_columns(to_cells(lit), shift))
+    # No floor subtraction here. It used to rescale by (cells - FLOOR*0.8) to
+    # keep the backdrop clean, but the backdrop is already ~0 — its mask is ~0,
+    # and density is mask-multiplied. All the subtraction did was cancel FLOOR,
+    # dropping the shirt to roughly the background's own brightness.
+    cells = np.clip(cells, 0.0, 1.0)
+    return COLS, rows, centre_horizontally(cells), mask
 
 
-def centre_shift(cells):
-    """How far to slide the subject to even out the gutters either side of it.
+def centre_horizontally(cells):
+    """Even out the empty gutters either side of the subject.
 
     A subject sitting off-centre — the previous source sat hard against the right
     edge with a quarter of the width empty on the left — leaves the renderer's
-    edge fade eating into one shoulder while the other side is blank. Half the
-    difference re-centres it without cropping the subject or resizing the frame.
+    edge fade eating into one shoulder while the other side is blank. Shift the
+    content by half the difference and pad the vacated columns, which re-centres
+    without cropping any of the subject or resizing the frame.
 
-    Measured on the light channel alone and applied to both: the two channels ink
-    opposite ends of the tone range, so measuring each separately can hand back
-    different shifts and slide the themes out of register with each other.
-
-    The current source is already centred, so this returns 0. Kept for the next
-    swap, which may not be.
+    The current source is already centred, so this computes a shift of 0 and
+    returns unchanged. Kept for the next swap, which may not be.
     """
-    _, cols = cells.shape
+    rows, cols = cells.shape
     column = cells.sum(axis=0)
     inked = np.where(column > column.max() * INK_THRESHOLD)[0]
     if inked.size == 0:
-        return 0
-    return (int(inked[0]) - (cols - 1 - int(inked[-1]))) // 2
+        return cells
 
-
-def shift_columns(cells, shift):
-    """Slide by `shift` columns, padding the vacated ones."""
+    shift = (int(inked[0]) - (cols - 1 - int(inked[-1]))) // 2
     if shift == 0:
         return cells
-    _, cols = cells.shape
+
     out = np.zeros_like(cells)
     if shift > 0:                       # subject sits right — move it left
         out[:, :cols - shift] = cells[:, shift:]
     else:                               # subject sits left — move it right
         out[:, -shift:] = cells[:, :cols + shift]
     return out
+
+
+def write_cutout(image, mask):
+    """Write SOURCE with its studio backdrop knocked out, for the dark theme.
+
+    The dark hero shows the photograph rather than the glyph field, and this
+    photo is shot on white — dropped straight onto a dark page, that backdrop
+    reads as a bright halo ringing the head. The subject mask already separates
+    the two, so reuse it as an alpha channel and the head sits on the page with
+    nothing behind it. Feathered a little so the hair edge does not turn into a
+    cut-out line.
+    """
+    alpha = np.asarray(
+        Image.fromarray((np.clip(mask, 0.0, 1.0) * 255).astype(np.uint8))
+        .filter(ImageFilter.GaussianBlur(1.2)),
+        dtype=np.uint8,
+    )
+    out = image.convert("RGBA")
+    out.putalpha(Image.fromarray(alpha))
+    out.save(CUTOUT)
+    print(f"wrote {CUTOUT.relative_to(ROOT)}", file=sys.stderr)
 
 
 def preview(cols, rows, cells):
@@ -307,30 +269,23 @@ def main():
     pool, weights = build_pool()
     with Image.open(SOURCE) as image:
         source_w, source_h = image.width, image.height
-        cols, rows, cells, cells_dark, cells_tint = build_grid(image.convert("RGB"))
+        rgb = image.convert("RGB")
+        cols, rows, cells, mask = build_grid(rgb)
+        write_cutout(rgb, mask)
 
-    print("light theme — opacity carries tone:")
     preview(cols, rows, cells)
-    print("\ndark theme — opacity carries presence (density below is NOT the tone):")
-    preview(cols, rows, cells_dark)
-    print("\ndark theme tint — the colour ramp, dark ink at the low end:")
-    preview(cols, rows, cells_tint)
-
+    inked = int((cells >= 0.05).sum())
     upper = sum(c.isupper() for c in pool)
     lower = sum(c.islower() for c in pool)
     digit = sum(c.isdigit() for c in pool)
-    print(f"\n{cols}x{rows} cells, {int((cells >= 0.05).sum())} inked light, "
-          f"{int((cells_dark >= 0.05).sum())} inked dark", file=sys.stderr)
+    print(f"\n{cols}x{rows} cells, {inked} inked", file=sys.stderr)
     print(f"pool: {len(pool)} glyphs ({upper} upper, {lower} lower, {digit} digit, "
           f"{len(pool) - upper - lower - digit} symbol)\n  {pool}", file=sys.stderr)
 
-    def encode(c):
-        levels = np.clip((c * LEVELS).astype(int), 0, LEVELS - 1)
-        return "\\n".join(
-            "".join(ALPHABET[levels[y, x]] for x in range(cols)) for y in range(rows)
-        )
-
-    data, data_dark, data_tint = encode(cells), encode(cells_dark), encode(cells_tint)
+    levels = np.clip((cells * LEVELS).astype(int), 0, LEVELS - 1)
+    data = "\\n".join(
+        "".join(ALPHABET[levels[y, x]] for x in range(cols)) for y in range(rows)
+    )
 
     OUTPUT.parent.mkdir(exist_ok=True)
     OUTPUT.write_text(
@@ -347,11 +302,7 @@ def main():
         f"    pool: {json.dumps(pool)},\n"
         # Same order as pool — the renderer indexes them in lockstep.
         f"    weights: {json.dumps(weights)},\n"
-        f"    data: '{data}',\n"
-        # On dark these two split the job the single light channel does alone:
-        # dataDark is presence (opacity), dataTint is tone (colour).
-        f"    dataDark: '{data_dark}',\n"
-        f"    dataTint: '{data_tint}'\n"
+        f"    data: '{data}'\n"
         "};\n"
     )
     print(f"wrote {OUTPUT.relative_to(ROOT)}", file=sys.stderr)

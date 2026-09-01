@@ -39,58 +39,21 @@
     // This adds a flat lift on top, scaled by (1 - density) so it lands almost
     // entirely on the faint cells and leaves the portrait's tone alone.
     const SPARKLE = 0.06;
-    // Colour buckets between --ascii-ink-low and --ascii-ink. Quantised so a run
-    // of similar cells shares one fillStyle, the same trick the alpha uses.
-    const RAMP_STEPS = 24;
-    // Unresolved cells draw in one fixed shade rather than their own: mid-shimmer
-    // static is not part of the portrait and must not spoil its tone. Held well
-    // down the ramp because a wall of full-brightness light ink on a dark page is
-    // glare, where the same wall of dark ink on cream reads as texture.
-    const NOISE_SHADE = (RAMP_STEPS * 0.35) | 0;
-    // How bright the opening wall of static is. Same reason: light ink on a dark
-    // page carries much further, so the entrance has to be pitched lower or it
-    // whites out the hero for its first half second.
-    const WALL_LIGHT = 0.5;
-    const WALL_DARK = 0.28;
     const POINTER_RADIUS = 70;  // CSS px
     const EDGE_FADE = 0.08;    // fraction of each axis the outer fade spans
     const NARROW = 420;        // CSS px below which the grid is halved
     const FRAME = 1000 / 30;
 
-    // Full-resolution density, decoded once per theme channel. The two are the
-    // same portrait with the tone inverted: ink has to mean "far from the page",
-    // which is the shadows on cream and the highlights on brown. Sharing one
-    // channel renders the dark theme as a negative — hair the brightest mass,
-    // face a hollow. dataDark is optional so an older baked grid still runs.
+    // Full-resolution density, decoded once.
     const fullCols = grid.cols;
     const fullRows = grid.rows;
-
-    function decode(text) {
-        const out = new Float32Array(fullCols * fullRows);
-        const lines = text.split('\n');
-        for (let y = 0; y < fullRows; y++) {
-            for (let x = 0; x < fullCols; x++) {
-                out[y * fullCols + x] =
-                    grid.alphabet.indexOf(lines[y][x]) / (grid.levels - 1);
-            }
+    const full = new Float32Array(fullCols * fullRows);
+    const lines = grid.data.split('\n');
+    for (let y = 0; y < fullRows; y++) {
+        for (let x = 0; x < fullCols; x++) {
+            full[y * fullCols + x] =
+                grid.alphabet.indexOf(lines[y][x]) / (grid.levels - 1);
         }
-        return out;
-    }
-
-    const fullLight = decode(grid.data);
-    const fullDark = grid.dataDark ? decode(grid.dataDark) : fullLight;
-    // Tone as colour, for the dark theme only — see the dark block in the
-    // generator. Absent on an older baked grid, in which case tinting is off and
-    // every cell draws in the flat ink.
-    const fullTint = grid.dataTint ? decode(grid.dataTint) : null;
-    let full = fullLight;
-
-    function isDark() {
-        return document.documentElement.dataset.theme === 'dark';
-    }
-
-    function tinting() {
-        return fullTint !== null && isDark();
     }
 
     let cols = 0;
@@ -104,50 +67,6 @@
     let variant;  // per-cell pick from the glyph pool
     let comp;     // per-cell opacity correction for that glyph's ink
     let settled;  // resolve progress, 0..1
-    let tint;     // per-cell colour bucket, index into RAMP
-    let tintRaw;  // float scratch the tint buckets are quantised from
-
-    // Fold the full-resolution channel into the active grid, averaging 2x2 when
-    // halved. Both channels go through this so colour and opacity always share a
-    // footprint.
-    function sample(src, out) {
-        for (let y = 0; y < rows; y++) {
-            for (let x = 0; x < cols; x++) {
-                const i = y * cols + x;
-                if (halved) {
-                    const sx = x * 2;
-                    const sy = y * 2;
-                    out[i] = (src[sy * fullCols + sx] +
-                        src[sy * fullCols + sx + 1] +
-                        src[(sy + 1) * fullCols + sx] +
-                        src[(sy + 1) * fullCols + sx + 1]) / 4;
-                } else {
-                    out[i] = src[i];
-                }
-            }
-        }
-    }
-
-    // Re-read the active channels. Only these depend on the theme — the geometry,
-    // stagger and glyph picks are all channel-independent, so a theme switch
-    // re-tones the portrait in place without disturbing its entrance progress or
-    // making it re-pick every glyph.
-    function fillTarget() {
-        sample(full, target);
-        if (tinting()) {
-            // Via the float scratch, not straight into tint: that is a Uint8Array
-            // and would truncate every 0..1 sample to zero.
-            sample(fullTint, tintRaw);
-            for (let i = 0; i < count; i++) {
-                tint[i] = Math.min(RAMP_STEPS - 1, (tintRaw[i] * RAMP_STEPS) | 0);
-            }
-        } else {
-            // Flat ink: every cell lands on the top of the ramp, which readInk
-            // pins to --ascii-ink itself, so the light theme draws exactly as it
-            // did before tinting existed.
-            tint.fill(RAMP_STEPS - 1);
-        }
-    }
 
     // At mobile widths the full grid renders glyphs too small to read, so fold
     // it 2x2 into a coarser one. The baked grid stays the single source.
@@ -160,8 +79,6 @@
         count = cols * rows;
 
         target = new Float32Array(count);
-        tint = new Uint8Array(count);
-        tintRaw = new Float32Array(count);
         fall = new Float32Array(count);
         delay = new Float32Array(count);
         phase = new Float32Array(count);
@@ -172,6 +89,17 @@
         for (let y = 0; y < rows; y++) {
             for (let x = 0; x < cols; x++) {
                 const i = y * cols + x;
+
+                if (half) {
+                    const sx = x * 2;
+                    const sy = y * 2;
+                    target[i] = (full[sy * fullCols + sx] +
+                        full[sy * fullCols + sx + 1] +
+                        full[(sy + 1) * fullCols + sx] +
+                        full[(sy + 1) * fullCols + sx + 1]) / 4;
+                } else {
+                    target[i] = full[i];
+                }
 
                 // The whole frame renders; only the outermost cells soften, so
                 // the block dissolves into the page instead of ending on a
@@ -198,50 +126,28 @@
                 comp[i] = 1 / (WEIGHTS[(variant[i] * POOL.length) | 0] || 1);
             }
         }
-
-        fillTarget();
     }
+
+    // Density means darkness in both themes. On the dark theme that makes the
+    // hair the brightest mass — strictly a negative — but the hair is what
+    // carries the silhouette: mapping brightness instead correctly drives dark
+    // hair to near-empty and the head stops reading at all.
+    useGrid(false);
 
     let cellW = 0;
     let cellH = 0;
     let pxScale = 1;
     let ink = '#45333a';
-    let ramp = [];
     let running = false;
     let frameId = 0;
     let start = 0;
     let last = 0;
     const pointer = { x: 0, y: 0, active: false };
 
-    // #rgb / #rrggbb only. Anything else returns null and the ramp collapses to
-    // the flat ink, which is exactly the pre-tinting rendering — a bad custom
-    // property degrades to the old look rather than to an invisible portrait.
-    function parseHex(value) {
-        const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(value);
-        if (!m) return null;
-        const h = m[1].length === 3 ? m[1].replace(/./g, (c) => c + c) : m[1];
-        return [0, 2, 4].map((k) => parseInt(h.slice(k, k + 2), 16));
-    }
-
     function readInk() {
-        const style = getComputedStyle(canvas);
-        const value = style.getPropertyValue('--ascii-ink').trim();
+        const value = getComputedStyle(canvas).getPropertyValue('--ascii-ink').trim();
         if (value) ink = value;
-
-        const hi = parseHex(ink);
-        const lo = parseHex(style.getPropertyValue('--ascii-ink-low').trim());
-        ramp = [];
-        for (let s = 0; s < RAMP_STEPS; s++) {
-            if (!hi || !lo) { ramp.push(ink); continue; }
-            const t = s / (RAMP_STEPS - 1);
-            const c = lo.map((v, k) => Math.round(v + (hi[k] - v) * t));
-            ramp.push(`rgb(${c[0]},${c[1]},${c[2]})`);
-        }
     }
-
-    readInk();
-    full = isDark() ? fullDark : fullLight;
-    useGrid(false);
 
     function fit() {
         // Proportions follow the baked image, so swapping the photo needs only
@@ -271,13 +177,10 @@
 
     function draw(elapsed) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = ink;
 
         const radius = POINTER_RADIUS * pxScale;
         let lastAlpha = -1;
-        let lastTint = -1;
-        const tinted = tinting();
-        const wall = tinted ? WALL_DARK : WALL_LIGHT;
-        const noiseShade = tinted ? NOISE_SHADE : RAMP_STEPS - 1;
 
         // The entrance wants a bright wall of static; idle shimmer must not,
         // or every flickering backdrop cell outshines the portrait. Fade the
@@ -299,7 +202,7 @@
             // Breathing fades out over the portrait so the face stays readable.
             const wobble = 1 + 0.16 * (1 - density) * Math.sin(elapsed * 1.7 + phase[i]);
             const idle = resolved * 1.4 + SPARKLE * (1 - density);
-            const noise = wall * opening + idle * (1 - opening);
+            const noise = 0.5 * opening + idle * (1 - opening);
             // comp corrects for the settled glyph's ink; cells drawing from
             // NOISE mid-shimmer are transient static and are meant to flicker.
             let alpha = fall[i] * (noise + (resolved - noise) * p) * wobble * comp[i];
@@ -312,14 +215,7 @@
                 ? POOL[(variant[i] * POOL.length) | 0]
                 : NOISE[(Math.random() * NOISE.length) | 0];
 
-            // Quantise so a run of similar cells shares one state change. A cell
-            // still resolving shows its noise glyph in the flat ink: mid-shimmer
-            // static is not part of the portrait and should not wear its tone.
-            const shade = p > 0.5 ? tint[i] : noiseShade;
-            if (shade !== lastTint) {
-                ctx.fillStyle = ramp[shade];
-                lastTint = shade;
-            }
+            // Quantise so a run of similar cells shares one state change.
             const step = Math.round(alpha * 32) / 32;
             if (step !== lastAlpha) {
                 ctx.globalAlpha = step;
@@ -413,14 +309,9 @@
         else if (!reduceMotion.matches) play();
     });
 
-    // While running, the next frame picks up the new ink and tone on its own.
+    // While running, the next frame picks up the new ink on its own.
     new MutationObserver(() => {
         readInk();
-        const next = isDark() ? fullDark : fullLight;
-        if (next !== full) {
-            full = next;
-            fillTarget();
-        }
         if (!running && reduceMotion.matches) drawStatic();
     }).observe(document.documentElement, { attributeFilter: ['data-theme'] });
 
