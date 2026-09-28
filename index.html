@@ -48,8 +48,8 @@
                         <li><a href="#blog">Blogs</a></li>
                     </ul>
                 </li>
-                <li><a href="#travel">Photography</a></li>
-                <li><a href="#memory">Travel & Memory</a></li>
+                <li><a href="https://arindampanda.github.io/far-from-home/">Photography</a></li>
+                <li><a href="#memory">Memory</a></li>
                 <li><a href="#connect">Contact</a></li>
 
             </ul>
@@ -90,7 +90,6 @@
             publications: ['publications'],
             news: ['news'],
             blog: ['news'],
-            travel: ['travel'],
             memory: ['memory'],
             connect: ['connect']
         };
@@ -110,7 +109,6 @@
                 publications: document.querySelector('nav a[href="#publications"]'),
                 news: document.querySelector('.nav-dropdown-toggle'),
                 blog: document.querySelector('.nav-dropdown-toggle'),
-                travel: document.querySelector('nav a[href="#travel"]'),
                 memory: document.querySelector('nav a[href="#memory"]'),
                 connect: document.querySelector('nav a[href="#connect"]')
             };
@@ -171,6 +169,11 @@
                 <div class="hero-buttons">
                     <button class="btn btn-primary" onclick="showPanel('research')">Explore Research</button>
                     <button class="btn btn-outline" onclick="showPanel('connect')">Get in Touch</button>
+                    <!-- Third capsule: leaves for the separate photography site,
+                         so it is a link, not a panel button. -->
+                    <a class="btn btn-away" href="https://arindampanda.github.io/far-from-home/"
+                        title="Far From Home: photographs and a travel journal">Away from Desk <span
+                            class="btn-away-arrow" aria-hidden="true">&#8599;</span></a>
                 </div>
             </div>
             <div class="hero-image-container">
@@ -207,13 +210,13 @@
                     <p class="explore-card-desc">News and blog posts, all in one place.</p>
                     <span class="read-more-link">Enter &rarr;</span>
                 </a>
-                <a class="explore-card" href="#travel">
+                <a class="explore-card" href="https://arindampanda.github.io/far-from-home/">
                     <span class="explore-card-label">Photography</span>
                     <p class="explore-card-desc">A photo gallery from my travels.</p>
                     <span class="read-more-link">Enter &rarr;</span>
                 </a>
                 <a class="explore-card" href="#memory">
-                    <span class="explore-card-label">Travel &amp; Memory</span>
+                    <span class="explore-card-label">Memory</span>
                     <p class="explore-card-desc">Trip write-ups and memories.</p>
                     <span class="read-more-link">Enter &rarr;</span>
                 </a>
@@ -627,110 +630,10 @@
                 </div>
             </section>
 
-            <!-- Travel -->
-            <section id="travel">
-                <div style="text-align: center;">
-                    <h2
-                        style="display: inline-block; border-bottom: 2px solid var(--accent-soft); padding-bottom: 5px; margin: 0;">
-                        Photography</h2>
-                </div>
-                <script>
-                    let photoInterval;
-                    const photoSpeed = 1; // Pixels per tick
-
-                    function startPhotoScroll() {
-                        const container = document.getElementById('photo-scroll-container');
-                        if (!container) return;
-
-                        // Clear existing
-                        if (photoInterval) clearInterval(photoInterval);
-
-                        photoInterval = setInterval(() => {
-                            container.scrollLeft += photoSpeed;
-                            // Infinite loop logic
-                            if (container.scrollLeft >= (container.scrollWidth / 2)) {
-                                container.scrollLeft = 0;
-                            }
-                        }, 20);
-                    }
-
-                    function pausePhotoScroll() {
-                        if (photoInterval) clearInterval(photoInterval);
-                    }
-
-                    function manualScrollPhoto(direction) {
-                        const container = document.getElementById('photo-scroll-container');
-                        const scrollAmount = 300;
-                        container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-                    }
-
-                    window.addEventListener('load', startPhotoScroll);
-                </script>
-
-                <div class="photo-wrapper" onmouseenter="pausePhotoScroll()" onmouseleave="startPhotoScroll()">
-                    <div class="photo-nav photo-prev" onclick="manualScrollPhoto(-1)">&#10094;</div>
-                    <div id="photo-scroll-container" class="photo-container">
-                        <div class="photo-group">
-                            <div class="gallery-item"
-                                onclick="openLightbox('photography/image1.jpg', 'Nature\'s tears are the most beautiful jewelry.', 'Various Dates');">
-                                <img src="photography/image1.jpg" alt="Photography 1">
-                                <div class="gallery-caption-text">Nature's tears are the most beautiful jewelry.</div>
-                            </div>
-                            <div class="gallery-item"
-                                onclick="openLightbox('photography/image2.jpg', 'A winter gem waiting for the first light.', 'Various Dates');">
-                                <img src="photography/image2.jpg" alt="Photography 2">
-                                <div class="gallery-caption-text">A winter gem waiting for the first light.</div>
-                            </div>
-                            <div class="gallery-item"
-                                onclick="openLightbox('photography/image3.jpg', 'Turning a soft golden morning into cotton clouds ablaze.', 'Various Dates');">
-                                <img src="photography/image3.jpg" alt="Photography 3">
-                                <div class="gallery-caption-text">Turning a soft golden morning into cotton clouds
-                                    ablaze.</div>
-                            </div>
-                            <div class="gallery-item"
-                                onclick="openLightbox('photography/image4.jpg', 'Matching the scorching noon heat with a blaze of its own.', 'Various Dates');">
-                                <img src="photography/image4.jpg" alt="Photography 4">
-                                <div class="gallery-caption-text">Matching the scorching noon heat with a blaze of
-                                    its own.</div>
-                            </div>
-                            <div class="gallery-item"
-                                onclick="openLightbox('photography/image5.jpg', '&quot;Nut-thing&quot; to see here, just having a snack.', 'Various Dates');">
-                                <img src="photography/image5.jpg" alt="Photography 5">
-                                <div class="gallery-caption-text">"Nut-thing" to see here, just having a snack.</div>
-                            </div>
-                            <div class="gallery-item"
-                                onclick="openLightbox('photography/image6.jpg', 'From spongy white calm to fiery red chaos.', 'Various Dates');">
-                                <img src="photography/image6.jpg" alt="Photography 6">
-                                <div class="gallery-caption-text">From spongy white calm to fiery red chaos.</div>
-                            </div>
-                            <div class="gallery-item"
-                                onclick="openLightbox('photography/image7.jpg', 'Soaking in the final golden glow of the afternoon.', 'Various Dates');">
-                                <img src="photography/image7.jpg" alt="Photography 7">
-                                <div class="gallery-caption-text">Soaking in the final golden glow of the afternoon.
-                                </div>
-                            </div>
-                            <div class="gallery-item"
-                                onclick="openLightbox('photography/image8.jpeg', 'The horizon holds the day\'s last burning ember, while the rest of world breathes cool.', 'Various Dates');">
-                                <img src="photography/image8.jpeg" alt="Photography 8">
-                                <div class="gallery-caption-text">The horizon holds the day's last burning ember,
-                                    while the rest of world breathes cool.</div>
-                            </div>
-                            <div class="gallery-item"
-                                onclick="openLightbox('photography/image9.jpg', 'A warm glow breaking the silence of the dark.', 'Various Dates');">
-                                <img src="photography/image9.jpg" alt="Photography 9">
-                                <div class="gallery-caption-text">A warm glow breaking the silence of the dark.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="photo-nav photo-next" onclick="manualScrollPhoto(1)">&#10095;</div>
-                </div>
-            </section>
-
-            <!-- Travel & Memory -->
+            <!-- Memory -->
             <section id="memory">
                 <div style="text-align: center;">
-                    <h2 style="display: inline-block; border-bottom: 2px solid var(--accent-soft); padding-bottom: 5px;">Travel &
-                        Memory</h2>
+                    <h2 style="display: inline-block; border-bottom: 2px solid var(--accent-soft); padding-bottom: 5px;">Memory</h2>
                 </div>
                 <div style="text-align: center; margin-top: 1.5rem; margin-bottom: 0.5rem;">
                     <h3 class="section-subheading">
