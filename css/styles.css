@@ -100,6 +100,20 @@ p {
     margin-bottom: 1.5rem;
 }
 
+/* Headings break into lines of even length rather than leaving one word on
+   the last line, and paragraphs and captions avoid ending on a single short
+   word. Browsers without text-wrap support wrap as before. */
+h1,
+h2,
+h3 {
+    text-wrap: balance;
+}
+
+p,
+figcaption {
+    text-wrap: pretty;
+}
+
 a {
     text-decoration: none;
     color: inherit;
