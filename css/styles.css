@@ -303,6 +303,14 @@ main>section.active-panel {
     display: block;
 }
 
+/* The hero's own "display: grid" below is an id rule, which outranks the
+   rule above, so without this the hero stayed on the page under every
+   other section: scrolling up from Research or Memory ran back into it,
+   and short sections such as About showed its lower half at the top. */
+main>#about:not(.active-panel) {
+    display: none;
+}
+
 @keyframes fadeIn {
     to {
         opacity: 1;
