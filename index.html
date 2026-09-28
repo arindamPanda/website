@@ -639,307 +639,160 @@
                     <h3 class="section-subheading">
                         Trips</h3>
                 </div>
-                <script>
-                    let tripsInterval;
-                    const tripsSpeed = 1; // Pixels per tick
-
-                    function startTripsScroll() {
-                        const container = document.getElementById('trips-scroll-container');
-                        if (!container) return;
-
-                        // Clear existing to avoid dupes
-                        if (tripsInterval) clearInterval(tripsInterval);
-
-                        tripsInterval = setInterval(() => {
-                            // Move right to left
-                            container.scrollLeft += tripsSpeed;
-
-                            // Infinite loop logic:
-                            // We have 2 identical groups. When we scroll past the first group
-                            // (width approx half of scrollWidth), snap back to 0.
-                            // We use a safe threshold (e.g. maxScroll / 2)
-                            if (container.scrollLeft >= (container.scrollWidth / 2)) {
-                                container.scrollLeft = 0;
-                            }
-                        }, 20); // 50fps approx
-                    }
-
-                    function pauseTripsScroll() {
-                        if (tripsInterval) clearInterval(tripsInterval);
-                    }
-
-                    function manualScrollTrips(direction) {
-                        const container = document.getElementById('trips-scroll-container');
-                        const scrollAmount = 400;
-                        container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-                    }
-
-                    // Start on load
-                    window.addEventListener('load', startTripsScroll);
-                </script>
-                <div class="trips-wrapper" onmouseenter="pauseTripsScroll()" onmouseleave="startTripsScroll()">
-                    <div class="trips-nav trips-prev" onclick="manualScrollTrips(-1)">&#10094;</div>
-                    <div id="trips-scroll-container" class="trips-container">
-                        <!-- Group 1 -->
-                        <div class="trips-group">
-                            <!-- Orchha Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Orchha, Sep, 2025</h3>
-                                <div class="card-thumb">
-                                    <img src="Orchha/orch1.jpg" alt="Orchha"
-                                        style="width: 100%; height: 100%; object-fit: contain;">
-                                </div>
-                                <a href="#" onclick="openMappedGallery([
-                                    {caption: 'Rani Mahal, Jhansi', images: ['Orchha/orch1.jpg', 'Orchha/orch2.jpg', 'Orchha/orch3.jpg', 'Orchha/orch4.jpg', 'Orchha/orch5.jpg']},
-                                    {caption: 'Orchha Fort (Raja Mahal)', images: ['Orchha/orch6.jpg', 'Orchha/orch7.jpg', 'Orchha/orch8.jpg', 'Orchha/orch9.jpg']},
-                                    {caption: 'The Chaturbhuj Temple from Raja Mahal', images: ['Orchha/orch10.jpg']},
-                                    {caption: 'The Chhatris of Orchha from Raja Mahal', images: ['Orchha/orch11.jpg']},
-                                    {caption: 'The Chhatris of Orchha', images: ['Orchha/orch12.jpg', 'Orchha/orch13.jpg', 'Orchha/orch14.jpg', 'Orchha/orch15.jpg', 'Orchha/orch16.jpg']},
-                                    {caption: 'Raja Mahal from The Chaturbhuj Temple', images: ['Orchha/orch17.jpg']},
-                                    {caption: 'Shri Ram Raja Mandir from The Chaturbhuj Temple', images: ['Orchha/orch18.jpg']}
-                                ], 'September, 2025'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-
-
-                            <!-- DPG Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    DPG, Mar, 2025</h3>
-                                <div class="card-thumb">
-                                    <img src="DPG/dpg1.jpeg" alt="DPG">
-                                </div>
-                                <a href="#" onclick="openMappedGallery([
-                                    {caption: 'Mumbai International Airport', images: ['DPG/dpg1.jpeg']},
-                                    {caption: 'Doha International Airport', images: ['DPG/dpg2.jpeg']},
-                                    {caption: 'Regensburg University', images: ['DPG/dpg3.jpeg', 'DPG/dpg4.jpeg']},
-                                    {caption: 'Old Stone Bridge, Danube River', images: ['DPG/dpg5.jpeg', 'DPG/dpg6.jpeg', 'DPG/dpg7.jpeg', 'DPG/dpg8.jpeg']},
-                                    {caption: 'Walhalla', images: ['DPG/dpg9.jpeg', 'DPG/dpg10.jpeg', 'DPG/dpg11.jpeg', 'DPG/dpg12.jpeg', 'DPG/dpg13.jpeg', 'DPG/dpg14.jpeg', 'DPG/dpg15.jpeg', 'DPG/dpg16.jpeg']},
-                                    {caption: 'Nymphenburg Palace, Munich', images: ['DPG/dpg17.jpeg', 'DPG/dpg18.jpeg', 'DPG/dpg19.jpeg', 'DPG/dpg20.jpeg']}
-                                ], 'March, 2025'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-                            <!-- Raisen Fort Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Raisen Fort, Aug, 2024</h3>
-                                <div class="card-thumb">
-                                    <img src="Raisen Fort/Rai1.jpeg" alt="Raisen Fort"
-                                        style="object-position: left;">
-                                </div>
-                                <a href="#"
-                                    onclick="openGallery(['Raisen Fort/Rai1.jpeg', 'Raisen Fort/Rai2.jpeg', 'Raisen Fort/Rai3.jpeg', 'Raisen Fort/Rai4.jpeg', 'Raisen Fort/Rai5.jpeg', 'Raisen Fort/Rai6.jpeg', 'Raisen Fort/Rai7.jpg', 'Raisen Fort/Rai8.jpeg'], 'Raisen Fort', 'August, 2024'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-                            <!-- Chennai Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Chennai Diaries, Dec, 2023</h3>
-                                <div class="card-thumb">
-                                    <img src="Chennai/1.jpg" alt="Chennai Diaries">
-                                </div>
-                                <a href="#" onclick="openMappedGallery([
-                                    {caption: 'Chennai Diaries', images: ['Chennai/1.jpg']},
-                                    {caption: 'Brihadeeswara Temple, Thanjavur; UNESCO World Heritage', images: ['Chennai/B1.jpeg', 'Chennai/B2.jpeg', 'Chennai/B3.jpeg', 'Chennai/B4.jpeg']},
-                                    {caption: 'Sri Ranganatha Swamy Temple, Tiruchirappalli', images: ['Chennai/S1.jpeg', 'Chennai/S2.jpeg', 'Chennai/S3.jpeg']},
-                                    {caption: 'Meenakshi Amman Temple, Madurai', images: ['Chennai/M1.jpeg', 'Chennai/M2.jpeg', 'Chennai/M3.jpeg']},
-                                    {caption: 'The Ramanathaswamy Temple, Rameswaram', images: ['Chennai/R1.jpeg', 'Chennai/R2.jpeg', 'Chennai/R3.jpeg', 'Chennai/R4.jpeg']},
-                                    {caption: 'Dhanushkodi, the Bay of Bengal and Indian Ocean meet', images: ['Chennai/D1.jpeg', 'Chennai/D2.jpeg']},
-                                    {caption: 'Mahabalipuram Temple, UNESCO Group of Monuments', images: ['Chennai/M1.jpg', 'Chennai/M2.jpg']}
-                                ], 'December, 2023'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-                            <!-- Jabalpur Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Jabalpur, Dec, 2022</h3>
-                                <div class="card-thumb">
-                                    <img src="Jabalpur/jab1.jpeg" alt="Jabalpur">
-                                </div>
-                                <a href="#" onclick="openMappedGallery([
-                                    {caption: 'Jabalpur Diaries', images: ['Jabalpur/jab1.jpeg']},
-                                    {caption: 'Rani Durgavati Museum', images: ['Jabalpur/jab2.jpeg']},
-                                    {caption: 'Balancing Rock', images: ['Jabalpur/jab3.jpeg']},
-                                    {caption: 'Madan Mahal Fort', images: ['Jabalpur/jab4.jpeg']},
-                                    {caption: 'Beauty of Bhedaghat', images: ['Jabalpur/jab5.jpeg', 'Jabalpur/jab6.jpeg', 'Jabalpur/jab7.jpeg', 'Jabalpur/jab8.jpeg', 'Jabalpur/jab9.jpeg', 'Jabalpur/jab10.jpeg']}
-                                ], 'December, 2022'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-                            <!-- Ranthambore Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Ranthambore, Oct, 2022</h3>
-                                <div class="card-thumb">
-                                    <img src="Ranthambore/IMG_0198.jpg" alt="Ranthambore">
-                                </div>
-                                <a href="#"
-                                    onclick="openGallery(['Ranthambore/IMG_0198.jpg', 'Ranthambore/IMG_0199.jpg', 'Ranthambore/IMG_0200.jpg', 'Ranthambore/IMG_0201.jpg', 'Ranthambore/IMG_0202.jpg', 'Ranthambore/IMG_0203.jpg', 'Ranthambore/IMG_0204.jpg', 'Ranthambore/IMG_0205.jpg'], 'Ranthambore', 'October, 2022'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-                            <!-- Hamta Pass Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Hamta Pass, June, 2022</h3>
-                                <div class="card-thumb">
-                                    <img src="Hamptapas/trek1.jpg" alt="Hamta Pass">
-                                </div>
-                                <a href="#" onclick="openMappedGallery([
-                                    {caption: 'Day 1', images: ['Hamptapas/Day1/Dy1.jpg', 'Hamptapas/Day1/Dy2.jpg', 'Hamptapas/Day1/Dy3.jpg', 'Hamptapas/Day1/Dy4.jpg', 'Hamptapas/Day1/Dy5.jpg', 'Hamptapas/Day1/Dy6.jpg']},
-                                    {caption: 'Day 2', images: ['Hamptapas/Day2/D2_1.jpg', 'Hamptapas/Day2/D2_2.jpg', 'Hamptapas/Day2/D2_3.jpg', 'Hamptapas/Day2/D2_4.jpg', 'Hamptapas/Day2/D2_5.jpg']},
-                                    {caption: 'Day 3', images: ['Hamptapas/Day3/Dy3_1.jpg', 'Hamptapas/Day3/Dy3_2.jpg', 'Hamptapas/Day3/Dy3_3.jpg', 'Hamptapas/Day3/Dy3_4.jpg', 'Hamptapas/Day3/Dy3_5.jpg', 'Hamptapas/Day3/Dy3_6.jpg', 'Hamptapas/Day3/Dy3_7.jpg', 'Hamptapas/Day3/Dy3_8.jpg', 'Hamptapas/Day3/Dy3_9.jpg', 'Hamptapas/Day3/Dy3_10.jpg']},
-                                    {caption: 'Final Day', images: ['Hamptapas/Day4/Dy4_1.jpg', 'Hamptapas/Day4/Dy4_2.jpg', 'Hamptapas/Day4/Dy4_3.jpg', 'Hamptapas/Day4/Dy4_4.jpg', 'Hamptapas/Day4/Dy4_5.jpg', 'Hamptapas/Day4/Dy4_6.jpg', 'Hamptapas/Day4/Dy4_7.jpg', 'Hamptapas/Day4/Dy4_8.jpg', 'Hamptapas/Day4/Dy4_9.jpg']}
-                                ], 'June, 2022'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-                            <!-- Manali Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Manali, June, 2022</h3>
-                                <div class="card-thumb">
-                                    <img src="Manali/Manali1.jpg?v=updated2" alt="Manali"
-                                        style="width: 100%; height: 100%; object-fit: contain;">
-                                </div>
-                                <a href="#"
-                                    onclick="openGallery(['Manali/Manali1.jpg?v=updated2', 'Manali/Manali2.jpg', 'Manali/Manali3.jpg', 'Manali/Manali4.jpeg', 'Manali/Manali5.jpeg', 'Manali/Manali6.jpeg', 'Manali/Manali7.jpg', 'Manali/Manali8.jpg', 'Manali/Manali9.jpg'], 'Manali', 'June, 2022'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-                            <!-- Churna Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Churna Safari (Satpura), Dec, 2021</h3>
-                                <div class="card-thumb">
-                                    <img src="Churna/314.jpg" alt="Churna Safari">
-                                </div>
-                                <a href="#"
-                                    onclick="openGallery(['Churna/314.jpg', 'Churna/315.jpg', 'Churna/316.jpg', 'Churna/317.jpg', 'Churna/320.jpg', 'Churna/321.jpg', 'Churna/322.jpg', 'Churna/323.jpg'], 'Churna Safari (Satpura)', 'December, 2021'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
+                <!-- One card per trip, newest first, laid out as a grid like the
+                     Timelines below, so every trip is reached by scrolling down. -->
+                <div class="trips-grid">
+                    <!-- Orchha Card -->
+                    <div class="card trip-card">
+                        <h3 class="trip-card-title">
+                            Orchha, Sep, 2025</h3>
+                        <div class="card-thumb">
+                            <img src="Orchha/orch1.jpg" alt="Orchha"
+                                style="width: 100%; height: 100%; object-fit: contain;">
                         </div>
+                        <a href="#" onclick="openMappedGallery([
+                            {caption: 'Rani Mahal, Jhansi', images: ['Orchha/orch1.jpg', 'Orchha/orch2.jpg', 'Orchha/orch3.jpg', 'Orchha/orch4.jpg', 'Orchha/orch5.jpg']},
+                            {caption: 'Orchha Fort (Raja Mahal)', images: ['Orchha/orch6.jpg', 'Orchha/orch7.jpg', 'Orchha/orch8.jpg', 'Orchha/orch9.jpg']},
+                            {caption: 'The Chaturbhuj Temple from Raja Mahal', images: ['Orchha/orch10.jpg']},
+                            {caption: 'The Chhatris of Orchha from Raja Mahal', images: ['Orchha/orch11.jpg']},
+                            {caption: 'The Chhatris of Orchha', images: ['Orchha/orch12.jpg', 'Orchha/orch13.jpg', 'Orchha/orch14.jpg', 'Orchha/orch15.jpg', 'Orchha/orch16.jpg']},
+                            {caption: 'Raja Mahal from The Chaturbhuj Temple', images: ['Orchha/orch17.jpg']},
+                            {caption: 'Shri Ram Raja Mandir from The Chaturbhuj Temple', images: ['Orchha/orch18.jpg']}
+                        ], 'September, 2025'); return false;"
+                            class="trip-card-link">view
+                            more &rarr;</a>
+                    </div>
 
-                        <!-- Group 2 (Duplicate) -->
-                        <div class="trips-group">
-                            <!-- Orchha Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Orchha, Sep, 2025</h3>
-                                <div class="card-thumb">
-                                    <img src="Orchha/orch1.jpg" alt="Orchha"
-                                        style="width: 100%; height: 100%; object-fit: contain;">
-                                </div>
-                                <a href="#" onclick="openMappedGallery([
-                                    {caption: 'Rani Mahal, Jhansi', images: ['Orchha/orch1.jpg', 'Orchha/orch2.jpg', 'Orchha/orch3.jpg', 'Orchha/orch4.jpg', 'Orchha/orch5.jpg']},
-                                    {caption: 'Orchha Fort (Raja Mahal)', images: ['Orchha/orch6.jpg', 'Orchha/orch7.jpg', 'Orchha/orch8.jpg', 'Orchha/orch9.jpg']},
-                                    {caption: 'The Chaturbhuj Temple from Raja Mahal', images: ['Orchha/orch10.jpg']},
-                                    {caption: 'The Chhatris of Orchha from Raja Mahal', images: ['Orchha/orch11.jpg']},
-                                    {caption: 'The Chhatris of Orchha', images: ['Orchha/orch12.jpg', 'Orchha/orch13.jpg', 'Orchha/orch14.jpg', 'Orchha/orch15.jpg', 'Orchha/orch16.jpg']},
-                                    {caption: 'Raja Mahal from The Chaturbhuj Temple', images: ['Orchha/orch17.jpg']},
-                                    {caption: 'Shri Ram Raja Mandir from The Chaturbhuj Temple', images: ['Orchha/orch18.jpg']}
-                                ], 'September, 2025'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
 
-                            <!-- Raisen Fort Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Raisen Fort, Aug, 2024</h3>
-                                <div class="card-thumb">
-                                    <img src="Raisen Fort/Rai1.jpeg" alt="Raisen Fort"
-                                        style="object-position: left;">
-                                </div>
-                                <a href="#"
-                                    onclick="openGallery(['Raisen Fort/Rai1.jpeg', 'Raisen Fort/Rai2.jpeg', 'Raisen Fort/Rai3.jpeg', 'Raisen Fort/Rai4.jpeg', 'Raisen Fort/Rai5.jpeg', 'Raisen Fort/Rai6.jpeg', 'Raisen Fort/Rai7.jpg', 'Raisen Fort/Rai8.jpeg'], 'Raisen Fort', 'August, 2024'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
 
-                            <!-- Chennai Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Chennai Diaries, Dec, 2023</h3>
-                                <div class="card-thumb">
-                                    <img src="Chennai/1.jpg" alt="Chennai Diaries">
-                                </div>
-                                <a href="#" onclick="openMappedGallery([
-                                    {caption: 'Chennai Diaries', images: ['Chennai/1.jpg']},
-                                    {caption: 'Brihadeeswara Temple, Thanjavur; UNESCO World Heritage', images: ['Chennai/B1.jpeg', 'Chennai/B2.jpeg', 'Chennai/B3.jpeg', 'Chennai/B4.jpeg']},
-                                    {caption: 'Sri Ranganatha Swamy Temple, Tiruchirappalli', images: ['Chennai/S1.jpeg', 'Chennai/S2.jpeg', 'Chennai/S3.jpeg']},
-                                    {caption: 'Meenakshi Amman Temple, Madurai', images: ['Chennai/M1.jpeg', 'Chennai/M2.jpeg', 'Chennai/M3.jpeg']},
-                                    {caption: 'The Ramanathaswamy Temple, Rameswaram', images: ['Chennai/R1.jpeg', 'Chennai/R2.jpeg', 'Chennai/R3.jpeg', 'Chennai/R4.jpeg']},
-                                    {caption: 'Dhanushkodi, the Bay of Bengal and Indian Ocean meet', images: ['Chennai/D1.jpeg', 'Chennai/D2.jpeg']},
-                                    {caption: 'Mahabalipuram Temple, UNESCO Group of Monuments', images: ['Chennai/M1.jpg', 'Chennai/M2.jpg']}
-                                ], 'December, 2023'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-                            <!-- Jabalpur Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Jabalpur, Dec, 2022</h3>
-                                <div class="card-thumb">
-                                    <img src="Jabalpur/jab1.jpeg" alt="Jabalpur">
-                                </div>
-                                <a href="#" onclick="openMappedGallery([
-                                    {caption: 'Jabalpur Diaries', images: ['Jabalpur/jab1.jpeg']},
-                                    {caption: 'Rani Durgavati Museum', images: ['Jabalpur/jab2.jpeg']},
-                                    {caption: 'Balancing Rock', images: ['Jabalpur/jab3.jpeg']},
-                                    {caption: 'Madan Mahal Fort', images: ['Jabalpur/jab4.jpeg']},
-                                    {caption: 'Beauty of Bhedaghat', images: ['Jabalpur/jab5.jpeg', 'Jabalpur/jab6.jpeg', 'Jabalpur/jab7.jpeg', 'Jabalpur/jab8.jpeg', 'Jabalpur/jab9.jpeg', 'Jabalpur/jab10.jpeg']}
-                                ], 'December, 2022'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-                            <!-- Ranthambore Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Ranthambore, Oct, 2022</h3>
-                                <div class="card-thumb">
-                                    <img src="Ranthambore/IMG_0198.jpg" alt="Ranthambore">
-                                </div>
-                                <a href="#"
-                                    onclick="openGallery(['Ranthambore/IMG_0198.jpg', 'Ranthambore/IMG_0199.jpg', 'Ranthambore/IMG_0200.jpg', 'Ranthambore/IMG_0201.jpg', 'Ranthambore/IMG_0202.jpg', 'Ranthambore/IMG_0203.jpg', 'Ranthambore/IMG_0204.jpg', 'Ranthambore/IMG_0205.jpg'], 'Ranthambore', 'October, 2022'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
-
-                            <!-- Churna Card -->
-                            <div class="card trip-card">
-                                <h3 class="trip-card-title">
-                                    Churna Safari (Satpura), Dec, 2021</h3>
-                                <div class="card-thumb">
-                                    <img src="Churna/314.jpg" alt="Churna Safari">
-                                </div>
-                                <a href="#"
-                                    onclick="openGallery(['Churna/314.jpg', 'Churna/315.jpg', 'Churna/316.jpg', 'Churna/317.jpg', 'Churna/320.jpg', 'Churna/321.jpg', 'Churna/322.jpg', 'Churna/323.jpg'], 'Churna Safari (Satpura)', 'December, 2021'); return false;"
-                                    class="trip-card-link">view
-                                    more &rarr;</a>
-                            </div>
+                    <!-- DPG Card -->
+                    <div class="card trip-card">
+                        <h3 class="trip-card-title">
+                            DPG, Mar, 2025</h3>
+                        <div class="card-thumb">
+                            <img src="DPG/dpg1.jpeg" alt="DPG">
                         </div>
+                        <a href="#" onclick="openMappedGallery([
+                            {caption: 'Mumbai International Airport', images: ['DPG/dpg1.jpeg']},
+                            {caption: 'Doha International Airport', images: ['DPG/dpg2.jpeg']},
+                            {caption: 'Regensburg University', images: ['DPG/dpg3.jpeg', 'DPG/dpg4.jpeg']},
+                            {caption: 'Old Stone Bridge, Danube River', images: ['DPG/dpg5.jpeg', 'DPG/dpg6.jpeg', 'DPG/dpg7.jpeg', 'DPG/dpg8.jpeg']},
+                            {caption: 'Walhalla', images: ['DPG/dpg9.jpeg', 'DPG/dpg10.jpeg', 'DPG/dpg11.jpeg', 'DPG/dpg12.jpeg', 'DPG/dpg13.jpeg', 'DPG/dpg14.jpeg', 'DPG/dpg15.jpeg', 'DPG/dpg16.jpeg']},
+                            {caption: 'Nymphenburg Palace, Munich', images: ['DPG/dpg17.jpeg', 'DPG/dpg18.jpeg', 'DPG/dpg19.jpeg', 'DPG/dpg20.jpeg']}
+                        ], 'March, 2025'); return false;"
+                            class="trip-card-link">view
+                            more &rarr;</a>
+                    </div>
 
+                    <!-- Raisen Fort Card -->
+                    <div class="card trip-card">
+                        <h3 class="trip-card-title">
+                            Raisen Fort, Aug, 2024</h3>
+                        <div class="card-thumb">
+                            <img src="Raisen Fort/Rai1.jpeg" alt="Raisen Fort"
+                                style="object-position: left;">
+                        </div>
+                        <a href="#"
+                            onclick="openGallery(['Raisen Fort/Rai1.jpeg', 'Raisen Fort/Rai2.jpeg', 'Raisen Fort/Rai3.jpeg', 'Raisen Fort/Rai4.jpeg', 'Raisen Fort/Rai5.jpeg', 'Raisen Fort/Rai6.jpeg', 'Raisen Fort/Rai7.jpg', 'Raisen Fort/Rai8.jpeg'], 'Raisen Fort', 'August, 2024'); return false;"
+                            class="trip-card-link">view
+                            more &rarr;</a>
+                    </div>
 
-                    </div> <!-- End trips-container -->
-                    <div class="trips-nav trips-next" onclick="manualScrollTrips(1)">&#10095;</div>
-                </div> <!-- End trips-wrapper -->
+                    <!-- Chennai Card -->
+                    <div class="card trip-card">
+                        <h3 class="trip-card-title">
+                            Chennai Diaries, Dec, 2023</h3>
+                        <div class="card-thumb">
+                            <img src="Chennai/1.jpg" alt="Chennai Diaries">
+                        </div>
+                        <a href="#" onclick="openMappedGallery([
+                            {caption: 'Chennai Diaries', images: ['Chennai/1.jpg']},
+                            {caption: 'Brihadeeswara Temple, Thanjavur; UNESCO World Heritage', images: ['Chennai/B1.jpeg', 'Chennai/B2.jpeg', 'Chennai/B3.jpeg', 'Chennai/B4.jpeg']},
+                            {caption: 'Sri Ranganatha Swamy Temple, Tiruchirappalli', images: ['Chennai/S1.jpeg', 'Chennai/S2.jpeg', 'Chennai/S3.jpeg']},
+                            {caption: 'Meenakshi Amman Temple, Madurai', images: ['Chennai/M1.jpeg', 'Chennai/M2.jpeg', 'Chennai/M3.jpeg']},
+                            {caption: 'The Ramanathaswamy Temple, Rameswaram', images: ['Chennai/R1.jpeg', 'Chennai/R2.jpeg', 'Chennai/R3.jpeg', 'Chennai/R4.jpeg']},
+                            {caption: 'Dhanushkodi, the Bay of Bengal and Indian Ocean meet', images: ['Chennai/D1.jpeg', 'Chennai/D2.jpeg']},
+                            {caption: 'Mahabalipuram Temple, UNESCO Group of Monuments', images: ['Chennai/M1.jpg', 'Chennai/M2.jpg']}
+                        ], 'December, 2023'); return false;"
+                            class="trip-card-link">view
+                            more &rarr;</a>
+                    </div>
+
+                    <!-- Jabalpur Card -->
+                    <div class="card trip-card">
+                        <h3 class="trip-card-title">
+                            Jabalpur, Dec, 2022</h3>
+                        <div class="card-thumb">
+                            <img src="Jabalpur/jab1.jpeg" alt="Jabalpur">
+                        </div>
+                        <a href="#" onclick="openMappedGallery([
+                            {caption: 'Jabalpur Diaries', images: ['Jabalpur/jab1.jpeg']},
+                            {caption: 'Rani Durgavati Museum', images: ['Jabalpur/jab2.jpeg']},
+                            {caption: 'Balancing Rock', images: ['Jabalpur/jab3.jpeg']},
+                            {caption: 'Madan Mahal Fort', images: ['Jabalpur/jab4.jpeg']},
+                            {caption: 'Beauty of Bhedaghat', images: ['Jabalpur/jab5.jpeg', 'Jabalpur/jab6.jpeg', 'Jabalpur/jab7.jpeg', 'Jabalpur/jab8.jpeg', 'Jabalpur/jab9.jpeg', 'Jabalpur/jab10.jpeg']}
+                        ], 'December, 2022'); return false;"
+                            class="trip-card-link">view
+                            more &rarr;</a>
+                    </div>
+
+                    <!-- Ranthambore Card -->
+                    <div class="card trip-card">
+                        <h3 class="trip-card-title">
+                            Ranthambore, Oct, 2022</h3>
+                        <div class="card-thumb">
+                            <img src="Ranthambore/IMG_0198.jpg" alt="Ranthambore">
+                        </div>
+                        <a href="#"
+                            onclick="openGallery(['Ranthambore/IMG_0198.jpg', 'Ranthambore/IMG_0199.jpg', 'Ranthambore/IMG_0200.jpg', 'Ranthambore/IMG_0201.jpg', 'Ranthambore/IMG_0202.jpg', 'Ranthambore/IMG_0203.jpg', 'Ranthambore/IMG_0204.jpg', 'Ranthambore/IMG_0205.jpg'], 'Ranthambore', 'October, 2022'); return false;"
+                            class="trip-card-link">view
+                            more &rarr;</a>
+                    </div>
+
+                    <!-- Hamta Pass Card -->
+                    <div class="card trip-card">
+                        <h3 class="trip-card-title">
+                            Hamta Pass, June, 2022</h3>
+                        <div class="card-thumb">
+                            <img src="Hamptapas/trek1.jpg" alt="Hamta Pass">
+                        </div>
+                        <a href="#" onclick="openMappedGallery([
+                            {caption: 'Day 1', images: ['Hamptapas/Day1/Dy1.jpg', 'Hamptapas/Day1/Dy2.jpg', 'Hamptapas/Day1/Dy3.jpg', 'Hamptapas/Day1/Dy4.jpg', 'Hamptapas/Day1/Dy5.jpg', 'Hamptapas/Day1/Dy6.jpg']},
+                            {caption: 'Day 2', images: ['Hamptapas/Day2/D2_1.jpg', 'Hamptapas/Day2/D2_2.jpg', 'Hamptapas/Day2/D2_3.jpg', 'Hamptapas/Day2/D2_4.jpg', 'Hamptapas/Day2/D2_5.jpg']},
+                            {caption: 'Day 3', images: ['Hamptapas/Day3/Dy3_1.jpg', 'Hamptapas/Day3/Dy3_2.jpg', 'Hamptapas/Day3/Dy3_3.jpg', 'Hamptapas/Day3/Dy3_4.jpg', 'Hamptapas/Day3/Dy3_5.jpg', 'Hamptapas/Day3/Dy3_6.jpg', 'Hamptapas/Day3/Dy3_7.jpg', 'Hamptapas/Day3/Dy3_8.jpg', 'Hamptapas/Day3/Dy3_9.jpg', 'Hamptapas/Day3/Dy3_10.jpg']},
+                            {caption: 'Final Day', images: ['Hamptapas/Day4/Dy4_1.jpg', 'Hamptapas/Day4/Dy4_2.jpg', 'Hamptapas/Day4/Dy4_3.jpg', 'Hamptapas/Day4/Dy4_4.jpg', 'Hamptapas/Day4/Dy4_5.jpg', 'Hamptapas/Day4/Dy4_6.jpg', 'Hamptapas/Day4/Dy4_7.jpg', 'Hamptapas/Day4/Dy4_8.jpg', 'Hamptapas/Day4/Dy4_9.jpg']}
+                        ], 'June, 2022'); return false;"
+                            class="trip-card-link">view
+                            more &rarr;</a>
+                    </div>
+
+                    <!-- Manali Card -->
+                    <div class="card trip-card">
+                        <h3 class="trip-card-title">
+                            Manali, June, 2022</h3>
+                        <div class="card-thumb">
+                            <img src="Manali/Manali1.jpg?v=updated2" alt="Manali"
+                                style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                        <a href="#"
+                            onclick="openGallery(['Manali/Manali1.jpg?v=updated2', 'Manali/Manali2.jpg', 'Manali/Manali3.jpg', 'Manali/Manali4.jpeg', 'Manali/Manali5.jpeg', 'Manali/Manali6.jpeg', 'Manali/Manali7.jpg', 'Manali/Manali8.jpg', 'Manali/Manali9.jpg'], 'Manali', 'June, 2022'); return false;"
+                            class="trip-card-link">view
+                            more &rarr;</a>
+                    </div>
+
+                    <!-- Churna Card -->
+                    <div class="card trip-card">
+                        <h3 class="trip-card-title">
+                            Churna Safari (Satpura), Dec, 2021</h3>
+                        <div class="card-thumb">
+                            <img src="Churna/314.jpg" alt="Churna Safari">
+                        </div>
+                        <a href="#"
+                            onclick="openGallery(['Churna/314.jpg', 'Churna/315.jpg', 'Churna/316.jpg', 'Churna/317.jpg', 'Churna/320.jpg', 'Churna/321.jpg', 'Churna/322.jpg', 'Churna/323.jpg'], 'Churna Safari (Satpura)', 'December, 2021'); return false;"
+                            class="trip-card-link">view
+                            more &rarr;</a>
+                    </div>
+                </div>
 
                 <div style="text-align: center; margin-top: 2rem; margin-bottom: 0.5rem;">
                     <h3 class="section-subheading">
