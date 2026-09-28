@@ -1391,7 +1391,19 @@ button:focus-visible {
     border-radius: 4px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     transform: scale(0.9);
-    transition: transform 0.3s ease;
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* shown once loaded, so stepping fades from one photograph to the next */
+.lightbox-image.is-loaded {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lightbox-image {
+        transition: none;
+    }
 }
 
 .lightbox-overlay.active .lightbox-image {

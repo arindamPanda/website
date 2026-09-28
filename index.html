@@ -1214,10 +1214,37 @@
                 if (nextBtn) nextBtn.style.display = 'none';
             }
 
+            // each photograph fades in once it has loaded (.is-loaded in the
+            // stylesheet), and the ones either side are fetched in advance
+            img.classList.remove('is-loaded');
             img.src = item.src;
+            if (img.complete && img.naturalWidth) img.classList.add('is-loaded');
+            [currentIndex - 1, currentIndex + 1].forEach(i => {
+                const next = currentGallery[(i + currentGallery.length) % currentGallery.length];
+                if (next && next !== item) new Image().src = next.src;
+            });
             cap.textContent = item.caption;
             dt.textContent = item.date;
         }
+
+        document.getElementById('lightbox-img').addEventListener('load', function () {
+            this.classList.add('is-loaded');
+        });
+
+        // Swipe left or right on a phone to step through the photographs.
+        (() => {
+            const lightbox = document.getElementById('lightbox');
+            let startX = null;
+            lightbox.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+            lightbox.addEventListener('touchend', (e) => {
+                if (startX === null) return;
+                const dx = e.changedTouches[0].clientX - startX;
+                startX = null;
+                if (Math.abs(dx) > 40) changeImage(dx < 0 ? 1 : -1);
+            });
+        })();
 
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
