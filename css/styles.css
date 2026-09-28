@@ -1294,10 +1294,28 @@ button:focus-visible {
     color: var(--heading-color);
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-    /* name and theme button share the top line, the links sit under them,
-       so the header takes one row fewer out of every section's space */
+/* The header's links need about 1170 px on one line at full spacing.
+   Below that they ran past the right edge, and since the page itself does
+   not scroll sideways, Contact and the theme button could not be reached
+   on a tablet or a small laptop. So: closer spacing down to 1000 px, and
+   below that the name and the theme button share the top line with the
+   links wrapped, centred, underneath. */
+@media (max-width: 1200px) {
+    header {
+        gap: 1.5rem;
+    }
+
+    nav ul {
+        gap: 1.3rem;
+    }
+
+    nav a,
+    .nav-dropdown-toggle {
+        letter-spacing: 1px;
+    }
+}
+
+@media (max-width: 1000px) {
     header {
         flex-wrap: wrap;
         height: auto;
@@ -1315,9 +1333,16 @@ button:focus-visible {
     }
 
     nav ul {
-        gap: 0.5rem 0.85rem;
+        gap: 0.5rem 1.1rem;
         flex-wrap: wrap;
         justify-content: center;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    nav ul {
+        gap: 0.5rem 0.85rem;
     }
 
     nav a {
