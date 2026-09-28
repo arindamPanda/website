@@ -639,6 +639,9 @@ main>section.active-panel {
     font-style: italic;
     color: var(--text-muted);
     font-size: 1rem;
+    /* no paragraph gap under the last line, so the card has the same
+       space above the title as below the citation */
+    margin-bottom: 0;
 }
 
 .pub-right {
@@ -663,6 +666,37 @@ main>section.active-panel {
     background: var(--accent-color);
     border-color: var(--accent-color);
     color: #fff;
+}
+
+/* On a phone the three columns do not fit: the year and type go on one
+   line with the link at its right end, and the title takes the full
+   width underneath instead of a narrow strip between them. */
+@media (max-width: 600px) {
+    .pub-card {
+        flex-wrap: wrap;
+        gap: 0.9rem 1rem;
+        padding: 1.25rem 1.35rem;
+    }
+
+    .pub-left {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 0;
+    }
+
+    .pub-year-badge {
+        margin-bottom: 0;
+    }
+
+    .pub-right {
+        margin-left: auto;
+    }
+
+    .pub-content {
+        order: 3;
+        flex-basis: 100%;
+    }
 }
 
 /* Mobile Adjustments for Hero */
