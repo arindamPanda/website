@@ -1018,15 +1018,28 @@
                     <h2 style="display: inline-block; border-bottom: 2px solid var(--accent-soft); padding-bottom: 5px;">Get in
                         Touch</h2>
                 </div>
-                <form action="#" onsubmit="event.preventDefault(); alert('Message sent!');">
-
-                    <div class="form-group">
-                        <textarea class="form-control" rows="5"
-                            placeholder="Drop a Message (Email & Name Please)"></textarea>
+                <form id="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="name" placeholder="Your name"
+                                autocomplete="name" required aria-label="Your name">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="email" name="email" placeholder="Your email"
+                                autocomplete="email" required aria-label="Your email">
+                        </div>
                     </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="message" rows="5" placeholder="Your message" required
+                            aria-label="Your message"></textarea>
+                    </div>
+                    <!-- left empty by people; a bot that fills it in is ignored -->
+                    <input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off"
+                        aria-hidden="true">
                     <div style="text-align: center;">
                         <button type="submit" class="contact-submit-btn">Send Message</button>
                     </div>
+                    <p class="form-status" role="status" aria-live="polite"></p>
                     <div style="text-align: center; margin-top: 2rem;">
                         <div class="tagline">SOCIALS
                         </div>
@@ -1083,6 +1096,49 @@
                 <script>
                     // keeps the copyright year current without editing the page
                     document.getElementById('footer-year').textContent = new Date().getFullYear();
+                </script>
+                <script>
+                    // The contact form posts to FormSubmit, which forwards each message
+                    // to Arindam's inbox. The address after /ajax/ is FormSubmit's alias
+                    // for his email, so the address itself never appears in this page.
+                    (() => {
+                        const ENDPOINT = 'https://formsubmit.co/ajax/67d0ffd5ade8a1d73419d135899b6009';
+                        const form = document.getElementById('contact-form');
+                        const status = form.querySelector('.form-status');
+                        const button = form.querySelector('button[type="submit"]');
+                        const say = (text, kind) => {
+                            status.textContent = text;
+                            status.className = 'form-status' + (kind ? ' is-' + kind : '');
+                        };
+
+                        form.addEventListener('submit', async (e) => {
+                            e.preventDefault();
+                            if (!form.reportValidity()) return;
+                            const data = Object.fromEntries(new FormData(form));
+                            data._subject = 'Website message from ' + data.name;
+                            data._replyto = data.email;
+                            data._template = 'table';
+                            data._captcha = 'false';
+
+                            button.disabled = true;
+                            say('Sending…');
+                            try {
+                                const res = await fetch(ENDPOINT, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                                    body: JSON.stringify(data)
+                                });
+                                const reply = await res.json();
+                                if (!res.ok || String(reply.success) !== 'true') throw new Error(reply.message);
+                                form.reset();
+                                say('Thank you, your message has been sent.', 'ok');
+                            } catch (err) {
+                                say('Sorry, the message could not be sent. Please try again in a moment, or write to me on LinkedIn.', 'error');
+                            } finally {
+                                button.disabled = false;
+                            }
+                        });
+                    })();
                 </script>
             </section>
 
