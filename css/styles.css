@@ -1028,13 +1028,41 @@ form {
 }
 
 /* Footer */
+/* the copyright on the left, the way across to Far From Home on the right,
+   as "Other side of me" sits at the foot of that site */
 footer {
-    text-align: center;
-    padding: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem 2rem;
+    padding: 3rem 0;
     font-size: 0.75rem;
     color: var(--text-muted);
     letter-spacing: 1px;
     border-top: 1px solid var(--card-border);
+}
+
+footer p {
+    margin: 0;
+}
+
+.footer-away {
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--heading-color);
+}
+
+.footer-away:hover {
+    color: var(--accent-color);
+}
+
+@media (max-width: 600px) {
+    footer {
+        justify-content: center;
+        text-align: center;
+    }
 }
 
 /* Accessibility: visible focus for keyboard users */
